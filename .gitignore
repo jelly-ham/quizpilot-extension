@@ -1,0 +1,17 @@
+node_modules/
+dist/
+dist-e2e/
+dist-store/
+release/
+coverage/
+*.log
+.DS_Store
+.env
+.env.*
+# Extension signing keys: never commit.
+*.pem
+apps/extension/keys/
+# Editor and assistant settings.
+.claude/
+.vscode/
+.idea/

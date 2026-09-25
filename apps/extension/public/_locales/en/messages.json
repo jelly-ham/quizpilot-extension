@@ -1,0 +1,752 @@
+{
+  "extName": {
+    "message": "QuizPilot"
+  },
+  "extDescription": {
+    "message": "AI study helper: finds the questions on a web page and suggests answers."
+  },
+  "apiStatus_checking": {
+    "message": "Connecting…"
+  },
+  "apiStatus_online": {
+    "message": "Online"
+  },
+  "apiStatus_offline": {
+    "message": "Offline"
+  },
+  "modeLabel": {
+    "message": "Mode"
+  },
+  "mode_byok": {
+    "message": "Free"
+  },
+  "mode_byok_hint": {
+    "message": "Use your own model API key, stored only on this device"
+  },
+  "mode_paid": {
+    "message": "Credits"
+  },
+  "mode_paid_hint": {
+    "message": "No setup: pay per use with credits"
+  },
+  "solvePage": {
+    "message": "Solve this page (auto)"
+  },
+  "comingSoon": {
+    "message": "Coming soon"
+  },
+  "solveRegion": {
+    "message": "Solve a selected area"
+  },
+  "openOptions": {
+    "message": "Settings"
+  },
+  "byokNotConfigured": {
+    "message": "No model set up yet"
+  },
+  "regionHint": {
+    "message": "Reading screenshots needs an image-capable model"
+  },
+  "relearnPage": {
+    "message": "Relearn this page's layout"
+  },
+  "solveAuto": {
+    "message": "Continuous (auto next question)"
+  },
+  "solveAutoHint": {
+    "message": "Answers a question, moves to the next one, and repeats at a human pace. Stop any time from the answer panel. Never submits."
+  },
+  "relearnHint": {
+    "message": "Use when questions are missed or wrong: relearns this site's question layout from a screenshot"
+  },
+  "solveAssist": {
+    "message": "Assist (mark answers only)"
+  },
+  "solveAssistHint": {
+    "message": "Outlines the suggested answer for you to pick; marks the next question when the page moves on. The extension never clicks or types on the page."
+  },
+  "ui_shortcut": {
+    "message": "Shortcut: {keys}"
+  },
+  "ui_version": {
+    "message": "Version"
+  },
+  "st_reading": {
+    "message": "Reading questions…"
+  },
+  "err_generic": {
+    "message": "Something went wrong: {msg}"
+  },
+  "err_noQuestions": {
+    "message": "No questions found on this page"
+  },
+  "err_noQuestionsNoVision": {
+    "message": "No questions found on this page. Add an image-capable model to read it from a screenshot."
+  },
+  "note_unreadableOptions": {
+    "message": "Couldn't read the options, so it wasn't answered. Try \"Solve a selected area\" on this question."
+  },
+  "st_solving": {
+    "message": "Solving {n} questions…"
+  },
+  "st_filling": {
+    "message": "Filling in…"
+  },
+  "st_undone": {
+    "message": "Answers undone"
+  },
+  "err_tabClosed": {
+    "message": "The tab was closed; continuous mode ended"
+  },
+  "auto_stopped": {
+    "message": "Continuous mode stopped"
+  },
+  "auto_captcha": {
+    "message": "Verification required: please complete it yourself. Answering resumes afterwards."
+  },
+  "auto_captchaTimeout": {
+    "message": "Timed out waiting for verification; continuous mode ended"
+  },
+  "auto_noMore": {
+    "message": "No more questions; continuous mode ended"
+  },
+  "auto_answering": {
+    "message": "Round {n}: answering…"
+  },
+  "auto_notFillable": {
+    "message": "This page's questions can't be filled in automatically; continuous mode ended"
+  },
+  "auto_answered": {
+    "message": "Round {n} answered, moving on…"
+  },
+  "auto_noNext": {
+    "message": "No \"next question\" button found; continuous mode ended"
+  },
+  "auto_lastQuestion": {
+    "message": "Last question reached. Check your answers, then click \"{label}\" yourself."
+  },
+  "auto_nextNoChange": {
+    "message": "Clicked \"next\" but the question didn't change; continuous mode ended"
+  },
+  "auto_maxRounds": {
+    "message": "Stopped after {n} rounds"
+  },
+  "auto_summary": {
+    "message": "{why} ({rounds} rounds, {answered} answered)"
+  },
+  "assist_summary": {
+    "message": "{why} ({rounds} rounds)"
+  },
+  "assist_stopped": {
+    "message": "Assist mode stopped"
+  },
+  "assist_marked": {
+    "message": "Suggested answers are outlined (green; orange means unsure). Pick them yourself; new questions are marked as they appear."
+  },
+  "assist_shown": {
+    "message": "Answers are listed below; answer yourself. New questions are marked as they appear."
+  },
+  "assist_idle": {
+    "message": "The page hasn't changed for a long time; assist mode ended"
+  },
+  "assist_maxRounds": {
+    "message": "Stopped after {n} rounds"
+  },
+  "note_rule": {
+    "message": "using this site's layout"
+  },
+  "note_learned": {
+    "message": "learned this site's layout"
+  },
+  "note_learnFailed": {
+    "message": "couldn't learn this page's layout"
+  },
+  "err_learnNeedsVision": {
+    "message": "Learning a page's layout needs an image-capable model"
+  },
+  "st_shooting": {
+    "message": "Capturing question {i}/{n}…"
+  },
+  "st_readingShots": {
+    "message": "Reading screenshots…"
+  },
+  "st_shotWholePage": {
+    "message": "No readable question text; reading a screenshot…"
+  },
+  "st_learning": {
+    "message": "Learning this page's layout…"
+  },
+  "err_regionNeedsVision": {
+    "message": "Solving a selected area needs an image-capable model"
+  },
+  "st_readingRegion": {
+    "message": "Reading the selected area…"
+  },
+  "item_fillFailed": {
+    "message": "Couldn't fill in: {reason}"
+  },
+  "item_noAnswer": {
+    "message": "No answer"
+  },
+  "summary": {
+    "message": "Answered {answered}/{total}"
+  },
+  "summary_filled": {
+    "message": ", filled in"
+  },
+  "summary_note": {
+    "message": " ({note})"
+  },
+  "footer_credits": {
+    "message": "Used {used} credits · balance {balance}"
+  },
+  "err_cantRun": {
+    "message": "Can't run on this page (browser pages and the Web Store don't allow extensions)"
+  },
+  "tag_screenshot": {
+    "message": "From screenshot"
+  },
+  "tag_displayOnly": {
+    "message": "Answer shown only"
+  },
+  "tag_vision": {
+    "message": "Answered from image"
+  },
+  "tag_reviewed": {
+    "message": "Reviewed"
+  },
+  "tag_incomplete": {
+    "message": "Partly read"
+  },
+  "tag_noImage": {
+    "message": "Image not seen; for reference only"
+  },
+  "ans_true": {
+    "message": "True ✓"
+  },
+  "ans_false": {
+    "message": "False ✗"
+  },
+  "err_googleNotConfigured": {
+    "message": "Google sign-in isn't configured"
+  },
+  "err_loginCancelled": {
+    "message": "Sign-in cancelled"
+  },
+  "err_googleNoToken": {
+    "message": "Didn't get a Google sign-in token"
+  },
+  "err_paidNeedsLogin": {
+    "message": "Credits mode needs you to sign in: click the QuizPilot icon in the toolbar"
+  },
+  "err_byokNoKey": {
+    "message": "Free mode needs a model API key: add one in Settings"
+  },
+  "err_loginFirst": {
+    "message": "Please sign in first"
+  },
+  "err_sessionExpired": {
+    "message": "Your session expired; please sign in again"
+  },
+  "err_insufficient": {
+    "message": "Not enough credits (about {required} needed, {balance} left). Top up in the extension popup."
+  },
+  "err_loginExpired": {
+    "message": "Your session expired; click the QuizPilot icon to sign in again"
+  },
+  "err_frozen": {
+    "message": "Account frozen (refund or dispute). Please contact support."
+  },
+  "err_rateLimited": {
+    "message": "Too many requests; please try again shortly"
+  },
+  "err_invalidCode": {
+    "message": "Wrong or expired code"
+  },
+  "err_tooManyAttempts": {
+    "message": "Too many attempts; request a new code"
+  },
+  "err_otpCooldown": {
+    "message": "Please wait {s} seconds before requesting another code"
+  },
+  "err_serverVision": {
+    "message": "Image reading isn't available right now; please try again later"
+  },
+  "err_needsVision": {
+    "message": "This question needs an image-capable model"
+  },
+  "err_unsupported": {
+    "message": "No model is set up for this kind of question"
+  },
+  "err_auth": {
+    "message": "Invalid API key or no access"
+  },
+  "err_busy": {
+    "message": "The model service is busy; please try again"
+  },
+  "err_timeout": {
+    "message": "Request timed out"
+  },
+  "err_model": {
+    "message": "Model call failed: {msg}"
+  },
+  "ui_close": {
+    "message": "Close"
+  },
+  "ui_stop": {
+    "message": "Stop"
+  },
+  "ui_stopping": {
+    "message": "Stopping…"
+  },
+  "ui_fill": {
+    "message": "Fill in answers"
+  },
+  "ui_undo": {
+    "message": "Undo"
+  },
+  "ui_confidence": {
+    "message": "Confidence {p}%"
+  },
+  "ui_regionTip": {
+    "message": "Drag to select the question area, Esc to cancel"
+  },
+  "hl_unsure": {
+    "message": "{title} (unsure; check it yourself)"
+  },
+  "hl_suggest": {
+    "message": "QuizPilot suggests: {text}"
+  },
+  "hl_pick": {
+    "message": "QuizPilot suggests this option"
+  },
+  "acc_logout": {
+    "message": "Sign out"
+  },
+  "acc_credits": {
+    "message": "credits"
+  },
+  "acc_frozen": {
+    "message": "Account frozen"
+  },
+  "acc_redirecting": {
+    "message": "Opening…"
+  },
+  "acc_packCredits": {
+    "message": "{n} credits"
+  },
+  "acc_email": {
+    "message": "Email"
+  },
+  "acc_sendCode": {
+    "message": "Send code"
+  },
+  "acc_codeLabel": {
+    "message": "Code (sent to {email})"
+  },
+  "acc_codePlaceholder": {
+    "message": "6 digits"
+  },
+  "acc_login": {
+    "message": "Sign in"
+  },
+  "acc_changeEmail": {
+    "message": "Use another email"
+  },
+  "acc_devCode": {
+    "message": "Dev mode code: {code}"
+  },
+  "acc_google": {
+    "message": "Sign in with Google"
+  },
+  "acc_grant": {
+    "message": "New accounts get free trial credits"
+  },
+  "acc_invalidEmail": {
+    "message": "Please enter a valid email"
+  },
+  "acc_offline": {
+    "message": "Can't reach the server"
+  },
+  "opt_saved": {
+    "message": "Saved"
+  },
+  "opt_title": {
+    "message": "QuizPilot settings"
+  },
+  "opt_byokHint": {
+    "message": "Use your own model API key. The key stays on this device and requests go straight to the model provider."
+  },
+  "opt_paidHint": {
+    "message": "No setup: sign in and pay per use with credits (sign in and top up from the popup)."
+  },
+  "opt_modelsSaved": {
+    "message": "Model settings saved"
+  },
+  "opt_answering": {
+    "message": "Answering"
+  },
+  "opt_humanize": {
+    "message": "Human-like pace"
+  },
+  "opt_humanizeHint": {
+    "message": "Answers at a human pace in both \"Solve this page\" and Continuous mode: reading pauses, gaps between questions, typed text. Off answers faster."
+  },
+  "opt_review": {
+    "message": "Review low-confidence answers"
+  },
+  "opt_reviewHint": {
+    "message": "When a multiple-choice or true/false answer is uncertain, the review model answers it again (one more model call; pick the review model under Routing in Free mode models)."
+  },
+  "opt_needPermission": {
+    "message": "Grant access to the model provider's domain so the extension can call its API"
+  },
+  "opt_noPermission": {
+    "message": "Domain access not granted"
+  },
+  "opt_testOk": {
+    "message": "Connected · {model} · {ms}ms"
+  },
+  "opt_models": {
+    "message": "Free mode models"
+  },
+  "opt_modelsIntro": {
+    "message": "Jev is recommended for multiple-choice and true/false. Fill-in and short answers need a text model; screenshots and picture questions need an image-capable model. API keys are stored only in this browser."
+  },
+  "opt_noModels": {
+    "message": "No models added yet"
+  },
+  "opt_routing": {
+    "message": "Routing"
+  },
+  "opt_routeChoice": {
+    "message": "Multiple choice / true-false"
+  },
+  "opt_routeText": {
+    "message": "Fill-in / short answer"
+  },
+  "opt_routeVision": {
+    "message": "Screenshots / picture questions"
+  },
+  "opt_routeReview": {
+    "message": "Review model"
+  },
+  "opt_sameAsText": {
+    "message": "Same as fill-in model"
+  },
+  "opt_reviewIntro": {
+    "message": "With \"Review low-confidence answers\" on, uncertain multiple-choice and true/false answers go to the review model. You can add a stronger model (such as a large model on OpenRouter) just for reviewing."
+  },
+  "opt_threshold": {
+    "message": "Review threshold"
+  },
+  "opt_thresholdHint": {
+    "message": "Review when confidence is below this (needs \"Review low-confidence answers\")"
+  },
+  "opt_saveModels": {
+    "message": "Save model settings"
+  },
+  "opt_vision": {
+    "message": "Images"
+  },
+  "opt_testing": {
+    "message": "Testing…"
+  },
+  "opt_test": {
+    "message": "Test connection"
+  },
+  "opt_delete": {
+    "message": "Remove"
+  },
+  "opt_nameTaken": {
+    "message": "That name is already used"
+  },
+  "opt_addTitle": {
+    "message": "Add {label}"
+  },
+  "opt_name": {
+    "message": "Name"
+  },
+  "opt_namePlaceholder": {
+    "message": "lowercase letters, digits, dashes"
+  },
+  "opt_model": {
+    "message": "Model"
+  },
+  "opt_keyOptional": {
+    "message": "Optional for local services"
+  },
+  "opt_cancel": {
+    "message": "Cancel"
+  },
+  "opt_add": {
+    "message": "Add"
+  },
+  "opt_auto": {
+    "message": "Auto"
+  },
+  "opt_noModelAvailable": {
+    "message": "(no model available)"
+  },
+  "opt_logCopied": {
+    "message": "Log copied"
+  },
+  "opt_logCleared": {
+    "message": "Log cleared"
+  },
+  "opt_debug": {
+    "message": "Debugging"
+  },
+  "opt_debugLog": {
+    "message": "Record a debug log"
+  },
+  "opt_debugHint": {
+    "message": "Records each step of reading, learning page layouts, answering and filling in, to help track down problems. Kept on this device and cleared when the browser closes; it includes question text but never API keys."
+  },
+  "opt_logCount": {
+    "message": "{n} entries"
+  },
+  "opt_copyLog": {
+    "message": "Copy log"
+  },
+  "opt_downloadLog": {
+    "message": "Download log"
+  },
+  "opt_clear": {
+    "message": "Clear"
+  },
+  "led_topup": {
+    "message": "Top-up"
+  },
+  "led_grant": {
+    "message": "Bonus"
+  },
+  "led_charge": {
+    "message": "Answering"
+  },
+  "led_refund": {
+    "message": "Refund clawback"
+  },
+  "opt_historyLogin": {
+    "message": "Sign in (from the popup) to see your credit history"
+  },
+  "opt_history": {
+    "message": "Credit history"
+  },
+  "opt_noHistory": {
+    "message": "Nothing yet"
+  },
+  "th_time": {
+    "message": "Time"
+  },
+  "th_type": {
+    "message": "Type"
+  },
+  "th_credits": {
+    "message": "Credits"
+  },
+  "opt_recent": {
+    "message": "Recent answers"
+  },
+  "th_site": {
+    "message": "Site"
+  },
+  "th_model": {
+    "message": "Model"
+  },
+  "th_questions": {
+    "message": "Questions"
+  },
+  "opt_visionCheck": {
+    "message": "This model accepts images"
+  },
+  "preset_jevOpenRouter": {
+    "message": "Jev (OpenRouter)"
+  },
+  "preset_jevOpenRouterHint": {
+    "message": "Calls Jev with an OpenRouter key. Great at multiple-choice and true/false, fast and cheap; cannot write text or read images."
+  },
+  "preset_jevTypeSafe": {
+    "message": "Jev (TypeSafe)"
+  },
+  "preset_jevTypeSafeHint": {
+    "message": "Calls Jev with a TypeSafe console key. Great at multiple-choice and true/false; cannot write text or read images."
+  },
+  "preset_qwen": {
+    "message": "Qwen (DashScope)"
+  },
+  "preset_kimi": {
+    "message": "Kimi (Moonshot)"
+  },
+  "preset_ollama": {
+    "message": "Ollama (local)"
+  },
+  "preset_custom": {
+    "message": "Other OpenAI-compatible service"
+  },
+  "grant_ok": {
+    "message": "Your new account got {n} free credits"
+  },
+  "grant_disposable": {
+    "message": "Temporary email addresses don't get the new-account credits; top up to start"
+  },
+  "grant_email_used": {
+    "message": "This mailbox already got new-account credits before; top up to start"
+  },
+  "grant_device_used": {
+    "message": "New-account credits were already claimed on this computer; top up to start"
+  },
+  "grant_ip_limit": {
+    "message": "Today's new-account credits for this network are used up; top up to start"
+  },
+  "grant_daily_cap": {
+    "message": "Today's new-account credits have run out; top up to start"
+  },
+  "preset_glm": {
+    "message": "Zhipu GLM"
+  },
+  "preset_doubao": {
+    "message": "Doubao (Volcano Ark)"
+  },
+  "preset_doubaoHint": {
+    "message": "For the model, use a model ID from the Ark console (e.g. doubao-seed-…) or an inference endpoint ID"
+  },
+  "preset_siliconflow": {
+    "message": "SiliconFlow"
+  },
+  "preset_hunyuan": {
+    "message": "Tencent Hunyuan"
+  },
+  "preset_qianfan": {
+    "message": "Baidu Qianfan"
+  },
+  "preset_lmstudio": {
+    "message": "LM Studio (local)"
+  },
+  "opt_listModels": {
+    "message": "List models"
+  },
+  "opt_listingModels": {
+    "message": "Loading…"
+  },
+  "opt_modelsFound": {
+    "message": "Found {n} models; pick one in the Model field"
+  },
+  "opt_listFailed": {
+    "message": "Couldn't list models: {msg}. You can type the model name"
+  },
+  "opt_modelPlaceholder": {
+    "message": "Enter the key, then click \"List models\""
+  },
+  "acc_paymentsSoon": {
+    "message": "Top-ups open soon; use your free credits for now"
+  },
+  "popup_local": {
+    "message": "Direct from this device"
+  },
+  "popup_models": {
+    "message": "Models"
+  },
+  "popup_change": {
+    "message": "Change"
+  },
+  "popup_choice": {
+    "message": "Choice"
+  },
+  "popup_text": {
+    "message": "Text"
+  },
+  "popup_keyLocal": {
+    "message": "Your key stays on this computer. Questions go straight to the provider you chose, never through our servers."
+  },
+  "popup_tryPaid": {
+    "message": "Rather not set up a key? Credits mode works out of the box, with free trial credits for new accounts."
+  },
+  "popup_tryPaidBtn": {
+    "message": "Try it"
+  },
+  "act_assistDesc": {
+    "message": "Marks the answer; you pick it yourself"
+  },
+  "act_autoDesc": {
+    "message": "Moves on by itself; stop any time"
+  },
+  "act_regionDesc": {
+    "message": "Drag around a question to read it"
+  },
+  "act_learnDesc": {
+    "message": "When questions are missed or wrong"
+  },
+  "shortcuts": {
+    "message": "Shortcuts"
+  },
+  "sc_intro": {
+    "message": "Press a shortcut on any page to start. Pressing the Assist or Continuous shortcut again stops it."
+  },
+  "sc_notSet": {
+    "message": "Not set"
+  },
+  "sc_edit": {
+    "message": "Change shortcuts"
+  },
+  "cmd_assist": {
+    "message": "Assist (press again to stop)"
+  },
+  "cmd_auto": {
+    "message": "Continuous (press again to stop)"
+  },
+  "cmd_stop": {
+    "message": "Stop answering"
+  },
+  "opt_nav": {
+    "message": "Settings sections"
+  },
+  "rep_title": {
+    "message": "Send to support"
+  },
+  "rep_intro": {
+    "message": "If a site reads questions wrong, gets stuck or picks wrong answers, send us the log so we can fix support for that site."
+  },
+  "rep_note": {
+    "message": "What went wrong (optional)"
+  },
+  "rep_notePh": {
+    "message": "e.g. question 7 was wrong, the answer is B"
+  },
+  "rep_contact": {
+    "message": "Reply email (optional)"
+  },
+  "rep_privacy": {
+    "message": "The log includes page addresses, questions and answers. It is emailed to QuizPilot support and used only to investigate the problem and improve site support. It never includes API keys."
+  },
+  "rep_send": {
+    "message": "Send log"
+  },
+  "rep_sending": {
+    "message": "Sending…"
+  },
+  "rep_sent": {
+    "message": "Sent, thank you! We will look into it soon."
+  },
+  "rep_failed": {
+    "message": "Could not send: {msg}"
+  },
+  "rep_enableFirst": {
+    "message": "Turn on \"Record a debug log\", reproduce the problem, then send."
+  },
+  "pg_label": {
+    "message": "Pages"
+  },
+  "pg_prev": {
+    "message": "Previous"
+  },
+  "pg_next": {
+    "message": "Next"
+  },
+  "pg_of": {
+    "message": "Page {page} of {pages}"
+  },
+  "pg_page": {
+    "message": "Page {page}"
+  }
+}

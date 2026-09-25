@@ -1,0 +1,4 @@
+pnpm-lock.yaml
+dist/
+apps/extension/dist-e2e/
+apps/extension/dist-store/

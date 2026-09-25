@@ -1,0 +1,752 @@
+{
+  "extName": {
+    "message": "QuizPilot"
+  },
+  "extDescription": {
+    "message": "AI 学习助手：识别网页上的题目并给出答案。"
+  },
+  "apiStatus_checking": {
+    "message": "连接中…"
+  },
+  "apiStatus_online": {
+    "message": "服务在线"
+  },
+  "apiStatus_offline": {
+    "message": "服务离线"
+  },
+  "modeLabel": {
+    "message": "使用模式"
+  },
+  "mode_byok": {
+    "message": "免费版"
+  },
+  "mode_byok_hint": {
+    "message": "使用你自己的模型 API Key，仅保存在本机"
+  },
+  "mode_paid": {
+    "message": "点数版"
+  },
+  "mode_paid_hint": {
+    "message": "无需配置，按使用量扣除点数"
+  },
+  "solvePage": {
+    "message": "解答本页（自动答题）"
+  },
+  "comingSoon": {
+    "message": "即将推出"
+  },
+  "solveRegion": {
+    "message": "框选区域解答"
+  },
+  "openOptions": {
+    "message": "设置"
+  },
+  "byokNotConfigured": {
+    "message": "还没有配置模型"
+  },
+  "regionHint": {
+    "message": "截图识别需要支持图片的模型"
+  },
+  "relearnPage": {
+    "message": "重新识别本页结构"
+  },
+  "solveAuto": {
+    "message": "连续答题（自动下一题）"
+  },
+  "solveAutoHint": {
+    "message": "答完一题自动进入下一题，按人的节奏作答，可随时在答案面板里停止；不会自动提交"
+  },
+  "relearnHint": {
+    "message": "题目找错或找不全时使用：截图重新学习这个网站的题目结构"
+  },
+  "solveAssist": {
+    "message": "辅助答题（仅标注答案）"
+  },
+  "solveAssistHint": {
+    "message": "用绿框标出建议答案，由你自己点选；翻到下一题后自动标出下一题。扩展不会点击或填写页面"
+  },
+  "ui_shortcut": {
+    "message": "快捷键 {keys}"
+  },
+  "ui_version": {
+    "message": "版本"
+  },
+  "st_reading": {
+    "message": "正在读取题目…"
+  },
+  "err_generic": {
+    "message": "出错了：{msg}"
+  },
+  "err_noQuestions": {
+    "message": "没有在页面上找到题目"
+  },
+  "err_noQuestionsNoVision": {
+    "message": "没有在页面上找到题目；配置支持图片的模型后可以截图识别"
+  },
+  "note_unreadableOptions": {
+    "message": "选项文字没有读出来，未作答；可以用“框选区域解答”单独识别这道题"
+  },
+  "st_solving": {
+    "message": "正在解答 {n} 道题…"
+  },
+  "st_filling": {
+    "message": "正在填写…"
+  },
+  "st_undone": {
+    "message": "已撤销填写"
+  },
+  "err_tabClosed": {
+    "message": "标签页已关闭，连续答题结束"
+  },
+  "auto_stopped": {
+    "message": "已停止连续答题"
+  },
+  "auto_captcha": {
+    "message": "检测到验证码：请手动完成验证，完成后会自动继续"
+  },
+  "auto_captchaTimeout": {
+    "message": "等待验证超时，连续答题结束"
+  },
+  "auto_noMore": {
+    "message": "没有更多题目，连续答题结束"
+  },
+  "auto_answering": {
+    "message": "第 {n} 轮：正在作答…"
+  },
+  "auto_notFillable": {
+    "message": "本页的题目无法自动填写，连续答题结束"
+  },
+  "auto_answered": {
+    "message": "第 {n} 轮已作答，准备下一题…"
+  },
+  "auto_noNext": {
+    "message": "没有找到“下一题”按钮，连续答题结束"
+  },
+  "auto_lastQuestion": {
+    "message": "已到最后一题，请检查后自己点“{label}”"
+  },
+  "auto_nextNoChange": {
+    "message": "点了“下一题”但题目没有变化，连续答题结束"
+  },
+  "auto_maxRounds": {
+    "message": "已连续答 {n} 轮，自动停止"
+  },
+  "auto_summary": {
+    "message": "{why}（共 {rounds} 轮，作答 {answered} 题）"
+  },
+  "assist_summary": {
+    "message": "{why}（共 {rounds} 轮）"
+  },
+  "assist_stopped": {
+    "message": "已停止辅助答题"
+  },
+  "assist_marked": {
+    "message": "已标出建议答案（绿框；橙框表示把握不大），请自己点选；出现新题目后会自动继续"
+  },
+  "assist_shown": {
+    "message": "答案见下方，请自己作答；出现新题目后会自动继续"
+  },
+  "assist_idle": {
+    "message": "页面长时间没有变化，辅助答题结束"
+  },
+  "assist_maxRounds": {
+    "message": "已连续辅助 {n} 轮，自动停止"
+  },
+  "note_rule": {
+    "message": "按本站读题规则"
+  },
+  "note_learned": {
+    "message": "已学习本站的题目结构"
+  },
+  "note_learnFailed": {
+    "message": "未能识别本页结构"
+  },
+  "err_learnNeedsVision": {
+    "message": "识别页面结构需要一个支持图片的模型"
+  },
+  "st_shooting": {
+    "message": "正在截图第 {i}/{n} 题…"
+  },
+  "st_readingShots": {
+    "message": "正在识别截图…"
+  },
+  "st_shotWholePage": {
+    "message": "页面上没有可读的题目文字，正在截图识别…"
+  },
+  "st_learning": {
+    "message": "正在学习本页的题目结构…"
+  },
+  "err_regionNeedsVision": {
+    "message": "框选识别需要一个支持图片的模型"
+  },
+  "st_readingRegion": {
+    "message": "正在识别框选区域…"
+  },
+  "item_fillFailed": {
+    "message": "无法自动填写：{reason}"
+  },
+  "item_noAnswer": {
+    "message": "没有得到答案"
+  },
+  "summary": {
+    "message": "已解答 {answered}/{total} 题"
+  },
+  "summary_filled": {
+    "message": "，已填写"
+  },
+  "summary_note": {
+    "message": "（{note}）"
+  },
+  "footer_credits": {
+    "message": "本次消耗 {used} 点，余额 {balance} 点"
+  },
+  "err_cantRun": {
+    "message": "无法在这个页面上运行（浏览器内置页面或扩展商店不允许）"
+  },
+  "tag_screenshot": {
+    "message": "截图识别"
+  },
+  "tag_displayOnly": {
+    "message": "仅显示答案"
+  },
+  "tag_vision": {
+    "message": "看图作答"
+  },
+  "tag_reviewed": {
+    "message": "已复核"
+  },
+  "tag_incomplete": {
+    "message": "识别不完整"
+  },
+  "tag_noImage": {
+    "message": "未看图，仅供参考"
+  },
+  "ans_true": {
+    "message": "正确 ✓"
+  },
+  "ans_false": {
+    "message": "错误 ✗"
+  },
+  "err_googleNotConfigured": {
+    "message": "Google 登录未配置"
+  },
+  "err_loginCancelled": {
+    "message": "登录已取消"
+  },
+  "err_googleNoToken": {
+    "message": "没有拿到 Google 登录凭证"
+  },
+  "err_paidNeedsLogin": {
+    "message": "点数版需要先登录：点击浏览器工具栏里的 QuizPilot 图标登录"
+  },
+  "err_byokNoKey": {
+    "message": "免费版需要先在设置页添加模型 API Key"
+  },
+  "err_loginFirst": {
+    "message": "请先登录"
+  },
+  "err_sessionExpired": {
+    "message": "登录已过期，请重新登录"
+  },
+  "err_insufficient": {
+    "message": "点数不足（需要约 {required} 点，余额 {balance} 点），请在扩展弹窗中充值"
+  },
+  "err_loginExpired": {
+    "message": "登录已过期，请点击 QuizPilot 图标重新登录"
+  },
+  "err_frozen": {
+    "message": "账户已被冻结（存在退款或争议），请联系客服"
+  },
+  "err_rateLimited": {
+    "message": "请求太频繁，请稍后再试"
+  },
+  "err_invalidCode": {
+    "message": "验证码错误或已过期"
+  },
+  "err_tooManyAttempts": {
+    "message": "错误次数过多，请重新获取验证码"
+  },
+  "err_otpCooldown": {
+    "message": "请 {s} 秒后再获取验证码"
+  },
+  "err_serverVision": {
+    "message": "服务暂时无法识别图片，请稍后再试"
+  },
+  "err_needsVision": {
+    "message": "需要看图的题目，请配置支持图片的模型"
+  },
+  "err_unsupported": {
+    "message": "没有可以回答这类题目的模型"
+  },
+  "err_auth": {
+    "message": "API Key 无效或没有权限"
+  },
+  "err_busy": {
+    "message": "模型服务繁忙，请稍后重试"
+  },
+  "err_timeout": {
+    "message": "请求超时"
+  },
+  "err_model": {
+    "message": "模型调用失败：{msg}"
+  },
+  "ui_close": {
+    "message": "关闭"
+  },
+  "ui_stop": {
+    "message": "停止"
+  },
+  "ui_stopping": {
+    "message": "正在停止…"
+  },
+  "ui_fill": {
+    "message": "填写答案"
+  },
+  "ui_undo": {
+    "message": "撤销填写"
+  },
+  "ui_confidence": {
+    "message": "置信度 {p}%"
+  },
+  "ui_regionTip": {
+    "message": "拖动框选题目区域，Esc 取消"
+  },
+  "hl_unsure": {
+    "message": "{title}（把握不大，请自己判断）"
+  },
+  "hl_suggest": {
+    "message": "QuizPilot 建议：{text}"
+  },
+  "hl_pick": {
+    "message": "QuizPilot 建议选这一项"
+  },
+  "acc_logout": {
+    "message": "退出"
+  },
+  "acc_credits": {
+    "message": "点"
+  },
+  "acc_frozen": {
+    "message": "账户已冻结"
+  },
+  "acc_redirecting": {
+    "message": "跳转中…"
+  },
+  "acc_packCredits": {
+    "message": "{n} 点"
+  },
+  "acc_email": {
+    "message": "邮箱"
+  },
+  "acc_sendCode": {
+    "message": "发送验证码"
+  },
+  "acc_codeLabel": {
+    "message": "验证码（已发送至 {email}）"
+  },
+  "acc_codePlaceholder": {
+    "message": "6 位数字"
+  },
+  "acc_login": {
+    "message": "登录"
+  },
+  "acc_changeEmail": {
+    "message": "换个邮箱"
+  },
+  "acc_devCode": {
+    "message": "开发模式验证码：{code}"
+  },
+  "acc_google": {
+    "message": "使用 Google 登录"
+  },
+  "acc_grant": {
+    "message": "新账户赠送体验点数"
+  },
+  "acc_invalidEmail": {
+    "message": "请输入有效的邮箱"
+  },
+  "acc_offline": {
+    "message": "无法连接服务器"
+  },
+  "opt_saved": {
+    "message": "已保存"
+  },
+  "opt_title": {
+    "message": "QuizPilot 设置"
+  },
+  "opt_byokHint": {
+    "message": "使用你自己的模型 API Key，Key 只保存在本机，请求直接发给模型服务商"
+  },
+  "opt_paidHint": {
+    "message": "无需配置，登录后按使用量扣除点数（在弹出窗口中登录与充值）"
+  },
+  "opt_modelsSaved": {
+    "message": "模型配置已保存"
+  },
+  "opt_answering": {
+    "message": "作答"
+  },
+  "opt_humanize": {
+    "message": "模拟人工节奏"
+  },
+  "opt_humanizeHint": {
+    "message": "解答本页和连续答题都按人的节奏作答：读题停顿、逐题间隔、逐字输入。关闭后答题更快。"
+  },
+  "opt_review": {
+    "message": "低置信度复核"
+  },
+  "opt_reviewHint": {
+    "message": "选择题 / 判断题把握不大时，交给复核模型重答一遍（多一次模型调用；复核模型在免费版模型设置的“分工”里选）"
+  },
+  "opt_needPermission": {
+    "message": "需要授予访问模型服务域名的权限，扩展才能直接调用这些 API"
+  },
+  "opt_noPermission": {
+    "message": "未授予域名权限"
+  },
+  "opt_testOk": {
+    "message": "连接正常 · {model} · {ms}ms"
+  },
+  "opt_models": {
+    "message": "免费版模型"
+  },
+  "opt_modelsIntro": {
+    "message": "选择题和判断题推荐 Jev；填空、简答需要一个文本模型；截图识别和看图题需要一个支持图片的模型。API Key 只保存在这台电脑的浏览器里。"
+  },
+  "opt_noModels": {
+    "message": "还没有添加模型"
+  },
+  "opt_routing": {
+    "message": "分工"
+  },
+  "opt_routeChoice": {
+    "message": "选择题 / 判断题"
+  },
+  "opt_routeText": {
+    "message": "填空题 / 简答题"
+  },
+  "opt_routeVision": {
+    "message": "截图识别 / 看图题"
+  },
+  "opt_routeReview": {
+    "message": "复核模型"
+  },
+  "opt_sameAsText": {
+    "message": "同填空题模型"
+  },
+  "opt_reviewIntro": {
+    "message": "开启“低置信度复核”后，把握不大的选择题 / 判断题会交给复核模型重答。可以添加一个更强的模型（例如 OpenRouter 上的大模型）专门用来复核。"
+  },
+  "opt_threshold": {
+    "message": "复核阈值"
+  },
+  "opt_thresholdHint": {
+    "message": "置信度低于它时复核（需开启“低置信度复核”）"
+  },
+  "opt_saveModels": {
+    "message": "保存模型配置"
+  },
+  "opt_vision": {
+    "message": "支持图片"
+  },
+  "opt_testing": {
+    "message": "测试中…"
+  },
+  "opt_test": {
+    "message": "测试连接"
+  },
+  "opt_delete": {
+    "message": "删除"
+  },
+  "opt_nameTaken": {
+    "message": "名称已被使用"
+  },
+  "opt_addTitle": {
+    "message": "添加 {label}"
+  },
+  "opt_name": {
+    "message": "名称"
+  },
+  "opt_namePlaceholder": {
+    "message": "小写字母、数字、横线"
+  },
+  "opt_model": {
+    "message": "模型"
+  },
+  "opt_keyOptional": {
+    "message": "本地服务可以不填"
+  },
+  "opt_cancel": {
+    "message": "取消"
+  },
+  "opt_add": {
+    "message": "添加"
+  },
+  "opt_auto": {
+    "message": "自动"
+  },
+  "opt_noModelAvailable": {
+    "message": "（没有可用模型）"
+  },
+  "opt_logCopied": {
+    "message": "日志已复制"
+  },
+  "opt_logCleared": {
+    "message": "日志已清空"
+  },
+  "opt_debug": {
+    "message": "调试"
+  },
+  "opt_debugLog": {
+    "message": "记录调试日志"
+  },
+  "opt_debugHint": {
+    "message": "记录每次读题、学习网站结构、答题和填写的步骤，方便排查问题。只保存在本机，关闭浏览器后清空；日志里会有题目内容，但不会有 API Key。"
+  },
+  "opt_logCount": {
+    "message": "共 {n} 条"
+  },
+  "opt_copyLog": {
+    "message": "复制日志"
+  },
+  "opt_downloadLog": {
+    "message": "下载日志"
+  },
+  "opt_clear": {
+    "message": "清空"
+  },
+  "led_topup": {
+    "message": "充值"
+  },
+  "led_grant": {
+    "message": "赠送"
+  },
+  "led_charge": {
+    "message": "答题消耗"
+  },
+  "led_refund": {
+    "message": "退款扣回"
+  },
+  "opt_historyLogin": {
+    "message": "登录后可以查看点数记录（在扩展弹窗中登录）"
+  },
+  "opt_history": {
+    "message": "点数记录"
+  },
+  "opt_noHistory": {
+    "message": "还没有记录"
+  },
+  "th_time": {
+    "message": "时间"
+  },
+  "th_type": {
+    "message": "类型"
+  },
+  "th_credits": {
+    "message": "点数"
+  },
+  "opt_recent": {
+    "message": "最近答题"
+  },
+  "th_site": {
+    "message": "网站"
+  },
+  "th_model": {
+    "message": "模型"
+  },
+  "th_questions": {
+    "message": "题数"
+  },
+  "opt_visionCheck": {
+    "message": "这个模型支持图片输入"
+  },
+  "preset_jevOpenRouter": {
+    "message": "Jev（OpenRouter）"
+  },
+  "preset_jevOpenRouterHint": {
+    "message": "用 OpenRouter 的 Key 调用 Jev。擅长选择题和判断题，速度快、价格低；不能写文字、不能看图"
+  },
+  "preset_jevTypeSafe": {
+    "message": "Jev（TypeSafe 官方）"
+  },
+  "preset_jevTypeSafeHint": {
+    "message": "用 TypeSafe 控制台的 Key 调用 Jev。擅长选择题和判断题；不能写文字、不能看图"
+  },
+  "preset_qwen": {
+    "message": "通义千问（DashScope）"
+  },
+  "preset_kimi": {
+    "message": "Kimi（Moonshot）"
+  },
+  "preset_ollama": {
+    "message": "Ollama（本地）"
+  },
+  "preset_custom": {
+    "message": "其他 OpenAI 兼容服务"
+  },
+  "grant_ok": {
+    "message": "新账户已赠送 {n} 点"
+  },
+  "grant_disposable": {
+    "message": "临时邮箱不参与新用户赠送；充值后即可使用"
+  },
+  "grant_email_used": {
+    "message": "这个邮箱之前已领取过新用户赠送；充值后即可使用"
+  },
+  "grant_device_used": {
+    "message": "这台电脑上已领取过新用户赠送；充值后即可使用"
+  },
+  "grant_ip_limit": {
+    "message": "当前网络今天领取新用户赠送的次数已达上限；充值后即可使用"
+  },
+  "grant_daily_cap": {
+    "message": "今天的新用户赠送名额已发完；充值后即可使用"
+  },
+  "preset_glm": {
+    "message": "智谱 GLM"
+  },
+  "preset_doubao": {
+    "message": "豆包（火山方舟）"
+  },
+  "preset_doubaoHint": {
+    "message": "模型填火山方舟控制台里的模型 ID（如 doubao-seed-…）或推理接入点 ID"
+  },
+  "preset_siliconflow": {
+    "message": "硅基流动（SiliconFlow）"
+  },
+  "preset_hunyuan": {
+    "message": "腾讯混元"
+  },
+  "preset_qianfan": {
+    "message": "百度千帆"
+  },
+  "preset_lmstudio": {
+    "message": "LM Studio（本地）"
+  },
+  "opt_listModels": {
+    "message": "获取模型列表"
+  },
+  "opt_listingModels": {
+    "message": "获取中…"
+  },
+  "opt_modelsFound": {
+    "message": "找到 {n} 个模型，可在“模型”输入框中选择"
+  },
+  "opt_listFailed": {
+    "message": "获取模型列表失败：{msg}。可以手动填写模型名称"
+  },
+  "opt_modelPlaceholder": {
+    "message": "先填 Key，再点“获取模型列表”选择"
+  },
+  "acc_paymentsSoon": {
+    "message": "充值即将开放，目前可以先用赠送的点数"
+  },
+  "popup_local": {
+    "message": "本机直连"
+  },
+  "popup_models": {
+    "message": "当前模型"
+  },
+  "popup_change": {
+    "message": "更换"
+  },
+  "popup_choice": {
+    "message": "选择题"
+  },
+  "popup_text": {
+    "message": "文本题"
+  },
+  "popup_keyLocal": {
+    "message": "Key 只保存在这台电脑上，题目直接发给你选择的模型服务商，不经过我们的服务器。"
+  },
+  "popup_tryPaid": {
+    "message": "不想自己配 Key？点数版开箱即用，新账户赠送体验点数。"
+  },
+  "popup_tryPaidBtn": {
+    "message": "试试"
+  },
+  "act_assistDesc": {
+    "message": "只标注建议答案，由你自己点选"
+  },
+  "act_autoDesc": {
+    "message": "答完自动进入下一题，随时可停"
+  },
+  "act_regionDesc": {
+    "message": "拖动框出题目，截图识别"
+  },
+  "act_learnDesc": {
+    "message": "题目找错或找不全时使用"
+  },
+  "shortcuts": {
+    "message": "快捷键"
+  },
+  "sc_intro": {
+    "message": "在任意网页上按快捷键即可开始。辅助答题和连续答题的快捷键再按一次会停止。"
+  },
+  "sc_notSet": {
+    "message": "未设置"
+  },
+  "sc_edit": {
+    "message": "修改快捷键"
+  },
+  "cmd_assist": {
+    "message": "辅助答题（再按一次停止）"
+  },
+  "cmd_auto": {
+    "message": "连续答题（再按一次停止）"
+  },
+  "cmd_stop": {
+    "message": "停止答题"
+  },
+  "opt_nav": {
+    "message": "设置分区"
+  },
+  "rep_title": {
+    "message": "发送给客服"
+  },
+  "rep_intro": {
+    "message": "网站题目识别不对、卡住或选错时，把日志发给我们，用来修正这个网站的适配。"
+  },
+  "rep_note": {
+    "message": "问题描述（可选）"
+  },
+  "rep_notePh": {
+    "message": "例如：第 7 题选错了，正确答案是 B"
+  },
+  "rep_contact": {
+    "message": "回复邮箱（可选）"
+  },
+  "rep_privacy": {
+    "message": "日志包含网页地址、题目和答案，会以邮件发给 QuizPilot 客服，只用于排查问题和改进网站适配，不包含 API Key。"
+  },
+  "rep_send": {
+    "message": "发送日志"
+  },
+  "rep_sending": {
+    "message": "发送中…"
+  },
+  "rep_sent": {
+    "message": "已发送，谢谢！我们会尽快查看。"
+  },
+  "rep_failed": {
+    "message": "发送失败：{msg}"
+  },
+  "rep_enableFirst": {
+    "message": "先打开“记录调试日志”，重现一次问题，再发送。"
+  },
+  "pg_label": {
+    "message": "分页"
+  },
+  "pg_prev": {
+    "message": "上一页"
+  },
+  "pg_next": {
+    "message": "下一页"
+  },
+  "pg_of": {
+    "message": "第 {page} / {pages} 页"
+  },
+  "pg_page": {
+    "message": "第 {page} 页"
+  }
+}

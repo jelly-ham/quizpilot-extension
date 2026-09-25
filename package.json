@@ -1,0 +1,21 @@
+{
+  "name": "quizpilot",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "packageManager": "pnpm@12.5.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @quizpilot/extension dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "typescript": "^7.0.2"
+  }
+}

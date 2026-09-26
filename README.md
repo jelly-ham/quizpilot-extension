@@ -6,6 +6,8 @@ QuizPilot 是面向网页练习题的 AI 学习助手（Chrome 扩展）。在�
 
 这个仓库是 QuizPilot 扩展和模型适配层的源代码。官网：<https://quizpilot.link>
 
+**安装**：[Chrome 应用商店](https://chromewebstore.google.com/detail/quizpilot/gloldlbaimjdhcpgpcdcihcekfclgeha)
+
 ## 功能
 
 - 支持单选、多选、判断、填空、简答，以及需要看图的题目

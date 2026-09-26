@@ -6,6 +6,8 @@ QuizPilot is an AI study helper for practice questions on the web, as a Chrome e
 
 This repository holds the source of the QuizPilot extension and its model adapters. Website: <https://quizpilot.link>
 
+**Install**: [Chrome Web Store](https://chromewebstore.google.com/detail/quizpilot/gloldlbaimjdhcpgpcdcihcekfclgeha)
+
 ## Features
 
 - Multiple choice, multiple answer, true/false, fill-in, short answer, and questions with pictures

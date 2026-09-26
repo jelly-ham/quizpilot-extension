@@ -104,7 +104,7 @@ async function badge(tabId: number, error: string | null) {
     chrome.action.setBadgeText({ tabId, text: error ? '!' : '' }),
     chrome.action.setTitle({
       tabId,
-      title: error ? `QuizPilot：${error}` : chrome.i18n.getMessage('extName'),
+      title: error ? `QuizPilot：${error}` : chrome.i18n.getMessage('extShortName'),
     }),
     error ? chrome.action.setBadgeBackgroundColor({ tabId, color: '#d93025' }) : undefined,
   ]).catch(() => {});

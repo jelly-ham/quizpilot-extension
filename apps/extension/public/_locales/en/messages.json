@@ -1,9 +1,12 @@
 {
   "extName": {
+    "message": "QuizPilot – AI Quiz Helper & Study Helper"
+  },
+  "extShortName": {
     "message": "QuizPilot"
   },
   "extDescription": {
-    "message": "AI study helper: finds the questions on a web page and suggests answers."
+    "message": "AI quiz helper & study helper: reads practice questions on web pages, suggests answers with confidence, and fills or marks them."
   },
   "apiStatus_checking": {
     "message": "Connecting…"

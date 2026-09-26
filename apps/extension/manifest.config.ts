@@ -30,7 +30,9 @@ export function createManifest(apiBase: string, opts: ManifestOptions = {}) {
   return defineManifest({
     ...(key ? { key } : {}),
     manifest_version: 3,
+    // The full name carries the store's search words; short_name and the toolbar tooltip stay short.
     name: '__MSG_extName__',
+    short_name: '__MSG_extShortName__',
     description: '__MSG_extDescription__',
     // Chinese browsers get zh_CN; everyone else English.
     default_locale: 'en',
@@ -41,7 +43,7 @@ export function createManifest(apiBase: string, opts: ManifestOptions = {}) {
     minimum_chrome_version: '116',
     action: {
       default_popup: 'src/popup/index.html',
-      default_title: '__MSG_extName__',
+      default_title: '__MSG_extShortName__',
       default_icon: ICONS,
     },
     options_page: 'src/options/index.html',

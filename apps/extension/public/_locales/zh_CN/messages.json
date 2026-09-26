@@ -1,9 +1,12 @@
 {
   "extName": {
+    "message": "QuizPilot：AI 学习助手，刷题做练习题一键解答"
+  },
+  "extShortName": {
     "message": "QuizPilot"
   },
   "extDescription": {
-    "message": "AI 学习助手：识别网页上的题目并给出答案。"
+    "message": "AI 学习助手：刷题时一键识别网页练习题，给出答案和置信度，可以自动答题，也可以只标注答案。支持单选、多选、判断、填空和简答，在线测验、驾考模拟题都能用。"
   },
   "apiStatus_checking": {
     "message": "连接中…"

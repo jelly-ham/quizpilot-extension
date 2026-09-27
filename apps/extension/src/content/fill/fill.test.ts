@@ -115,6 +115,83 @@ describe('fillAnswers', () => {
     expect(radios.map(isChecked)).toEqual([false, true]);
   });
 
+  it.each([
+    ['a hidden input', 'display:none'],
+    ['a visible input', ''],
+  ])(
+    'clicks the option row when the site toggles %s and counts answers itself',
+    async (_, style) => {
+      // Exam-site pattern: the row's handler flips the input, so a click on the input itself
+      // would be undone by the bubbling click and never counted.
+      const [single, multi] = setup(`
+      <div><p>1. Single?</p><ul>
+        <li class="opt"><input type="radio" name="a" style="${style}"><span>A. alpha</span></li>
+        <li class="opt"><input type="radio" name="a" style="${style}"><span>B. beta</span></li>
+      </ul></div>
+      <div><p>2. Multi?</p><ul>
+        <li class="opt"><input type="checkbox" name="b" style="${style}"><span>A. one</span></li>
+        <li class="opt"><input type="checkbox" name="b" style="${style}"><span>B. two</span></li>
+        <li class="opt"><input type="checkbox" name="b" style="${style}"><span>C. three</span></li>
+      </ul></div>`);
+      const answered = new Set<string>();
+      for (const li of document.querySelectorAll('li.opt'))
+        li.addEventListener('click', (e) => {
+          if (e.target instanceof HTMLInputElement) return;
+          const input = li.querySelector('input')!;
+          input.checked = input.type === 'radio' ? true : !input.checked;
+          const group = [
+            ...document.querySelectorAll<HTMLInputElement>(`input[name=${input.name}]`),
+          ];
+          if (group.some((i) => i.checked)) answered.add(input.name);
+          else answered.delete(input.name);
+        });
+
+      const { outcomes, undo } = await fillAnswers(
+        [
+          { anchor: single!.anchor, answer: answer('q1', { choice: 'B' }) },
+          { anchor: multi!.anchor, answer: answer('q2', { kind: 'multi', choices: ['A', 'C'] }) },
+        ],
+        noSleep,
+      );
+
+      expect(outcomes.every((o) => o.ok)).toBe(true);
+      expect([...document.querySelectorAll('input')].map((i) => i.checked)).toEqual([
+        false,
+        true,
+        true,
+        false,
+        true,
+      ]);
+      expect([...answered].sort()).toEqual(['a', 'b']);
+
+      undo();
+      expect([...document.querySelectorAll('input')].slice(2).map((i) => i.checked)).toEqual([
+        false,
+        false,
+        false,
+      ]);
+      expect(answered.has('b')).toBe(false);
+    },
+  );
+
+  it('clicks deep enough for handlers delegated to an inner option element', async () => {
+    const [q] = setup(`
+      <div><p>Pick one</p>
+        <div class="wrap"><div class="option"><input type="radio" name="a"><span class="txt">red</span></div></div>
+        <div class="wrap"><div class="option"><input type="radio" name="a"><span class="txt">blue</span></div></div>
+      </div>`);
+    const picked: string[] = [];
+    const onClick = (e: Event) => {
+      const option = (e.target as Element).closest('.option');
+      if (option) picked.push(option.textContent!.trim());
+    };
+    document.addEventListener('click', onClick);
+    await fillAnswers([{ anchor: q!.anchor, answer: answer('q1', { choice: 'B' }) }], noSleep);
+    document.removeEventListener('click', onClick);
+    expect(picked).toContain('blue');
+    expect(document.querySelectorAll('input')[1]!.checked).toBe(true);
+  });
+
   it('undo restores the previous state', async () => {
     const [choice, text] = setup(`
       <div><p>Single?</p><label><input type="radio" name="a" checked>x</label><label><input type="radio" name="a">y</label></div>

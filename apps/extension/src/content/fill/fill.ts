@@ -1,5 +1,5 @@
 import type { Answer } from '@quizpilot/shared';
-import { optionForBool, type Anchor } from '../extract/generic';
+import { optionForBool, type Anchor, type ChoiceOption } from '../extract/generic';
 
 export interface FillOptions {
   /** Pause between questions and type text one character at a time. */
@@ -52,7 +52,7 @@ async function fillOne(
     for (const o of anchor.options) {
       const want = wanted.includes(o.key);
       if (isChecked(o.control) !== want && (want || anchor.control === 'checkbox')) {
-        await toggle(o.control, want);
+        toggle(o, want);
         if (opts.humanize) await sleep(jitter(80, 250));
       }
     }
@@ -87,12 +87,28 @@ export function isChecked(el: Element): boolean {
   if (el instanceof HTMLInputElement) return el.checked;
   if (el.hasAttribute('aria-checked')) return el.getAttribute('aria-checked') === 'true';
   if (el.hasAttribute('aria-selected')) return el.getAttribute('aria-selected') === 'true';
+  // An option row around a hidden input: the input knows, the row's class may not.
+  const inputs = el.querySelectorAll<HTMLInputElement>('input[type=radio], input[type=checkbox]');
+  if (inputs.length === 1 && inputs[0]!.checked) return true;
   // Custom div options usually mark the chosen one with a class.
   return SELECTED_CLASS.test(el.getAttribute('class') ?? '');
 }
 
-async function toggle(el: Element, want: boolean) {
+/**
+ * Selects or clears one option the way a person would: by clicking its text. Many exam sites
+ * hide the input and handle clicks on the option row (toggling the input and counting answered
+ * questions themselves), so clicking the input directly can be undone by the row's handler and
+ * leaves the site's own state behind. The input is only clicked or set directly when clicking
+ * the text didn't take.
+ */
+function toggle(option: ChoiceOption, want: boolean) {
+  const el = option.control;
   if (el instanceof HTMLInputElement) {
+    const target = clickTarget(el, option.text);
+    if (target !== el) {
+      press(target);
+      if (el.checked === want) return;
+    }
     // A real click runs label handlers and framework listeners.
     el.click();
     if (el.checked !== want) {
@@ -104,6 +120,29 @@ async function toggle(el: Element, want: boolean) {
   }
   // role=radio / role=checkbox custom widgets.
   press(el);
+}
+
+const CHOICE_INPUT = 'input[type=radio], input[type=checkbox], [role=radio], [role=checkbox]';
+const squashSpace = (t: string) => t.replace(/\s+/g, '');
+
+/**
+ * What a person would click to choose this input: the deepest element in its option row that
+ * shows the option text, so the click bubbles through every wrapper a site may listen on. The
+ * row is the largest ancestor holding no other choice. The input itself when there is no row.
+ */
+export function clickTarget(input: HTMLInputElement, text: string): Element {
+  let row: Element = input;
+  for (let up = input.parentElement; up && up !== document.body; up = up.parentElement) {
+    if (up.querySelectorAll(CHOICE_INPUT).length > 1) break;
+    row = up;
+  }
+  if (row === input) return input;
+  const snippet = squashSpace(text).slice(0, 12);
+  let target = row;
+  if (snippet)
+    for (const el of row.querySelectorAll('*'))
+      if (el !== input && squashSpace(el.textContent ?? '').includes(snippet)) target = el;
+  return target;
 }
 
 /** The event sequence of a mouse click, for widgets that listen to pointer/mouse events. */
@@ -179,18 +218,11 @@ function snapshot(anchor: Anchor): Undo {
       const value = anchor.select.value;
       return () => setSelectValue(anchor.select!, value);
     }
-    const states = anchor.options.map((o) => [o.control, isChecked(o.control)] as const);
+    const states = anchor.options.map((o) => [o, isChecked(o.control)] as const);
     return () => {
-      for (const [el, was] of states) {
-        if (isChecked(el) === was) continue;
-        if (el instanceof HTMLInputElement) {
-          nativeSet(el, 'checked', was);
-          dispatch(el, 'input');
-          dispatch(el, 'change');
-        } else {
-          (el as HTMLElement).click();
-        }
-      }
+      // Reselect first: in a radio group that clears the filled answer the way the site expects.
+      const order = [...states].sort(([, a], [, b]) => Number(b) - Number(a));
+      for (const [o, was] of order) if (isChecked(o.control) !== was) toggle(o, was);
     };
   }
   const values = anchor.blanks.map((el) =>

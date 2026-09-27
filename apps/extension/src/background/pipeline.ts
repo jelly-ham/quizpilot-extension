@@ -1030,22 +1030,35 @@ async function inject(tabId: number) {
   }
 }
 
+/**
+ * Chrome's errors for a frame or tab that went away mid-call: the page reloaded, navigated or
+ * was closed while the extension was reading or filling it ("Frame with ID 0 was removed.").
+ */
+const pageGone = (err: unknown) =>
+  /frame with id \d+ was removed|no frame with id|no tab with id|tab was closed|frame .*showing error page/i.test(
+    (err as Error)?.message ?? '',
+  );
+
 async function callFrames<T>(
   tabId: number,
   frames: number[] | 'all',
   method: Method,
   args: unknown[],
 ): Promise<{ frameId: number; result: T | undefined }[]> {
-  const results = await chrome.scripting.executeScript({
-    target: frames === 'all' ? { tabId, allFrames: true } : { tabId, frameIds: frames },
-    func: (m: string, a: unknown[]) => {
-      const api = (
-        globalThis as unknown as { __quizpilot?: Record<string, (...x: unknown[]) => unknown> }
-      ).__quizpilot;
-      return api?.[m]?.(...a) ?? null;
-    },
-    args: [method, args],
-  });
+  const results = await chrome.scripting
+    .executeScript({
+      target: frames === 'all' ? { tabId, allFrames: true } : { tabId, frameIds: frames },
+      func: (m: string, a: unknown[]) => {
+        const api = (
+          globalThis as unknown as { __quizpilot?: Record<string, (...x: unknown[]) => unknown> }
+        ).__quizpilot;
+        return api?.[m]?.(...a) ?? null;
+      },
+      args: [method, args],
+    })
+    .catch((err: unknown) => {
+      throw pageGone(err) ? new UserError(t('err_pageChanged')) : err;
+    });
   return results.map((r) => ({
     frameId: r.frameId,
     result: (r.result ?? undefined) as T | undefined,

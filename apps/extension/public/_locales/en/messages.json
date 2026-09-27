@@ -98,6 +98,9 @@
   "st_undone": {
     "message": "Answers undone"
   },
+  "err_pageChanged": {
+    "message": "The page reloaded, navigated away or closed while answering, so the answers were not all filled in. Go back to the questions and solve again."
+  },
   "err_tabClosed": {
     "message": "The tab was closed; continuous mode ended"
   },

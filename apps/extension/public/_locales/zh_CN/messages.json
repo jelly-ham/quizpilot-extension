@@ -98,6 +98,9 @@
   "st_undone": {
     "message": "已撤销填写"
   },
+  "err_pageChanged": {
+    "message": "页面在作答过程中刷新、跳转或关闭了，这次没有填写完。请回到题目页面后重新解答。"
+  },
   "err_tabClosed": {
     "message": "标签页已关闭，连续答题结束"
   },

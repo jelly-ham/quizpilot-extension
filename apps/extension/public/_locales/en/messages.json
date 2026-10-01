@@ -6,7 +6,7 @@
     "message": "QuizPilot"
   },
   "extDescription": {
-    "message": "AI quiz helper & study helper: reads practice questions on web pages, suggests answers with confidence, and fills or marks them."
+    "message": "AI quiz solver & homework helper: reads practice questions on web pages, suggests answers with confidence, and fills or marks them."
   },
   "apiStatus_checking": {
     "message": "Connecting…"

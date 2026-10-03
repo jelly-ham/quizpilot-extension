@@ -4,11 +4,25 @@ import type { Rect, Viewport } from '../lib/protocol';
 const MIN_CAPTURE_INTERVAL_MS = 600;
 let lastCapture = 0;
 
-export async function captureVisible(windowId: number): Promise<string> {
+/** The run's tab is the one its window shows, and the window isn't minimized. */
+export async function isFront(tabId: number): Promise<boolean> {
+  const tab = await chrome.tabs.get(tabId).catch(() => null);
+  if (!tab?.active) return false;
+  const win = await chrome.windows.get(tab.windowId).catch(() => null);
+  return !!win && win.state !== 'minimized';
+}
+
+/**
+ * Screenshot of `tab`. captureVisibleTab shoots whatever its window shows, so this refuses when
+ * `tab` isn't in front: another page must never be captured (or sent to a model) in its place.
+ */
+export async function captureVisible(tab: { id?: number; windowId: number }): Promise<string> {
+  if (tab.id === undefined || !(await isFront(tab.id)))
+    throw new Error('the quiz tab is not in front; screenshots need it visible');
   const wait = lastCapture + MIN_CAPTURE_INTERVAL_MS - Date.now();
   if (wait > 0) await new Promise((r) => setTimeout(r, wait));
   lastCapture = Date.now();
-  return chrome.tabs.captureVisibleTab(windowId, { format: 'png' });
+  return chrome.tabs.captureVisibleTab(tab.windowId, { format: 'png' });
 }
 
 export interface Cropped {

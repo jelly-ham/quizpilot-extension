@@ -12,6 +12,7 @@ const load = (loc: string) =>
   >;
 const zh = load('zh_CN');
 const en = load('en');
+const others = { en, ja: load('ja'), ko: load('ko') };
 const placeholders = (s: string) => [...s.matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort();
 
 function sources(dir: string): string[] {
@@ -23,10 +24,10 @@ function sources(dir: string): string[] {
 }
 
 describe('locales', () => {
-  it('zh_CN and en have the same keys and placeholders', () => {
-    expect(Object.keys(en).sort()).toEqual(Object.keys(zh).sort());
+  it.each(Object.entries(others))('%s has the same keys and placeholders as zh_CN', (_, loc) => {
+    expect(Object.keys(loc).sort()).toEqual(Object.keys(zh).sort());
     for (const k of Object.keys(zh))
-      expect(placeholders(en[k]!.message), k).toEqual(placeholders(zh[k]!.message));
+      expect(placeholders(loc[k]!.message), k).toEqual(placeholders(zh[k]!.message));
   });
 
   it("every t('key') in the code exists", () => {

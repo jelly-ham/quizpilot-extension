@@ -2,7 +2,7 @@ import { ProviderId } from '@quizpilot/shared';
 import { z } from 'zod';
 import type { RetryOptions } from './http';
 import { createJevProvider } from './jev';
-import { createOpenAICompatibleProvider } from './openai-compatible';
+import { createOpenAICompatibleProvider, ReasoningEffort } from './openai-compatible';
 import { ModelPricing } from './pricing';
 import type { RoutingConfig } from './router';
 import type { Question } from '@quizpilot/shared';
@@ -38,7 +38,7 @@ export const ProviderConfig = z.discriminatedUnion('type', [
     model: z.string().min(1),
     vision: z.boolean().optional(),
     jsonMode: z.boolean().optional(),
-    reasoning: z.boolean().optional(),
+    reasoning: z.union([z.boolean(), ReasoningEffort]).optional(),
     temperature: z.number().min(0).max(2).optional(),
     maxOutputTokens: z.number().int().positive().optional(),
     headers: z.record(z.string(), z.string()).optional(),

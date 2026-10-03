@@ -1,0 +1,779 @@
+{
+  "extName": {
+    "message": "QuizPilot – AI 문제 풀이·학습 도우미"
+  },
+  "extShortName": {
+    "message": "QuizPilot"
+  },
+  "extDescription": {
+    "message": "AI 문제 풀이·숙제 도우미: 웹 페이지의 연습문제를 읽고 신뢰도와 함께 답을 제시하며, 답을 입력하거나 표시해 줍니다."
+  },
+  "apiStatus_checking": {
+    "message": "연결 중…"
+  },
+  "apiStatus_online": {
+    "message": "온라인"
+  },
+  "apiStatus_offline": {
+    "message": "오프라인"
+  },
+  "tierLabel": {
+    "message": "풀이 모드"
+  },
+  "tier_fast": {
+    "message": "빠름"
+  },
+  "tier_accurate": {
+    "message": "정밀"
+  },
+  "tier_fast_hint": {
+    "message": "Jev와 경량 모델이 몇 초 만에 답합니다. 한 문제당 1문제로 계산합니다."
+  },
+  "tier_accurate_hint": {
+    "message": "고급 AI 모델이 문제마다 생각한 뒤 답합니다. 더 정확하지만 더 느립니다. 한 문제당 {n}문제로 계산하며, 답을 내지 못한 문제는 무료입니다."
+  },
+  "modeLabel": {
+    "message": "모드"
+  },
+  "mode_byok": {
+    "message": "무료"
+  },
+  "mode_byok_hint": {
+    "message": "내 모델 API 키 사용 (이 기기에만 저장)"
+  },
+  "mode_paid": {
+    "message": "유료"
+  },
+  "mode_paid_hint": {
+    "message": "설정 불필요: 답한 문제 수만큼 결제"
+  },
+  "solvePage": {
+    "message": "이 페이지 풀기 (자동 입력)"
+  },
+  "comingSoon": {
+    "message": "곧 제공 예정"
+  },
+  "solveRegion": {
+    "message": "영역을 선택해 풀기"
+  },
+  "openOptions": {
+    "message": "설정"
+  },
+  "byokNotConfigured": {
+    "message": "아직 설정된 모델이 없습니다"
+  },
+  "regionHint": {
+    "message": "스크린샷을 읽으려면 이미지를 지원하는 모델이 필요합니다"
+  },
+  "relearnPage": {
+    "message": "이 페이지 구조 다시 학습"
+  },
+  "solveAuto": {
+    "message": "연속 풀이 (자동으로 다음 문제)"
+  },
+  "solveAutoHint": {
+    "message": "한 문제를 풀고 다음 문제로 넘어가는 과정을 사람 속도로 반복합니다. 답안 패널에서 언제든 멈출 수 있으며, 절대 제출하지 않습니다."
+  },
+  "relearnHint": {
+    "message": "문제를 빠뜨리거나 잘못 읽을 때: 스크린샷으로 이 사이트의 문제 구조를 다시 학습합니다"
+  },
+  "solveAssist": {
+    "message": "보조 (답 표시만)"
+  },
+  "solveAssistHint": {
+    "message": "추천 답을 테두리로 표시하고 선택은 직접 합니다. 페이지가 넘어가면 다음 문제에 표시합니다. 확장 프로그램은 페이지를 클릭하거나 입력하지 않습니다."
+  },
+  "ui_shortcut": {
+    "message": "단축키: {keys}"
+  },
+  "ui_version": {
+    "message": "버전"
+  },
+  "st_reading": {
+    "message": "문제를 읽는 중…"
+  },
+  "err_generic": {
+    "message": "오류가 발생했습니다: {msg}"
+  },
+  "err_noQuestions": {
+    "message": "이 페이지에서 문제를 찾지 못했습니다"
+  },
+  "err_noQuestionsNoVision": {
+    "message": "이 페이지에서 문제를 찾지 못했습니다. 이미지를 지원하는 모델을 추가하면 스크린샷으로 읽을 수 있습니다."
+  },
+  "note_unreadableOptions": {
+    "message": "선택지를 읽지 못해 답하지 않았습니다. 이 문제에서 \"영역을 선택해 풀기\"를 사용해 보세요."
+  },
+  "st_solving": {
+    "message": "{n}문제를 푸는 중…"
+  },
+  "st_filling": {
+    "message": "입력 중…"
+  },
+  "st_undone": {
+    "message": "입력을 취소했습니다"
+  },
+  "st_waitFront": {
+    "message": "스크린샷을 찍으려면 이 탭이 앞에 있어야 합니다: 이 탭으로 돌아오면 자동으로 이어집니다"
+  },
+  "err_pageChanged": {
+    "message": "풀이 도중 페이지가 새로 고쳐지거나 이동하거나 닫혀서 답을 모두 입력하지 못했습니다. 문제 페이지로 돌아가 다시 풀어 주세요."
+  },
+  "err_tabClosed": {
+    "message": "탭이 닫혀 연속 풀이를 종료했습니다"
+  },
+  "auto_stopped": {
+    "message": "연속 풀이를 멈췄습니다"
+  },
+  "auto_captcha": {
+    "message": "인증이 필요합니다. 직접 완료해 주세요. 완료하면 풀이를 이어갑니다."
+  },
+  "auto_captchaTimeout": {
+    "message": "인증 대기 시간이 초과되어 연속 풀이를 종료했습니다"
+  },
+  "auto_noMore": {
+    "message": "더 이상 문제가 없어 연속 풀이를 종료했습니다"
+  },
+  "auto_answering": {
+    "message": "{n}번째: 푸는 중…"
+  },
+  "auto_notFillable": {
+    "message": "이 페이지의 문제는 자동으로 입력할 수 없어 연속 풀이를 종료했습니다"
+  },
+  "auto_answered": {
+    "message": "{n}번째 풀이 완료, 다음으로 넘어갑니다…"
+  },
+  "auto_noNext": {
+    "message": "\"다음 문제\" 버튼을 찾지 못해 연속 풀이를 종료했습니다"
+  },
+  "auto_lastQuestion": {
+    "message": "마지막 문제입니다. 답을 확인한 뒤 직접 \"{label}\"을(를) 클릭하세요"
+  },
+  "auto_nextNoChange": {
+    "message": "\"다음\"을 클릭했지만 문제가 바뀌지 않아 연속 풀이를 종료했습니다"
+  },
+  "auto_maxRounds": {
+    "message": "{n}번 반복 후 멈췄습니다"
+  },
+  "auto_summary": {
+    "message": "{why} ({rounds}번, {answered}문제 풀이)"
+  },
+  "assist_summary": {
+    "message": "{why} ({rounds}번)"
+  },
+  "assist_stopped": {
+    "message": "보조 모드를 멈췄습니다"
+  },
+  "assist_marked": {
+    "message": "추천 답을 테두리로 표시했습니다 (초록색, 주황색은 확신이 낮음). 직접 선택하세요. 새 문제가 나타나면 자동으로 표시합니다"
+  },
+  "assist_shown": {
+    "message": "아래에 답을 표시했습니다. 직접 답해 주세요. 새 문제가 나타나면 자동으로 표시합니다"
+  },
+  "assist_idle": {
+    "message": "페이지가 오랫동안 바뀌지 않아 보조 모드를 종료했습니다"
+  },
+  "assist_maxRounds": {
+    "message": "{n}번 반복 후 멈췄습니다"
+  },
+  "note_rule": {
+    "message": "이 사이트의 구조 사용"
+  },
+  "note_learned": {
+    "message": "이 사이트의 구조를 학습함"
+  },
+  "note_learnFailed": {
+    "message": "이 페이지의 구조를 학습하지 못함"
+  },
+  "err_learnNeedsVision": {
+    "message": "페이지 구조를 학습하려면 이미지를 지원하는 모델이 필요합니다"
+  },
+  "st_shooting": {
+    "message": "{i}/{n}번째 문제 캡처 중…"
+  },
+  "st_readingShots": {
+    "message": "스크린샷을 읽는 중…"
+  },
+  "st_shotWholePage": {
+    "message": "읽을 수 있는 문제 텍스트가 없어 스크린샷을 읽는 중…"
+  },
+  "st_learning": {
+    "message": "이 페이지의 구조를 학습하는 중…"
+  },
+  "err_regionNeedsVision": {
+    "message": "영역을 선택해 풀려면 이미지를 지원하는 모델이 필요합니다"
+  },
+  "st_readingRegion": {
+    "message": "선택한 영역을 읽는 중…"
+  },
+  "item_fillFailed": {
+    "message": "입력하지 못했습니다: {reason}"
+  },
+  "item_noAnswer": {
+    "message": "답 없음"
+  },
+  "summary": {
+    "message": "{answered}/{total}문제 풀이"
+  },
+  "summary_filled": {
+    "message": ", 입력 완료"
+  },
+  "summary_note": {
+    "message": " ({note})"
+  },
+  "footer_questions": {
+    "message": "이번에 {used}문제 사용({tier}) · {balance}문제 남음"
+  },
+  "err_cantRun": {
+    "message": "이 페이지에서는 실행할 수 없습니다 (브라우저 페이지와 웹 스토어에서는 확장 프로그램을 사용할 수 없습니다)"
+  },
+  "tag_screenshot": {
+    "message": "스크린샷에서"
+  },
+  "tag_displayOnly": {
+    "message": "답만 표시"
+  },
+  "tag_vision": {
+    "message": "이미지로 답함"
+  },
+  "tag_reviewed": {
+    "message": "재확인함"
+  },
+  "tag_incomplete": {
+    "message": "일부만 읽음"
+  },
+  "tag_noImage": {
+    "message": "이미지를 보지 못함, 참고용"
+  },
+  "ans_true": {
+    "message": "맞음 ✓"
+  },
+  "ans_false": {
+    "message": "틀림 ✗"
+  },
+  "err_googleNotConfigured": {
+    "message": "Google 로그인이 설정되지 않았습니다"
+  },
+  "err_loginCancelled": {
+    "message": "로그인을 취소했습니다"
+  },
+  "err_googleNoToken": {
+    "message": "Google 로그인 토큰을 받지 못했습니다"
+  },
+  "err_paidNeedsLogin": {
+    "message": "유료 모드는 로그인이 필요합니다: 툴바의 QuizPilot 아이콘을 클릭해 로그인하세요"
+  },
+  "err_byokNoKey": {
+    "message": "무료 모드는 모델 API 키가 필요합니다: 설정에서 추가하세요"
+  },
+  "err_loginFirst": {
+    "message": "먼저 로그인해 주세요"
+  },
+  "err_sessionExpired": {
+    "message": "세션이 만료되었습니다. 다시 로그인해 주세요"
+  },
+  "err_insufficient": {
+    "message": "{tier} 모드의 남은 문제 수가 부족합니다 ({required}문제 필요, {balance}문제 남음). 확장 프로그램 팝업에서 충전하세요."
+  },
+  "err_loginExpired": {
+    "message": "세션이 만료되었습니다. QuizPilot 아이콘을 클릭해 다시 로그인하세요"
+  },
+  "err_frozen": {
+    "message": "계정이 동결되었습니다 (환불 또는 결제 이의 제기). 고객 지원에 문의하세요."
+  },
+  "err_rateLimited": {
+    "message": "요청이 너무 많습니다. 잠시 후 다시 시도하세요"
+  },
+  "err_invalidCode": {
+    "message": "코드가 틀렸거나 만료되었습니다"
+  },
+  "err_tooManyAttempts": {
+    "message": "시도 횟수가 너무 많습니다. 새 코드를 받으세요"
+  },
+  "err_otpCooldown": {
+    "message": "{s}초 후에 코드를 다시 요청하세요"
+  },
+  "err_serverVision": {
+    "message": "지금은 이미지 읽기를 사용할 수 없습니다. 잠시 후 다시 시도하세요"
+  },
+  "err_needsVision": {
+    "message": "이 문제는 이미지를 지원하는 모델이 필요합니다"
+  },
+  "err_unsupported": {
+    "message": "이 유형의 문제에 맞는 모델이 설정되지 않았습니다"
+  },
+  "err_auth": {
+    "message": "API 키가 잘못되었거나 접근 권한이 없습니다"
+  },
+  "err_busy": {
+    "message": "모델 서비스가 혼잡합니다. 다시 시도하세요"
+  },
+  "err_timeout": {
+    "message": "요청 시간이 초과되었습니다"
+  },
+  "err_model": {
+    "message": "모델 호출에 실패했습니다: {msg}"
+  },
+  "ui_close": {
+    "message": "닫기"
+  },
+  "ui_stop": {
+    "message": "멈추기"
+  },
+  "ui_stopping": {
+    "message": "멈추는 중…"
+  },
+  "ui_fill": {
+    "message": "답 입력"
+  },
+  "ui_undo": {
+    "message": "입력 취소"
+  },
+  "ui_confidence": {
+    "message": "신뢰도 {p}%"
+  },
+  "ui_regionTip": {
+    "message": "드래그해서 문제 영역을 선택하세요. Esc로 취소"
+  },
+  "hl_unsure": {
+    "message": "{title} (확신이 낮으니 직접 확인하세요)"
+  },
+  "hl_suggest": {
+    "message": "QuizPilot 추천: {text}"
+  },
+  "hl_pick": {
+    "message": "QuizPilot이 이 선택지를 추천합니다"
+  },
+  "acc_logout": {
+    "message": "로그아웃"
+  },
+  "acc_questions": {
+    "message": "문제 · {tier} 모드로 풀 수 있음"
+  },
+  "acc_frozen": {
+    "message": "계정 동결됨"
+  },
+  "acc_redirecting": {
+    "message": "여는 중…"
+  },
+  "acc_email": {
+    "message": "이메일"
+  },
+  "acc_sendCode": {
+    "message": "코드 보내기"
+  },
+  "acc_codeLabel": {
+    "message": "인증 코드 ({email}(으)로 보냄)"
+  },
+  "acc_codePlaceholder": {
+    "message": "6자리 숫자"
+  },
+  "acc_login": {
+    "message": "로그인"
+  },
+  "acc_changeEmail": {
+    "message": "다른 이메일 사용"
+  },
+  "acc_devCode": {
+    "message": "개발 모드 코드: {code}"
+  },
+  "acc_google": {
+    "message": "Google로 로그인"
+  },
+  "acc_grant": {
+    "message": "새 계정에 무료 문제 제공"
+  },
+  "acc_invalidEmail": {
+    "message": "올바른 이메일을 입력하세요"
+  },
+  "acc_offline": {
+    "message": "서버에 연결할 수 없습니다"
+  },
+  "opt_saved": {
+    "message": "저장했습니다"
+  },
+  "opt_title": {
+    "message": "QuizPilot 설정"
+  },
+  "opt_byokHint": {
+    "message": "내 모델 API 키를 사용합니다. 키는 이 기기에 저장되고, 요청은 모델 서비스로 바로 전송됩니다."
+  },
+  "opt_paidHint": {
+    "message": "설정 불필요: 로그인 후 답한 문제 수만큼 결제 (로그인과 충전은 팝업에서)."
+  },
+  "opt_modelsSaved": {
+    "message": "모델 설정을 저장했습니다"
+  },
+  "opt_answering": {
+    "message": "풀이"
+  },
+  "opt_humanize": {
+    "message": "사람 같은 속도"
+  },
+  "opt_humanizeHint": {
+    "message": "\"이 페이지 풀기\"와 연속 풀이 모두에서 사람 속도로 답합니다: 읽는 동안 멈춤, 문제 사이 간격, 한 글자씩 입력. 끄면 더 빠르게 답합니다."
+  },
+  "opt_review": {
+    "message": "확신이 낮은 답 재확인"
+  },
+  "opt_reviewHint": {
+    "message": "객관식이나 참거짓 답의 확신이 낮으면 재확인 모델이 다시 답합니다 (모델 호출이 한 번 늘어납니다. 재확인 모델은 무료 모드 모델 설정의 \"배정\"에서 고릅니다)."
+  },
+  "opt_needPermission": {
+    "message": "확장 프로그램이 API를 호출할 수 있도록 모델 서비스 도메인에 대한 접근을 허용하세요"
+  },
+  "opt_noPermission": {
+    "message": "도메인 접근이 허용되지 않았습니다"
+  },
+  "opt_testOk": {
+    "message": "연결 성공 · {model} · {ms}ms"
+  },
+  "opt_models": {
+    "message": "무료 모드 모델"
+  },
+  "opt_modelsTip": {
+    "message": "팁: 고급 모델(추론 능력이 더 뛰어난 모델)을 사용하면 정확도는 높아지지만 풀이 속도는 느려집니다."
+  },
+  "opt_modelsIntro": {
+    "message": "객관식과 참거짓에는 Jev를 추천합니다. 빈칸과 주관식에는 텍스트 모델이, 스크린샷과 그림 문제에는 이미지를 지원하는 모델이 필요합니다. API 키는 이 브라우저에만 저장됩니다."
+  },
+  "opt_noModels": {
+    "message": "아직 추가한 모델이 없습니다"
+  },
+  "opt_routing": {
+    "message": "배정"
+  },
+  "opt_routeChoice": {
+    "message": "객관식 / 참거짓"
+  },
+  "opt_routeText": {
+    "message": "빈칸 / 주관식"
+  },
+  "opt_routeVision": {
+    "message": "스크린샷 / 그림 문제"
+  },
+  "opt_routeReview": {
+    "message": "재확인 모델"
+  },
+  "opt_sameAsText": {
+    "message": "빈칸 모델과 같음"
+  },
+  "opt_reviewIntro": {
+    "message": "\"확신이 낮은 답 재확인\"을 켜면 확신이 낮은 객관식·참거짓 답을 재확인 모델로 보냅니다. 재확인 전용으로 더 강한 모델(OpenRouter의 대형 모델 등)을 추가할 수 있습니다."
+  },
+  "opt_threshold": {
+    "message": "재확인 기준"
+  },
+  "opt_thresholdHint": {
+    "message": "신뢰도가 이 값보다 낮으면 재확인합니다 (\"확신이 낮은 답 재확인\"이 켜져 있을 때)"
+  },
+  "opt_saveModels": {
+    "message": "모델 설정 저장"
+  },
+  "opt_vision": {
+    "message": "이미지"
+  },
+  "opt_testing": {
+    "message": "테스트 중…"
+  },
+  "opt_test": {
+    "message": "연결 테스트"
+  },
+  "opt_delete": {
+    "message": "삭제"
+  },
+  "opt_nameTaken": {
+    "message": "이미 사용 중인 이름입니다"
+  },
+  "opt_addTitle": {
+    "message": "{label} 추가"
+  },
+  "opt_name": {
+    "message": "이름"
+  },
+  "opt_namePlaceholder": {
+    "message": "영문 소문자, 숫자, 하이픈"
+  },
+  "opt_model": {
+    "message": "모델"
+  },
+  "opt_keyOptional": {
+    "message": "로컬 서비스는 생략 가능"
+  },
+  "opt_cancel": {
+    "message": "취소"
+  },
+  "opt_add": {
+    "message": "추가"
+  },
+  "opt_auto": {
+    "message": "자동"
+  },
+  "opt_noModelAvailable": {
+    "message": "(사용할 수 있는 모델 없음)"
+  },
+  "opt_logCopied": {
+    "message": "로그를 복사했습니다"
+  },
+  "opt_logCleared": {
+    "message": "로그를 지웠습니다"
+  },
+  "opt_debug": {
+    "message": "디버깅"
+  },
+  "opt_debugLog": {
+    "message": "디버그 로그 기록"
+  },
+  "opt_debugHint": {
+    "message": "문제 읽기, 페이지 구조 학습, 풀이, 입력의 각 단계를 기록해 문제 원인을 찾는 데 도움을 줍니다. 이 기기에 저장되고 브라우저를 닫으면 지워집니다. 문제 내용은 포함되지만 API 키는 포함되지 않습니다."
+  },
+  "opt_logCount": {
+    "message": "{n}개 항목"
+  },
+  "opt_copyLog": {
+    "message": "로그 복사"
+  },
+  "opt_downloadLog": {
+    "message": "로그 다운로드"
+  },
+  "opt_clear": {
+    "message": "지우기"
+  },
+  "led_topup": {
+    "message": "충전"
+  },
+  "led_grant": {
+    "message": "무료 제공"
+  },
+  "led_charge": {
+    "message": "풀이"
+  },
+  "led_refund": {
+    "message": "환불 차감"
+  },
+  "opt_historyLogin": {
+    "message": "기록을 보려면 로그인하세요 (확장 프로그램 팝업에서)"
+  },
+  "opt_history": {
+    "message": "사용 기록"
+  },
+  "opt_noHistory": {
+    "message": "아직 기록이 없습니다"
+  },
+  "th_time": {
+    "message": "시간"
+  },
+  "th_type": {
+    "message": "유형"
+  },
+  "th_charged": {
+    "message": "문제 수"
+  },
+  "opt_recent": {
+    "message": "최근 풀이"
+  },
+  "th_site": {
+    "message": "사이트"
+  },
+  "th_model": {
+    "message": "모델"
+  },
+  "th_questions": {
+    "message": "문제 수"
+  },
+  "opt_visionCheck": {
+    "message": "이 모델은 이미지를 지원합니다"
+  },
+  "preset_jevOpenRouter": {
+    "message": "Jev (OpenRouter)"
+  },
+  "preset_jevOpenRouterHint": {
+    "message": "OpenRouter 키로 Jev를 호출합니다. 객관식과 참거짓에 강하고 빠르며 저렴합니다. 글을 쓰거나 이미지를 읽을 수는 없습니다."
+  },
+  "preset_jevTypeSafe": {
+    "message": "Jev (TypeSafe)"
+  },
+  "preset_jevTypeSafeHint": {
+    "message": "TypeSafe 콘솔 키로 Jev를 호출합니다. 객관식과 참거짓에 강합니다. 글을 쓰거나 이미지를 읽을 수는 없습니다."
+  },
+  "preset_qwen": {
+    "message": "Qwen (DashScope)"
+  },
+  "preset_kimi": {
+    "message": "Kimi (Moonshot)"
+  },
+  "preset_ollama": {
+    "message": "Ollama (로컬)"
+  },
+  "preset_custom": {
+    "message": "기타 OpenAI 호환 서비스"
+  },
+  "grant_ok": {
+    "message": "새 계정에 무료 {n}문제를 드렸습니다 (정밀 모드로는 {m}문제)"
+  },
+  "grant_disposable": {
+    "message": "일회용 이메일은 새 계정 무료 제공 대상이 아닙니다. 충전하면 바로 사용할 수 있습니다"
+  },
+  "grant_email_used": {
+    "message": "이 이메일은 이미 새 계정 무료 제공을 받았습니다. 충전하면 바로 사용할 수 있습니다"
+  },
+  "grant_device_used": {
+    "message": "이 컴퓨터에서는 이미 새 계정 무료 제공을 받았습니다. 충전하면 바로 사용할 수 있습니다"
+  },
+  "grant_ip_limit": {
+    "message": "오늘 이 네트워크의 새 계정 무료 제공 횟수가 모두 소진되었습니다. 충전하면 바로 사용할 수 있습니다"
+  },
+  "grant_daily_cap": {
+    "message": "오늘의 새 계정 무료 제공이 모두 소진되었습니다. 충전하면 바로 사용할 수 있습니다"
+  },
+  "preset_glm": {
+    "message": "Zhipu GLM"
+  },
+  "preset_doubao": {
+    "message": "Doubao (Volcano Ark)"
+  },
+  "preset_doubaoHint": {
+    "message": "모델에는 Ark 콘솔의 모델 ID(예: doubao-seed-…) 또는 추론 엔드포인트 ID를 입력하세요"
+  },
+  "preset_siliconflow": {
+    "message": "SiliconFlow"
+  },
+  "preset_hunyuan": {
+    "message": "Tencent Hunyuan"
+  },
+  "preset_qianfan": {
+    "message": "Baidu Qianfan"
+  },
+  "preset_lmstudio": {
+    "message": "LM Studio (로컬)"
+  },
+  "opt_listModels": {
+    "message": "모델 목록 가져오기"
+  },
+  "opt_listingModels": {
+    "message": "불러오는 중…"
+  },
+  "opt_modelsFound": {
+    "message": "모델 {n}개를 찾았습니다. \"모델\" 칸에서 선택하세요"
+  },
+  "opt_listFailed": {
+    "message": "모델 목록을 가져오지 못했습니다: {msg}. 모델 이름을 직접 입력할 수 있습니다"
+  },
+  "opt_modelPlaceholder": {
+    "message": "키를 입력한 뒤 \"모델 목록 가져오기\"를 클릭하세요"
+  },
+  "popup_local": {
+    "message": "이 기기에서 직접"
+  },
+  "popup_models": {
+    "message": "모델"
+  },
+  "popup_change": {
+    "message": "변경"
+  },
+  "popup_choice": {
+    "message": "객관식"
+  },
+  "popup_text": {
+    "message": "텍스트"
+  },
+  "popup_keyLocal": {
+    "message": "키는 이 컴퓨터에 저장됩니다. 문제는 선택한 서비스로 바로 전송되며 우리 서버를 거치지 않습니다."
+  },
+  "popup_tryPaid": {
+    "message": "키 설정이 번거로우신가요? 유료 모드는 바로 사용할 수 있고, 새 계정에는 무료 문제를 드립니다."
+  },
+  "popup_tryPaidBtn": {
+    "message": "사용해 보기"
+  },
+  "act_assistDesc": {
+    "message": "답을 표시하고 선택은 직접"
+  },
+  "act_autoDesc": {
+    "message": "자동으로 다음 문제, 언제든 멈춤"
+  },
+  "act_regionDesc": {
+    "message": "문제를 드래그로 감싸서 읽기"
+  },
+  "act_learnDesc": {
+    "message": "문제를 빠뜨리거나 잘못 읽을 때"
+  },
+  "shortcuts": {
+    "message": "단축키"
+  },
+  "sc_intro": {
+    "message": "어떤 페이지에서든 단축키로 시작할 수 있습니다. 보조와 연속 풀이는 다시 누르면 멈춥니다."
+  },
+  "sc_notSet": {
+    "message": "설정 안 됨"
+  },
+  "sc_edit": {
+    "message": "단축키 변경"
+  },
+  "cmd_assist": {
+    "message": "보조 (다시 누르면 멈춤)"
+  },
+  "cmd_auto": {
+    "message": "연속 풀이 (다시 누르면 멈춤)"
+  },
+  "cmd_stop": {
+    "message": "풀이 멈추기"
+  },
+  "opt_nav": {
+    "message": "설정 항목"
+  },
+  "rep_title": {
+    "message": "고객 지원에 보내기"
+  },
+  "rep_intro": {
+    "message": "사이트의 문제를 잘못 읽거나, 멈추거나, 답이 틀리면 로그를 보내 주세요. 해당 사이트 지원을 개선하겠습니다."
+  },
+  "rep_note": {
+    "message": "무엇이 잘못되었나요 (선택)"
+  },
+  "rep_notePh": {
+    "message": "예: 7번 문제가 틀렸고 정답은 B입니다"
+  },
+  "rep_contact": {
+    "message": "답장받을 이메일 (선택)"
+  },
+  "rep_privacy": {
+    "message": "로그에는 페이지 주소, 문제, 답이 포함됩니다. QuizPilot 고객 지원으로 이메일 전송되며 문제 조사와 사이트 지원 개선에만 사용됩니다. API 키는 포함되지 않습니다."
+  },
+  "rep_send": {
+    "message": "로그 보내기"
+  },
+  "rep_sending": {
+    "message": "보내는 중…"
+  },
+  "rep_sent": {
+    "message": "보냈습니다. 감사합니다! 곧 확인하겠습니다."
+  },
+  "rep_failed": {
+    "message": "보내지 못했습니다: {msg}"
+  },
+  "rep_enableFirst": {
+    "message": "\"디버그 로그 기록\"을 켜고 문제를 재현한 뒤 보내 주세요."
+  },
+  "pg_label": {
+    "message": "페이지"
+  },
+  "pg_prev": {
+    "message": "이전"
+  },
+  "pg_next": {
+    "message": "다음"
+  },
+  "pg_of": {
+    "message": "{page} / {pages} 페이지"
+  },
+  "pg_page": {
+    "message": "{page} 페이지"
+  },
+  "acc_packTier": {
+    "message": "{tier} {n}문제"
+  },
+  "err_billingUnavailable": {
+    "message": "지금은 충전할 수 없습니다. 잠시 후 다시 시도하세요"
+  }
+}

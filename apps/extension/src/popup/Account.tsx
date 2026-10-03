@@ -1,4 +1,9 @@
-import type { CreditPack } from '@quizpilot/shared';
+import {
+  formatQuestions,
+  formatQuestionsLeft,
+  SolveTier,
+  type CreditPack,
+} from '@quizpilot/shared';
 import { useEffect, useState } from 'preact/hooks';
 import {
   ApiError,
@@ -20,8 +25,11 @@ import type { RuntimeMessage } from '../lib/protocol';
 
 const GOOGLE_ENABLED = !!import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
-/** Login state for credits mode; `onReady` tells the parent whether solving is possible. */
-export function Account({ onReady }: { onReady(ready: boolean): void }) {
+/**
+ * Login state for paid mode; `onReady` tells the parent whether solving is possible. Amounts are
+ * shown as questions of `tier`, the answer mode picked in the popup.
+ */
+export function Account({ tier, onReady }: { tier: SolveTier; onReady(ready: boolean): void }) {
   const [auth, setAuth] = useState<AuthState | null | undefined>(undefined);
 
   useEffect(() => {
@@ -37,13 +45,12 @@ export function Account({ onReady }: { onReady(ready: boolean): void }) {
   useEffect(() => onReady(!!auth), [auth]);
 
   if (auth === undefined) return null;
-  return auth ? <Wallet auth={auth} /> : <Login />;
+  return auth ? <Wallet auth={auth} tier={tier} /> : <Login />;
 }
 
-function Wallet({ auth }: { auth: AuthState }) {
+function Wallet({ auth, tier }: { auth: AuthState; tier: SolveTier }) {
   const [me, setMe] = useState<Me | null>(null);
   const [packs, setPacks] = useState<CreditPack[]>([]);
-  const [payments, setPayments] = useState(true);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState('');
   const [grant, setGrant] = useState<SignupGrant | null>(null);
@@ -52,10 +59,7 @@ function Wallet({ auth }: { auth: AuthState }) {
     getSignupGrant().then(setGrant);
     getMe().then(setMe, (e) => setError(describe(e)));
     getPacks().then(
-      (r) => {
-        setPacks(r.packs);
-        setPayments(r.paymentsEnabled !== false);
-      },
+      (r) => setPacks(r.packs),
       () => {},
     );
   }, [auth.user.id]);
@@ -85,29 +89,35 @@ function Wallet({ auth }: { auth: AuthState }) {
         </button>
       </div>
       <div class="balance">
-        <span class="balance-num mono">{me ? me.balance.toLocaleString() : '—'}</span>
-        <span class="muted">{t('acc_credits')}</span>
+        <span class="balance-num mono">{me ? formatQuestionsLeft(me.balance, tier) : '—'}</span>
+        <span class="muted">{t('acc_questions', { tier: t(`tier_${tier}`) })}</span>
         {me?.user.status === 'frozen' && <span class="warn">{t('acc_frozen')}</span>}
       </div>
       {packs.length > 0 && (
         <div class="packs">
           {packs.map((p) => (
-            <button class="pack" disabled={busy !== null || !payments} onClick={() => buy(p)}>
+            <button class="pack" disabled={busy !== null} onClick={() => buy(p)}>
               <strong>${(p.priceCents / 100).toFixed(0)}</strong>
-              <span>
-                {busy === p.id
-                  ? t('acc_redirecting')
-                  : t('acc_packCredits', { n: p.credits.toLocaleString() })}
-              </span>
+              {busy === p.id ? (
+                <span>{t('acc_redirecting')}</span>
+              ) : (
+                SolveTier.options.map((m) => (
+                  <span class={m === tier ? 'current' : ''}>
+                    {t('acc_packTier', { tier: t(`tier_${m}`), n: formatQuestions(p.credits, m) })}
+                  </span>
+                ))
+              )}
             </button>
           ))}
         </div>
       )}
-      {packs.length > 0 && !payments && <p class="muted">{t('acc_paymentsSoon')}</p>}
       {grant && (
         <p class="muted">
           {grant.credits > 0
-            ? t('grant_ok', { n: grant.credits.toLocaleString() })
+            ? t('grant_ok', {
+                n: formatQuestions(grant.credits),
+                m: formatQuestions(grant.credits, 'accurate'),
+              })
             : t(`grant_${grant.reason ?? 'daily_cap'}`)}
         </p>
       )}

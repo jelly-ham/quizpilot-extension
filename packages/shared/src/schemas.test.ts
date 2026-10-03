@@ -1,5 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { formatIssues, Question, ReadRequest, SolveRequest, splitOptionKey } from './index';
+import {
+  CREDITS_PER_QUESTION,
+  formatQuestions,
+  formatQuestionsLeft,
+  questionCredits,
+  formatIssues,
+  Question,
+  ReadRequest,
+  SolveRequest,
+  splitOptionKey,
+} from './index';
 
 describe('Question', () => {
   it('accepts a single-choice question', () => {
@@ -52,7 +62,32 @@ describe('SolveRequest', () => {
       pageUrl: 'https://example.com/quiz',
       questions: [{ id: 'q1', kind: 'judge', stem: 'The sky is blue.' }],
     });
-    expect(r.prefs).toEqual({ provider: 'auto', allowEscalation: false });
+    expect(r.prefs).toEqual({ provider: 'auto', allowEscalation: false, tier: 'fast' });
+  });
+
+  it('accepts the accurate tier and rejects unknown ones', () => {
+    const base = {
+      pageUrl: 'https://example.com/quiz',
+      questions: [{ id: 'q1', kind: 'judge', stem: 'The sky is blue.' }],
+    };
+    expect(SolveRequest.parse({ ...base, prefs: { tier: 'accurate' } }).prefs.tier).toBe(
+      'accurate',
+    );
+    expect(SolveRequest.safeParse({ ...base, prefs: { tier: 'turbo' } }).success).toBe(false);
+  });
+
+  it('prices answers per question by tier, whatever their length', () => {
+    expect(questionCredits('fast')).toBe(CREDITS_PER_QUESTION);
+    expect(questionCredits('accurate')).toBe(10 * CREDITS_PER_QUESTION);
+    expect(formatQuestions(1_996, 'fast', 'en-US')).toBe('199.6');
+    expect(formatQuestions(110_000, 'fast', 'en-US')).toBe('11,000');
+    // Per tier, truncated: never more than the balance buys.
+    expect(formatQuestions(1_996, 'accurate', 'en-US')).toBe('19.9');
+    expect(formatQuestions(110_000, 'accurate', 'en-US')).toBe('1,100');
+    // What a balance can still answer: whole questions only.
+    expect(formatQuestionsLeft(1_996, 'accurate', 'en-US')).toBe('19');
+    expect(formatQuestionsLeft(1_996, 'fast', 'en-US')).toBe('199');
+    expect(formatQuestionsLeft(-5, 'fast', 'en-US')).toBe('0');
   });
 
   it('rejects an empty question list', () => {

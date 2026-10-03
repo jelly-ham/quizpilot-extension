@@ -61,11 +61,14 @@ export function canAnswer(p: Provider, q: Question): boolean {
   }
 }
 
+/** What routing reads from the prefs; the tier is chosen by the caller's provider set. */
+export type RoutePrefs = Pick<SolvePrefs, 'provider' | 'allowEscalation'>;
+
 /** Candidate providers for a question, best first. */
 function candidates(
   q: Question,
   routing: RoutingConfig,
-  prefs: SolvePrefs,
+  prefs: RoutePrefs,
   providers: ProviderSet,
 ): Provider[] {
   const ids: (string | undefined)[] = [];
@@ -91,7 +94,7 @@ export async function routeSolve(
   questions: Question[],
   providers: ProviderSet,
   routing: RoutingConfig,
-  prefs: SolvePrefs,
+  prefs: RoutePrefs,
   ctx: CallCtx = {},
 ): Promise<RoutedSolve> {
   if (prefs.provider !== 'auto' && !providers.has(prefs.provider)) {

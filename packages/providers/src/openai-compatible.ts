@@ -47,9 +47,10 @@ export interface OpenAICompatibleConfig {
    * Let the model think before answering. Off by default: quiz answers are short, and a hybrid
    * model's hidden reasoning is billed as output (DeepSeek V4.1 Flash on OpenRouter wrote ~400–1,000
    * reasoning tokens for a true/false answer, ~40× the cost). Only sent to OpenRouter, whose
-   * `reasoning` parameter other OpenAI-compatible servers don't know.
+   * `reasoning` parameter other OpenAI-compatible servers don't know. An effort level turns it on
+   * at that depth (`reasoning: { effort }`), for models where thinking is worth paying for.
    */
-  reasoning?: boolean;
+  reasoning?: boolean | ReasoningEffort;
   maxOutputTokens?: number;
   timeoutMs?: number;
   headers?: Record<string, string>;
@@ -86,6 +87,17 @@ const SolveReply = z.object({
 const ReadReply = z.object({ questions: z.array(z.unknown()) });
 const MarkReply = ReadReply;
 
+/** OpenRouter's reasoning effort levels, as the adapter and the Worker's variables accept them. */
+export const ReasoningEffort = z.enum(['low', 'medium', 'high']);
+export type ReasoningEffort = z.infer<typeof ReasoningEffort>;
+
+/** OpenRouter's `reasoning` field: off unless asked for, or at the requested effort. */
+function reasoningParam(reasoning: OpenAICompatibleConfig['reasoning'], required: boolean) {
+  if (typeof reasoning === 'string') return { reasoning: { effort: reasoning } };
+  if (reasoning || required) return {};
+  return { reasoning: { enabled: false } };
+}
+
 /** OpenRouter's refusal when a model can't run with reasoning off. */
 const REASONING_MANDATORY = /reasoning is mandatory|cannot be disabled/i;
 
@@ -110,9 +122,7 @@ export function createOpenAICompatibleProvider(config: OpenAICompatibleConfig): 
           temperature: config.temperature ?? 0,
           ...(config.maxOutputTokens ? { max_tokens: config.maxOutputTokens } : {}),
           ...((config.jsonMode ?? true) ? { response_format: { type: 'json_object' } } : {}),
-          ...(openRouter && !config.reasoning && !reasoningRequired
-            ? { reasoning: { enabled: false } }
-            : {}),
+          ...(openRouter ? reasoningParam(config.reasoning, reasoningRequired) : {}),
         },
         {
           fetch: config.fetch ?? globalThis.fetch.bind(globalThis),

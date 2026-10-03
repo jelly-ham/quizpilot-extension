@@ -1,14 +1,24 @@
-import type { AnswerError } from '@quizpilot/shared';
+import {
+  formatQuestions,
+  formatQuestionsLeft,
+  type AnswerError,
+  type SolveTier,
+} from '@quizpilot/shared';
 import type { ApiError } from './api';
 import { t } from './i18n';
 
-/** User-facing text for an error from our API. Unknown codes fall back to the server message. */
-export function apiErrorMessage(e: ApiError): string {
+/**
+ * User-facing text for an error from our API. Unknown codes fall back to the server message.
+ * Amounts are shown as questions of `tier`, the mode the request ran in.
+ */
+export function apiErrorMessage(e: ApiError, tier: SolveTier = 'fast'): string {
   switch (e.code) {
     case 'insufficient_credits':
       return t('err_insufficient', {
-        required: String(e.body.required ?? '?'),
-        balance: String(e.body.balance ?? 0),
+        // The API counts credits; users see questions of the mode they picked.
+        tier: t(`tier_${tier}`),
+        required: e.body.required == null ? '?' : formatQuestions(Number(e.body.required), tier),
+        balance: formatQuestionsLeft(Number(e.body.balance ?? 0), tier),
       });
     case 'not_logged_in':
     case 'unauthorized':
@@ -28,7 +38,7 @@ export function apiErrorMessage(e: ApiError): string {
     case 'needs_vision':
       return t('err_serverVision');
     case 'billing_disabled':
-      return t('acc_paymentsSoon');
+      return t('err_billingUnavailable');
     default:
       return e.message;
   }

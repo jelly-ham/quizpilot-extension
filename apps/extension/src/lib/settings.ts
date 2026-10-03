@@ -1,10 +1,13 @@
 import { ProviderSetup } from '@quizpilot/providers';
+import { SolveTier } from '@quizpilot/shared';
 
 /** Free tier: user's own keys, called directly from the extension. Paid tier: credits via our API. */
 export type Mode = 'byok' | 'paid';
 
 export interface Settings {
   mode: Mode;
+  /** Credits mode: the cheap model mix (fast) or the frontier model at a fixed price (accurate). */
+  tier: SolveTier;
   /** Re-check low-confidence choice answers with the text model. */
   allowEscalation: boolean;
   /** Human pacing: pauses between questions and typed text, in page and continuous mode. */
@@ -17,6 +20,7 @@ export interface Settings {
 
 export const DEFAULT_SETTINGS: Settings = {
   mode: 'byok',
+  tier: 'fast',
   allowEscalation: false,
   humanize: true,
   debug: false,
@@ -30,7 +34,12 @@ export async function getSettings(): Promise<Settings> {
   const merged = { ...DEFAULT_SETTINGS, ...stored };
   // A hand-edited or outdated BYOK blob must not break the extension; fall back to empty.
   const byok = ProviderSetup.safeParse(merged.byok);
-  return { ...merged, byok: byok.success ? byok.data : DEFAULT_SETTINGS.byok };
+  const tier = SolveTier.safeParse(merged.tier);
+  return {
+    ...merged,
+    tier: tier.success ? tier.data : DEFAULT_SETTINGS.tier,
+    byok: byok.success ? byok.data : DEFAULT_SETTINGS.byok,
+  };
 }
 
 export async function updateSettings(patch: Partial<Settings>): Promise<Settings> {

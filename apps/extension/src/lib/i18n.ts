@@ -1,5 +1,5 @@
 /**
- * UI text from public/_locales (zh_CN and en; Chrome picks by browser language, English
+ * UI text from public/_locales (zh_CN, en, ja, ko; Chrome picks by browser language, English
  * otherwise). `{name}` placeholders are filled from `params`. A missing entry shows its key, and
  * i18n.test.ts checks every key used in the code exists in both languages.
  */
@@ -16,11 +16,19 @@ export function t(key: string, params?: Record<string, string | number>): string
     : text;
 }
 
-/** For the page's lang attribute and number formatting. */
-export const uiLang = (): 'zh' | 'en' => {
+export type UiLang = 'zh' | 'en' | 'ja' | 'ko';
+
+/** The locale Chrome shows the extension in; also sent to the API for emails and checkout. */
+export const uiLang = (): UiLang => {
+  let lang: string;
   try {
-    return chrome.i18n.getUILanguage().toLowerCase().startsWith('zh') ? 'zh' : 'en';
+    lang = chrome.i18n.getUILanguage();
   } catch {
-    return navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+    lang = navigator.language;
   }
+  const base = lang.toLowerCase().slice(0, 2);
+  return base === 'zh' || base === 'ja' || base === 'ko' ? base : 'en';
 };
+
+/** For the page's lang attribute. */
+export const htmlLang = () => (uiLang() === 'zh' ? 'zh-CN' : uiLang());

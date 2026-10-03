@@ -1,4 +1,6 @@
 import {
+  formatQuestions,
+  formatQuestionsLeft,
   MAX_QUESTIONS_PER_SOLVE,
   type Mark,
   type Answer,
@@ -24,7 +26,7 @@ import {
 import { logger, type Log } from '../lib/debug';
 import { getRules, saveRule } from '../lib/site-rules';
 import { getSettings, type Settings } from '../lib/settings';
-import { captureVisible, cropToJpeg } from './capture';
+import { captureVisible, cropToJpeg, isFront } from './capture';
 import {
   entryId,
   formatAnswer,
@@ -289,9 +291,11 @@ async function answerOnce(
     note: read.note,
     ...(bill.charged !== undefined
       ? {
-          footer: t('footer_credits', {
-            used: bill.charged.toLocaleString('en-US'),
-            balance: (bill.balance ?? 0).toLocaleString('en-US'),
+          // In questions of the mode this run used.
+          footer: t('footer_questions', {
+            tier: t(`tier_${settings.tier}`),
+            used: formatQuestions(bill.charged, settings.tier),
+            balance: formatQuestionsLeft(bill.balance ?? 0, settings.tier),
           }),
         }
       : {}),
@@ -331,6 +335,30 @@ export function stopRun(tabId: number) {
 }
 
 const jitter = (min: number, max: number) => min + Math.random() * (max - min);
+
+/** How long a run waits for its tab to come back to the front before skipping screenshots. */
+const FRONT_WAIT_MS = 10 * 60_000;
+
+/**
+ * Screenshots need the run's tab in front: the page only renders there, and the browser captures
+ * whatever the window shows. Waits for it, saying so in the panel. False when stopped or timed out.
+ */
+async function untilFront(
+  tabId: number,
+  panel: (s: PanelState | null) => Promise<unknown>,
+  log: Log,
+): Promise<boolean> {
+  if (await isFront(tabId)) return true;
+  log('截图：等待标签页回到前台');
+  await panel(busyState(t('st_waitFront')));
+  const end = Date.now() + FRONT_WAIT_MS;
+  while (Date.now() < end) {
+    if (!(await pause(tabId, 1_000))) return false;
+    if (await isFront(tabId)) return true;
+  }
+  log('截图：等待超时，跳过截图');
+  return false;
+}
 
 /** Waits `ms`, waking early when the user stops. False if stopped. */
 async function pause(tabId: number, ms: number): Promise<boolean> {
@@ -733,12 +761,14 @@ async function readPage(
     // transcription calls it feeds run concurrently.
     const pending: Promise<Entry>[] = [];
     for (const [i, e] of needShots.entries()) {
+      // Not in front: the rest are answered from their text (markUnverified below).
+      if (!(await untilFront(tabId, panel, log))) break;
       await panel(busyState(t('st_shooting', { i: i + 1, n: needShots.length })));
       const [hit] = await callFrames<Reveal | null>(tabId, [0], 'reveal', [e.localId]);
       if (!hit?.result) continue;
       await panel(null); // keep our panel out of the shot
       const crop = await cropToJpeg(
-        await captureVisible(tab.windowId),
+        await captureVisible(tab),
         hit.result.rect,
         hit.result.viewport,
       );
@@ -765,9 +795,9 @@ async function readPage(
   // Nothing readable in the DOM at all (canvas, PDF viewer, images): read the whole viewport.
   if (entries.length === 0 && solver.canRead) {
     const shot = frames.find((f) => f.frameId === 0)?.result;
-    if (!shot) return { entries, note };
+    if (!shot || !(await untilFront(tabId, panel, log))) return { entries, note };
     await panel(null);
-    const crop = await cropToJpeg(await captureVisible(tab.windowId), null, shot.viewport);
+    const crop = await cropToJpeg(await captureVisible(tab), null, shot.viewport);
     await panel(busyState(t('st_shotWholePage')));
     const out = await solver.read({ pageUrl: page.url, image: crop.dataUrl, hint: shot.title });
     log('整页截图识别结果', out.questions.map(describeQuestion));
@@ -789,6 +819,7 @@ async function learnLayout(
   log: Log,
 ): Promise<Learned | null> {
   const tabId = tab.id!;
+  if (!(await untilFront(tabId, panel, log))) return null;
   await panel(busyState(t('st_learning')));
   await panel(null);
   const [drawn] = await callFrames<Mark[]>(tabId, [0], 'marks', []);
@@ -800,7 +831,7 @@ async function learnLayout(
   if (marks.length === 0) return null;
   let image: string;
   try {
-    image = (await cropToJpeg(await captureVisible(tab.windowId), null, top.viewport)).dataUrl;
+    image = (await cropToJpeg(await captureVisible(tab), null, top.viewport)).dataUrl;
   } finally {
     await callFrames(tabId, [0], 'clearMarks', []);
   }
@@ -830,7 +861,7 @@ async function readRegion(
   const [sel] = await callFrames<Rect | null>(tab.id!, [0], 'selectRegion', []);
   if (!sel?.result) return null;
   const [vp] = await callFrames<Viewport>(tab.id!, [0], 'viewport', []);
-  const crop = await cropToJpeg(await captureVisible(tab.windowId), sel.result, vp!.result!);
+  const crop = await cropToJpeg(await captureVisible(tab), sel.result, vp!.result!);
   await panel(busyState(t('st_readingRegion')));
   const out = await solver.read({ pageUrl: page.url, image: crop.dataUrl, hint: page.title });
   log('框选识别结果', { rect: sel.result, questions: out.questions.map(describeQuestion) });
@@ -872,7 +903,12 @@ async function solveAll(entries: Entry[], settings: Settings, solver: Solver, pa
     const out = await solver.solve({
       pageUrl,
       questions: batch.map((e) => e.question),
-      prefs: { provider: 'auto', allowEscalation: settings.allowEscalation },
+      prefs: {
+        provider: 'auto',
+        allowEscalation: settings.allowEscalation,
+        // The tier picks platform models; your own keys (free mode) are always used as set up.
+        tier: settings.mode === 'paid' ? settings.tier : 'fast',
+      },
     });
     answers.push(...out.answers);
     errors.push(...out.errors);

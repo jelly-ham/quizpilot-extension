@@ -86,7 +86,7 @@ describe('OpenAI-compatible solve', () => {
   });
 
   it('turns off hidden reasoning on OpenRouter only, unless asked for', async () => {
-    const make = (baseURL: string, reasoning?: boolean) => {
+    const make = (baseURL: string, reasoning?: boolean | 'medium') => {
       const fetch = fakeFetch(chatReply({ answers: [{ id: 's', choice: 'A' }] }));
       const p = createOpenAICompatibleProvider({
         id: 'x',
@@ -106,6 +106,10 @@ describe('OpenAI-compatible solve', () => {
     const thinking = make('https://openrouter.ai/api/v1', true);
     await thinking.p.solve([single('s')]);
     expect(thinking.fetch.calls[0]!.body.reasoning).toBeUndefined();
+
+    const effort = make('https://openrouter.ai/api/v1', 'medium');
+    await effort.p.solve([single('s')]);
+    expect(effort.fetch.calls[0]!.body.reasoning).toEqual({ effort: 'medium' });
 
     const other = make('https://api.deepseek.com/v1');
     await other.p.solve([single('s')]);

@@ -172,6 +172,37 @@ await main('byok', async () => {
       'undo iframe',
     );
 
+    // A run whose tab is in the background waits before screenshots (the browser would capture
+    // the tab in front instead), and carries on once the tab is back.
+    {
+      const bg = await browser.context.newPage();
+      await bg.goto(`${ORIGIN}/quiz.html?bg`);
+      const tabId = await browser.worker.evaluate(
+        async (url) => (await chrome.tabs.query({ url }))[0].id,
+        `${ORIGIN}/quiz.html?bg`,
+      );
+      const front = await browser.context.newPage();
+      await front.goto(`${ORIGIN}/frame.html`);
+      await front.bringToFront();
+      const visionBefore = calls.vision;
+      await browser.ext.evaluate(
+        (id) => chrome.runtime.sendMessage({ type: 'qp:run', mode: 'page', tabId: id }),
+        tabId,
+      );
+      const bgStatus = bg.locator('#quizpilot-root .status');
+      await bgStatus.filter({ hasText: '切回这里' }).waitFor({ timeout: 15_000 });
+      assert.equal(calls.vision, visionBefore, 'nothing captured or sent while in the background');
+      await bg.bringToFront();
+      await bgStatus.filter({ hasText: '已解答' }).waitFor({ timeout: 30_000 });
+      assert.equal(
+        await bg.locator('input[name=q7][value=square]').isChecked(),
+        true,
+        'figure question answered once the tab is back in front',
+      );
+      await front.close();
+      await bg.close();
+    }
+
     // Canvas page: nothing in the DOM, so the whole viewport is read by the vision model.
     const { page: canvas, status: canvasStatus } = await openAndRun(browser, '/canvas.html');
     await canvasStatus.filter({ hasText: '已解答' }).waitFor({ timeout: 30_000 });

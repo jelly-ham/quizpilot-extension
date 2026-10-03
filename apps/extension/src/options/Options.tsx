@@ -9,7 +9,7 @@ import {
   ProviderSetup,
   testProvider,
 } from '@quizpilot/providers';
-import { formatIssues } from '@quizpilot/shared';
+import { formatIssues, formatQuestions } from '@quizpilot/shared';
 import type { ComponentChildren } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import { ApiError, getAuth, getUsage, sendDebugReport, type UsageHistory } from '../lib/api';
@@ -240,6 +240,7 @@ function ByokSection({
     <section class="card" id="models">
       <h2>{t('opt_models')}</h2>
       <p class="muted">{t('opt_modelsIntro')}</p>
+      <p class="tip">{t('opt_modelsTip')}</p>
 
       {providers.length === 0 && <p class="empty">{t('opt_noModels')}</p>}
       {providers.map((p, i) => (
@@ -738,7 +739,7 @@ const ledgerLabel = (kind: UsageHistory['ledger'][number]['kind']) =>
 
 const PAGE_SIZE = 10;
 
-/** Credits mode: the ledger and recent answering, each a table with its own pages. */
+/** Paid mode: what was charged (in questions) and recent answering, each a table with pages. */
 function History() {
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
   useEffect(() => {
@@ -758,7 +759,7 @@ function History() {
               <tr>
                 <th>{t('th_time')}</th>
                 <th>{t('th_type')}</th>
-                <th class="num">{t('th_credits')}</th>
+                <th class="num">{t('th_charged')}</th>
               </tr>
             }
             rows={(h) =>
@@ -767,7 +768,7 @@ function History() {
                   <td>{time(l.created_at)}</td>
                   <td>{ledgerLabel(l.kind)}</td>
                   <td class={`num ${l.delta > 0 ? 'plus' : 'minus'}`}>
-                    {l.delta > 0 ? `+${l.delta}` : l.delta}
+                    {l.delta > 0 ? `+${formatQuestions(l.delta)}` : formatQuestions(l.delta)}
                   </td>
                 </tr>
               ))
@@ -784,7 +785,6 @@ function History() {
                 <th>{t('th_site')}</th>
                 <th>{t('th_model')}</th>
                 <th class="num">{t('th_questions')}</th>
-                <th class="num">{t('th_credits')}</th>
               </tr>
             }
             rows={(h) =>
@@ -794,7 +794,6 @@ function History() {
                   <td>{u.page_host ?? '—'}</td>
                   <td>{u.model}</td>
                   <td class="num">{u.question_count}</td>
-                  <td class="num">{u.credits}</td>
                 </tr>
               ))
             }

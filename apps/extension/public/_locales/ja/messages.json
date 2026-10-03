@@ -1,0 +1,779 @@
+{
+  "extName": {
+    "message": "QuizPilot – AI問題解答・学習ヘルパー"
+  },
+  "extShortName": {
+    "message": "QuizPilot"
+  },
+  "extDescription": {
+    "message": "AIで問題を解く学習・宿題ヘルパー：ウェブ上の練習問題を読み取り、自信度付きの解答を提示し、入力やマークまで行います。"
+  },
+  "apiStatus_checking": {
+    "message": "接続中…"
+  },
+  "apiStatus_online": {
+    "message": "オンライン"
+  },
+  "apiStatus_offline": {
+    "message": "オフライン"
+  },
+  "tierLabel": {
+    "message": "解答モード"
+  },
+  "tier_fast": {
+    "message": "高速"
+  },
+  "tier_accurate": {
+    "message": "高精度"
+  },
+  "tier_fast_hint": {
+    "message": "Jev と軽量モデルが数秒で解答します。1問につき1問分。"
+  },
+  "tier_accurate_hint": {
+    "message": "高性能AIモデルが1問ずつ考えて解答します。より正確ですが時間がかかります。1問につき{n}問分、解答できなかった問題は無料です。"
+  },
+  "modeLabel": {
+    "message": "モード"
+  },
+  "mode_byok": {
+    "message": "無料"
+  },
+  "mode_byok_hint": {
+    "message": "自分のモデルAPIキーを使用（この端末にのみ保存）"
+  },
+  "mode_paid": {
+    "message": "有料"
+  },
+  "mode_paid_hint": {
+    "message": "設定不要：解答した問題数だけ支払い"
+  },
+  "solvePage": {
+    "message": "このページを解答（自動入力）"
+  },
+  "comingSoon": {
+    "message": "近日公開"
+  },
+  "solveRegion": {
+    "message": "範囲を選んで解答"
+  },
+  "openOptions": {
+    "message": "設定"
+  },
+  "byokNotConfigured": {
+    "message": "モデルがまだ設定されていません"
+  },
+  "regionHint": {
+    "message": "スクリーンショットの読み取りには画像対応モデルが必要です"
+  },
+  "relearnPage": {
+    "message": "このページの構造を学び直す"
+  },
+  "solveAuto": {
+    "message": "連続解答（自動で次の問題へ）"
+  },
+  "solveAutoHint": {
+    "message": "1問解答して次の問題へ進む、を人のペースで繰り返します。解答パネルからいつでも停止できます。提出は決してしません。"
+  },
+  "relearnHint": {
+    "message": "問題の読み漏れや誤読があるときに：スクリーンショットからこのサイトの問題構造を学び直します"
+  },
+  "solveAssist": {
+    "message": "アシスト（解答をマークのみ）"
+  },
+  "solveAssistHint": {
+    "message": "おすすめの解答を枠で示し、選択はあなたが行います。ページが進むと次の問題にマークします。拡張機能がページをクリックしたり入力したりすることはありません。"
+  },
+  "ui_shortcut": {
+    "message": "ショートカット：{keys}"
+  },
+  "ui_version": {
+    "message": "バージョン"
+  },
+  "st_reading": {
+    "message": "問題を読み取り中…"
+  },
+  "err_generic": {
+    "message": "エラーが発生しました：{msg}"
+  },
+  "err_noQuestions": {
+    "message": "このページに問題が見つかりません"
+  },
+  "err_noQuestionsNoVision": {
+    "message": "このページに問題が見つかりません。画像対応モデルを追加すると、スクリーンショットから読み取れます。"
+  },
+  "note_unreadableOptions": {
+    "message": "選択肢を読み取れなかったため解答していません。この問題で「範囲を選んで解答」をお試しください。"
+  },
+  "st_solving": {
+    "message": "{n}問を解答中…"
+  },
+  "st_filling": {
+    "message": "入力中…"
+  },
+  "st_undone": {
+    "message": "入力を取り消しました"
+  },
+  "st_waitFront": {
+    "message": "スクリーンショットにはこのタブを前面に表示する必要があります：ここに戻ると自動で再開します"
+  },
+  "err_pageChanged": {
+    "message": "解答中にページが再読み込み・移動・終了したため、すべての解答を入力できませんでした。問題のページに戻って、もう一度解答してください。"
+  },
+  "err_tabClosed": {
+    "message": "タブが閉じられたため、連続解答を終了しました"
+  },
+  "auto_stopped": {
+    "message": "連続解答を停止しました"
+  },
+  "auto_captcha": {
+    "message": "認証が必要です。ご自身で完了してください。完了後に解答を再開します。"
+  },
+  "auto_captchaTimeout": {
+    "message": "認証の待機がタイムアウトしたため、連続解答を終了しました"
+  },
+  "auto_noMore": {
+    "message": "問題がもうないため、連続解答を終了しました"
+  },
+  "auto_answering": {
+    "message": "{n}回目：解答中…"
+  },
+  "auto_notFillable": {
+    "message": "このページの問題は自動入力できないため、連続解答を終了しました"
+  },
+  "auto_answered": {
+    "message": "{n}回目を解答しました。次へ進みます…"
+  },
+  "auto_noNext": {
+    "message": "「次の問題」ボタンが見つからないため、連続解答を終了しました"
+  },
+  "auto_lastQuestion": {
+    "message": "最後の問題です。解答を確認してから、ご自身で「{label}」をクリックしてください"
+  },
+  "auto_nextNoChange": {
+    "message": "「次へ」をクリックしましたが問題が変わらないため、連続解答を終了しました"
+  },
+  "auto_maxRounds": {
+    "message": "{n}回で停止しました"
+  },
+  "auto_summary": {
+    "message": "{why}（{rounds}回、{answered}問解答）"
+  },
+  "assist_summary": {
+    "message": "{why}（{rounds}回）"
+  },
+  "assist_stopped": {
+    "message": "アシストを停止しました"
+  },
+  "assist_marked": {
+    "message": "おすすめの解答を枠で示しました（緑。オレンジは自信が低い解答）。ご自身で選んでください。新しい問題が表示されると自動でマークします"
+  },
+  "assist_shown": {
+    "message": "解答を下に表示しました。ご自身で解答してください。新しい問題が表示されると自動でマークします"
+  },
+  "assist_idle": {
+    "message": "ページが長時間変わらないため、アシストを終了しました"
+  },
+  "assist_maxRounds": {
+    "message": "{n}回で停止しました"
+  },
+  "note_rule": {
+    "message": "このサイトの構造を使用"
+  },
+  "note_learned": {
+    "message": "このサイトの構造を学習しました"
+  },
+  "note_learnFailed": {
+    "message": "このページの構造を学習できませんでした"
+  },
+  "err_learnNeedsVision": {
+    "message": "ページ構造の学習には画像対応モデルが必要です"
+  },
+  "st_shooting": {
+    "message": "{i}/{n}問目を撮影中…"
+  },
+  "st_readingShots": {
+    "message": "スクリーンショットを読み取り中…"
+  },
+  "st_shotWholePage": {
+    "message": "読み取れる問題テキストがないため、スクリーンショットを読み取り中…"
+  },
+  "st_learning": {
+    "message": "このページの構造を学習中…"
+  },
+  "err_regionNeedsVision": {
+    "message": "範囲を選んで解答するには画像対応モデルが必要です"
+  },
+  "st_readingRegion": {
+    "message": "選んだ範囲を読み取り中…"
+  },
+  "item_fillFailed": {
+    "message": "入力できませんでした：{reason}"
+  },
+  "item_noAnswer": {
+    "message": "解答なし"
+  },
+  "summary": {
+    "message": "{answered}/{total}問を解答"
+  },
+  "summary_filled": {
+    "message": "、入力済み"
+  },
+  "summary_note": {
+    "message": "（{note}）"
+  },
+  "footer_questions": {
+    "message": "今回 {used}問 使用（{tier}）· 残り {balance}問"
+  },
+  "err_cantRun": {
+    "message": "このページでは実行できません（ブラウザのページやウェブストアでは拡張機能を使えません）"
+  },
+  "tag_screenshot": {
+    "message": "スクリーンショットから"
+  },
+  "tag_displayOnly": {
+    "message": "解答の表示のみ"
+  },
+  "tag_vision": {
+    "message": "画像から解答"
+  },
+  "tag_reviewed": {
+    "message": "再確認済み"
+  },
+  "tag_incomplete": {
+    "message": "一部のみ読み取り"
+  },
+  "tag_noImage": {
+    "message": "画像未確認、参考程度に"
+  },
+  "ans_true": {
+    "message": "正しい ✓"
+  },
+  "ans_false": {
+    "message": "誤り ✗"
+  },
+  "err_googleNotConfigured": {
+    "message": "Google ログインが設定されていません"
+  },
+  "err_loginCancelled": {
+    "message": "ログインがキャンセルされました"
+  },
+  "err_googleNoToken": {
+    "message": "Google のログイントークンを取得できませんでした"
+  },
+  "err_paidNeedsLogin": {
+    "message": "有料モードにはログインが必要です：ツールバーの QuizPilot アイコンをクリックしてログインしてください"
+  },
+  "err_byokNoKey": {
+    "message": "無料モードにはモデルのAPIキーが必要です：設定で追加してください"
+  },
+  "err_loginFirst": {
+    "message": "先にログインしてください"
+  },
+  "err_sessionExpired": {
+    "message": "セッションの有効期限が切れました。もう一度ログインしてください"
+  },
+  "err_insufficient": {
+    "message": "{tier}モードの残り問題数が足りません（必要 {required}問、残り {balance}問）。拡張機能のポップアップからチャージしてください。"
+  },
+  "err_loginExpired": {
+    "message": "セッションの有効期限が切れました。QuizPilot アイコンをクリックして再度ログインしてください"
+  },
+  "err_frozen": {
+    "message": "アカウントが凍結されています（返金または支払い異議のため）。サポートにお問い合わせください。"
+  },
+  "err_rateLimited": {
+    "message": "リクエストが多すぎます。しばらくしてから再度お試しください"
+  },
+  "err_invalidCode": {
+    "message": "コードが間違っているか、有効期限が切れています"
+  },
+  "err_tooManyAttempts": {
+    "message": "試行回数が多すぎます。新しいコードを取得してください"
+  },
+  "err_otpCooldown": {
+    "message": "{s}秒待ってから、もう一度コードを取得してください"
+  },
+  "err_serverVision": {
+    "message": "現在、画像の読み取りを利用できません。しばらくしてから再度お試しください"
+  },
+  "err_needsVision": {
+    "message": "この問題には画像対応モデルが必要です"
+  },
+  "err_unsupported": {
+    "message": "この種類の問題に対応するモデルが設定されていません"
+  },
+  "err_auth": {
+    "message": "APIキーが無効か、アクセス権がありません"
+  },
+  "err_busy": {
+    "message": "モデルのサービスが混み合っています。再度お試しください"
+  },
+  "err_timeout": {
+    "message": "リクエストがタイムアウトしました"
+  },
+  "err_model": {
+    "message": "モデルの呼び出しに失敗しました：{msg}"
+  },
+  "ui_close": {
+    "message": "閉じる"
+  },
+  "ui_stop": {
+    "message": "停止"
+  },
+  "ui_stopping": {
+    "message": "停止中…"
+  },
+  "ui_fill": {
+    "message": "解答を入力"
+  },
+  "ui_undo": {
+    "message": "入力を取り消す"
+  },
+  "ui_confidence": {
+    "message": "自信度 {p}%"
+  },
+  "ui_regionTip": {
+    "message": "ドラッグして問題の範囲を選択、Esc でキャンセル"
+  },
+  "hl_unsure": {
+    "message": "{title}（自信が低いため、ご自身で確認してください）"
+  },
+  "hl_suggest": {
+    "message": "QuizPilot のおすすめ：{text}"
+  },
+  "hl_pick": {
+    "message": "QuizPilot はこの選択肢をおすすめします"
+  },
+  "acc_logout": {
+    "message": "ログアウト"
+  },
+  "acc_questions": {
+    "message": "問 · {tier}モードで解答可能"
+  },
+  "acc_frozen": {
+    "message": "アカウント凍結中"
+  },
+  "acc_redirecting": {
+    "message": "開いています…"
+  },
+  "acc_email": {
+    "message": "メールアドレス"
+  },
+  "acc_sendCode": {
+    "message": "コードを送信"
+  },
+  "acc_codeLabel": {
+    "message": "認証コード（{email} に送信しました）"
+  },
+  "acc_codePlaceholder": {
+    "message": "6桁の数字"
+  },
+  "acc_login": {
+    "message": "ログイン"
+  },
+  "acc_changeEmail": {
+    "message": "別のメールアドレスを使う"
+  },
+  "acc_devCode": {
+    "message": "開発モードのコード：{code}"
+  },
+  "acc_google": {
+    "message": "Google でログイン"
+  },
+  "acc_grant": {
+    "message": "新規アカウントに無料の問題数をプレゼント"
+  },
+  "acc_invalidEmail": {
+    "message": "有効なメールアドレスを入力してください"
+  },
+  "acc_offline": {
+    "message": "サーバーに接続できません"
+  },
+  "opt_saved": {
+    "message": "保存しました"
+  },
+  "opt_title": {
+    "message": "QuizPilot の設定"
+  },
+  "opt_byokHint": {
+    "message": "自分のモデルAPIキーを使用します。キーはこの端末に保存され、リクエストはモデルのサービスに直接送られます。"
+  },
+  "opt_paidHint": {
+    "message": "設定不要：ログインして解答した問題数だけ支払い（ログインとチャージはポップアップから）。"
+  },
+  "opt_modelsSaved": {
+    "message": "モデル設定を保存しました"
+  },
+  "opt_answering": {
+    "message": "解答"
+  },
+  "opt_humanize": {
+    "message": "人のようなペースで解答"
+  },
+  "opt_humanizeHint": {
+    "message": "「このページを解答」と連続解答の両方で、人のペースで解答します：読む間の待ち、問題間の間隔、1文字ずつの入力。オフにすると速く解答します。"
+  },
+  "opt_review": {
+    "message": "自信が低い解答を再確認"
+  },
+  "opt_reviewHint": {
+    "message": "選択問題や正誤問題の解答に自信がないとき、再確認用モデルがもう一度解答します（モデル呼び出しが1回増えます。再確認用モデルは無料モードのモデル設定の「振り分け」で選びます）。"
+  },
+  "opt_needPermission": {
+    "message": "拡張機能がAPIを呼び出せるよう、モデルのサービスのドメインへのアクセスを許可してください"
+  },
+  "opt_noPermission": {
+    "message": "ドメインへのアクセスが許可されていません"
+  },
+  "opt_testOk": {
+    "message": "接続成功 · {model} · {ms}ms"
+  },
+  "opt_models": {
+    "message": "無料モードのモデル"
+  },
+  "opt_modelsTip": {
+    "message": "ヒント：高性能モデル（推論能力の高いモデル）を使うと正確さが上がりますが、解答は遅くなります。"
+  },
+  "opt_modelsIntro": {
+    "message": "選択問題と正誤問題には Jev がおすすめです。穴埋めと記述にはテキストモデル、スクリーンショットと画像問題には画像対応モデルが必要です。APIキーはこのブラウザにのみ保存されます。"
+  },
+  "opt_noModels": {
+    "message": "モデルはまだ追加されていません"
+  },
+  "opt_routing": {
+    "message": "振り分け"
+  },
+  "opt_routeChoice": {
+    "message": "選択 / 正誤"
+  },
+  "opt_routeText": {
+    "message": "穴埋め / 記述"
+  },
+  "opt_routeVision": {
+    "message": "スクリーンショット / 画像問題"
+  },
+  "opt_routeReview": {
+    "message": "再確認用モデル"
+  },
+  "opt_sameAsText": {
+    "message": "穴埋め用モデルと同じ"
+  },
+  "opt_reviewIntro": {
+    "message": "「自信が低い解答を再確認」をオンにすると、自信の低い選択・正誤問題の解答を再確認用モデルに送ります。再確認専用に、より強いモデル（OpenRouter の大規模モデルなど）を追加することもできます。"
+  },
+  "opt_threshold": {
+    "message": "再確認のしきい値"
+  },
+  "opt_thresholdHint": {
+    "message": "自信度がこの値を下回ると再確認します（「自信が低い解答を再確認」がオンのとき）"
+  },
+  "opt_saveModels": {
+    "message": "モデル設定を保存"
+  },
+  "opt_vision": {
+    "message": "画像"
+  },
+  "opt_testing": {
+    "message": "テスト中…"
+  },
+  "opt_test": {
+    "message": "接続テスト"
+  },
+  "opt_delete": {
+    "message": "削除"
+  },
+  "opt_nameTaken": {
+    "message": "この名前はすでに使われています"
+  },
+  "opt_addTitle": {
+    "message": "{label} を追加"
+  },
+  "opt_name": {
+    "message": "名前"
+  },
+  "opt_namePlaceholder": {
+    "message": "小文字の英字、数字、ハイフン"
+  },
+  "opt_model": {
+    "message": "モデル"
+  },
+  "opt_keyOptional": {
+    "message": "ローカルのサービスでは省略可"
+  },
+  "opt_cancel": {
+    "message": "キャンセル"
+  },
+  "opt_add": {
+    "message": "追加"
+  },
+  "opt_auto": {
+    "message": "自動"
+  },
+  "opt_noModelAvailable": {
+    "message": "（使えるモデルがありません）"
+  },
+  "opt_logCopied": {
+    "message": "ログをコピーしました"
+  },
+  "opt_logCleared": {
+    "message": "ログを消去しました"
+  },
+  "opt_debug": {
+    "message": "デバッグ"
+  },
+  "opt_debugLog": {
+    "message": "デバッグログを記録"
+  },
+  "opt_debugHint": {
+    "message": "問題の読み取り、ページ構造の学習、解答、入力の各ステップを記録し、問題の調査に役立てます。この端末に保存され、ブラウザを閉じると消去されます。問題文は含みますが、APIキーは含みません。"
+  },
+  "opt_logCount": {
+    "message": "{n}件"
+  },
+  "opt_copyLog": {
+    "message": "ログをコピー"
+  },
+  "opt_downloadLog": {
+    "message": "ログをダウンロード"
+  },
+  "opt_clear": {
+    "message": "消去"
+  },
+  "led_topup": {
+    "message": "チャージ"
+  },
+  "led_grant": {
+    "message": "プレゼント"
+  },
+  "led_charge": {
+    "message": "解答"
+  },
+  "led_refund": {
+    "message": "返金による差し引き"
+  },
+  "opt_historyLogin": {
+    "message": "履歴を見るにはログインしてください（拡張機能のポップアップから）"
+  },
+  "opt_history": {
+    "message": "利用履歴"
+  },
+  "opt_noHistory": {
+    "message": "まだ履歴はありません"
+  },
+  "th_time": {
+    "message": "日時"
+  },
+  "th_type": {
+    "message": "種類"
+  },
+  "th_charged": {
+    "message": "問題数"
+  },
+  "opt_recent": {
+    "message": "最近の解答"
+  },
+  "th_site": {
+    "message": "サイト"
+  },
+  "th_model": {
+    "message": "モデル"
+  },
+  "th_questions": {
+    "message": "問題数"
+  },
+  "opt_visionCheck": {
+    "message": "このモデルは画像に対応しています"
+  },
+  "preset_jevOpenRouter": {
+    "message": "Jev（OpenRouter）"
+  },
+  "preset_jevOpenRouterHint": {
+    "message": "OpenRouter のキーで Jev を呼び出します。選択・正誤問題に強く、速くて安価です。文章の作成や画像の読み取りはできません。"
+  },
+  "preset_jevTypeSafe": {
+    "message": "Jev（TypeSafe）"
+  },
+  "preset_jevTypeSafeHint": {
+    "message": "TypeSafe コンソールのキーで Jev を呼び出します。選択・正誤問題に強いモデルです。文章の作成や画像の読み取りはできません。"
+  },
+  "preset_qwen": {
+    "message": "Qwen（DashScope）"
+  },
+  "preset_kimi": {
+    "message": "Kimi（Moonshot）"
+  },
+  "preset_ollama": {
+    "message": "Ollama（ローカル）"
+  },
+  "preset_custom": {
+    "message": "その他の OpenAI 互換サービス"
+  },
+  "grant_ok": {
+    "message": "新規アカウントに無料で{n}問分をプレゼントしました（高精度モードでは{m}問）"
+  },
+  "grant_disposable": {
+    "message": "使い捨てメールアドレスは新規プレゼントの対象外です。チャージするとすぐに使えます"
+  },
+  "grant_email_used": {
+    "message": "このメールアドレスはすでに新規プレゼントを受け取っています。チャージするとすぐに使えます"
+  },
+  "grant_device_used": {
+    "message": "このパソコンではすでに新規プレゼントを受け取っています。チャージするとすぐに使えます"
+  },
+  "grant_ip_limit": {
+    "message": "本日、このネットワークでの新規プレゼントは上限に達しました。チャージするとすぐに使えます"
+  },
+  "grant_daily_cap": {
+    "message": "本日の新規プレゼントの枠はなくなりました。チャージするとすぐに使えます"
+  },
+  "preset_glm": {
+    "message": "Zhipu GLM"
+  },
+  "preset_doubao": {
+    "message": "Doubao（Volcano Ark）"
+  },
+  "preset_doubaoHint": {
+    "message": "モデルには Ark コンソールのモデルID（例：doubao-seed-…）または推論エンドポイントIDを入力してください"
+  },
+  "preset_siliconflow": {
+    "message": "SiliconFlow"
+  },
+  "preset_hunyuan": {
+    "message": "Tencent Hunyuan"
+  },
+  "preset_qianfan": {
+    "message": "Baidu Qianfan"
+  },
+  "preset_lmstudio": {
+    "message": "LM Studio（ローカル）"
+  },
+  "opt_listModels": {
+    "message": "モデル一覧を取得"
+  },
+  "opt_listingModels": {
+    "message": "読み込み中…"
+  },
+  "opt_modelsFound": {
+    "message": "{n}個のモデルが見つかりました。「モデル」欄で選んでください"
+  },
+  "opt_listFailed": {
+    "message": "モデル一覧を取得できませんでした：{msg}。モデル名を直接入力することもできます"
+  },
+  "opt_modelPlaceholder": {
+    "message": "キーを入力してから「モデル一覧を取得」をクリック"
+  },
+  "popup_local": {
+    "message": "この端末から直接"
+  },
+  "popup_models": {
+    "message": "モデル"
+  },
+  "popup_change": {
+    "message": "変更"
+  },
+  "popup_choice": {
+    "message": "選択"
+  },
+  "popup_text": {
+    "message": "テキスト"
+  },
+  "popup_keyLocal": {
+    "message": "キーはこのパソコンに保存されます。問題は選んだサービスに直接送られ、当社のサーバーは経由しません。"
+  },
+  "popup_tryPaid": {
+    "message": "キーの設定が面倒ですか？有料モードならすぐに使え、新規アカウントには無料の問題数をプレゼントします。"
+  },
+  "popup_tryPaidBtn": {
+    "message": "試してみる"
+  },
+  "act_assistDesc": {
+    "message": "解答をマーク、選ぶのはあなた"
+  },
+  "act_autoDesc": {
+    "message": "自動で次へ、いつでも停止"
+  },
+  "act_regionDesc": {
+    "message": "問題をドラッグで囲んで読み取り"
+  },
+  "act_learnDesc": {
+    "message": "読み漏れや誤読があるとき"
+  },
+  "shortcuts": {
+    "message": "ショートカット"
+  },
+  "sc_intro": {
+    "message": "どのページでもショートカットで開始できます。アシストと連続解答は、もう一度押すと停止します。"
+  },
+  "sc_notSet": {
+    "message": "未設定"
+  },
+  "sc_edit": {
+    "message": "ショートカットを変更"
+  },
+  "cmd_assist": {
+    "message": "アシスト（もう一度押すと停止）"
+  },
+  "cmd_auto": {
+    "message": "連続解答（もう一度押すと停止）"
+  },
+  "cmd_stop": {
+    "message": "解答を停止"
+  },
+  "opt_nav": {
+    "message": "設定の項目"
+  },
+  "rep_title": {
+    "message": "サポートに送信"
+  },
+  "rep_intro": {
+    "message": "サイトの問題を正しく読み取れない、止まってしまう、解答が間違っているなどの場合は、ログを送ってください。そのサイトへの対応を改善します。"
+  },
+  "rep_note": {
+    "message": "何が起きたか（任意）"
+  },
+  "rep_notePh": {
+    "message": "例：7問目が間違っていて、正解は B"
+  },
+  "rep_contact": {
+    "message": "返信先メールアドレス（任意）"
+  },
+  "rep_privacy": {
+    "message": "ログにはページのアドレス、問題、解答が含まれます。QuizPilot サポートにメールで送られ、問題の調査とサイト対応の改善にのみ使われます。APIキーは含まれません。"
+  },
+  "rep_send": {
+    "message": "ログを送信"
+  },
+  "rep_sending": {
+    "message": "送信中…"
+  },
+  "rep_sent": {
+    "message": "送信しました。ありがとうございます！すぐに確認します。"
+  },
+  "rep_failed": {
+    "message": "送信できませんでした：{msg}"
+  },
+  "rep_enableFirst": {
+    "message": "「デバッグログを記録」をオンにして問題を再現してから送信してください。"
+  },
+  "pg_label": {
+    "message": "ページ"
+  },
+  "pg_prev": {
+    "message": "前へ"
+  },
+  "pg_next": {
+    "message": "次へ"
+  },
+  "pg_of": {
+    "message": "{page} / {pages} ページ"
+  },
+  "pg_page": {
+    "message": "{page} ページ"
+  },
+  "acc_packTier": {
+    "message": "{tier} {n}問"
+  },
+  "err_billingUnavailable": {
+    "message": "現在チャージをご利用いただけません。しばらくしてから再度お試しください"
+  }
+}

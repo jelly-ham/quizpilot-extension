@@ -247,9 +247,7 @@ export interface Me {
 }
 
 export const getMe = () => apiRequest<Me>('/v1/me', { auth: true });
-/** paymentsEnabled is false while top-ups aren't open yet (absent on older servers: open). */
-export const getPacks = () =>
-  apiRequest<{ packs: CreditPack[]; paymentsEnabled?: boolean }>('/v1/billing/packs');
+export const getPacks = () => apiRequest<{ packs: CreditPack[] }>('/v1/billing/packs');
 export const createCheckout = (packId: string) =>
   apiRequest<{ url: string }>('/v1/billing/checkout', {
     body: { packId, lang: uiLang() },

@@ -17,6 +17,21 @@
   "apiStatus_offline": {
     "message": "Offline"
   },
+  "tierLabel": {
+    "message": "Answer mode"
+  },
+  "tier_fast": {
+    "message": "Fast"
+  },
+  "tier_accurate": {
+    "message": "Accurate"
+  },
+  "tier_fast_hint": {
+    "message": "Jev and a light LLM answer in seconds; each question counts as 1."
+  },
+  "tier_accurate_hint": {
+    "message": "An advanced AI model thinks through each question: more accurate, but slower. Each question counts as {n}; unanswered ones are free."
+  },
   "modeLabel": {
     "message": "Mode"
   },
@@ -27,10 +42,10 @@
     "message": "Use your own model API key, stored only on this device"
   },
   "mode_paid": {
-    "message": "Credits"
+    "message": "Paid"
   },
   "mode_paid_hint": {
-    "message": "No setup: pay per use with credits"
+    "message": "No setup: pay per question answered"
   },
   "solvePage": {
     "message": "Solve this page (auto)"
@@ -97,6 +112,9 @@
   },
   "st_undone": {
     "message": "Answers undone"
+  },
+  "st_waitFront": {
+    "message": "Screenshots need this tab in front: switch back here and it carries on"
   },
   "err_pageChanged": {
     "message": "The page reloaded, navigated away or closed while answering, so the answers were not all filled in. Go back to the questions and solve again."
@@ -203,8 +221,8 @@
   "summary_note": {
     "message": " ({note})"
   },
-  "footer_credits": {
-    "message": "Used {used} credits · balance {balance}"
+  "footer_questions": {
+    "message": "Used {used} · {balance} left ({tier})"
   },
   "err_cantRun": {
     "message": "Can't run on this page (browser pages and the Web Store don't allow extensions)"
@@ -243,7 +261,7 @@
     "message": "Didn't get a Google sign-in token"
   },
   "err_paidNeedsLogin": {
-    "message": "Credits mode needs you to sign in: click the QuizPilot icon in the toolbar"
+    "message": "Paid mode needs you to sign in: click the QuizPilot icon in the toolbar"
   },
   "err_byokNoKey": {
     "message": "Free mode needs a model API key: add one in Settings"
@@ -255,7 +273,7 @@
     "message": "Your session expired; please sign in again"
   },
   "err_insufficient": {
-    "message": "Not enough credits (about {required} needed, {balance} left). Top up in the extension popup."
+    "message": "Not enough left for {tier} mode ({required} needed, {balance} left). Top up in the extension popup."
   },
   "err_loginExpired": {
     "message": "Your session expired; click the QuizPilot icon to sign in again"
@@ -329,17 +347,14 @@
   "acc_logout": {
     "message": "Sign out"
   },
-  "acc_credits": {
-    "message": "credits"
+  "acc_questions": {
+    "message": "questions left · {tier} mode"
   },
   "acc_frozen": {
     "message": "Account frozen"
   },
   "acc_redirecting": {
     "message": "Opening…"
-  },
-  "acc_packCredits": {
-    "message": "{n} credits"
   },
   "acc_email": {
     "message": "Email"
@@ -366,7 +381,7 @@
     "message": "Sign in with Google"
   },
   "acc_grant": {
-    "message": "New accounts get free trial credits"
+    "message": "New accounts get free questions"
   },
   "acc_invalidEmail": {
     "message": "Please enter a valid email"
@@ -384,7 +399,7 @@
     "message": "Use your own model API key. The key stays on this device and requests go straight to the model provider."
   },
   "opt_paidHint": {
-    "message": "No setup: sign in and pay per use with credits (sign in and top up from the popup)."
+    "message": "No setup: sign in and pay per question (sign in and top up from the popup)."
   },
   "opt_modelsSaved": {
     "message": "Model settings saved"
@@ -415,6 +430,9 @@
   },
   "opt_models": {
     "message": "Free mode models"
+  },
+  "opt_modelsTip": {
+    "message": "Tip: an advanced model (a stronger reasoning model) answers more accurately, but more slowly."
   },
   "opt_modelsIntro": {
     "message": "Jev is recommended for multiple-choice and true/false. Fill-in and short answers need a text model; screenshots and picture questions need an image-capable model. API keys are stored only in this browser."
@@ -534,10 +552,10 @@
     "message": "Refund clawback"
   },
   "opt_historyLogin": {
-    "message": "Sign in (from the popup) to see your credit history"
+    "message": "Sign in (from the popup) to see your history"
   },
   "opt_history": {
-    "message": "Credit history"
+    "message": "History"
   },
   "opt_noHistory": {
     "message": "Nothing yet"
@@ -548,8 +566,8 @@
   "th_type": {
     "message": "Type"
   },
-  "th_credits": {
-    "message": "Credits"
+  "th_charged": {
+    "message": "Questions"
   },
   "opt_recent": {
     "message": "Recent answers"
@@ -591,22 +609,22 @@
     "message": "Other OpenAI-compatible service"
   },
   "grant_ok": {
-    "message": "Your new account got {n} free credits"
+    "message": "Your new account got {n} free questions ({m} in Accurate mode)"
   },
   "grant_disposable": {
-    "message": "Temporary email addresses don't get the new-account credits; top up to start"
+    "message": "Temporary email addresses don't get the free questions; top up to start"
   },
   "grant_email_used": {
-    "message": "This mailbox already got new-account credits before; top up to start"
+    "message": "This mailbox already got the free questions before; top up to start"
   },
   "grant_device_used": {
-    "message": "New-account credits were already claimed on this computer; top up to start"
+    "message": "The free questions were already claimed on this computer; top up to start"
   },
   "grant_ip_limit": {
-    "message": "Today's new-account credits for this network are used up; top up to start"
+    "message": "Today's free questions for this network are used up; top up to start"
   },
   "grant_daily_cap": {
-    "message": "Today's new-account credits have run out; top up to start"
+    "message": "Today's free questions for new accounts have run out; top up to start"
   },
   "preset_glm": {
     "message": "Zhipu GLM"
@@ -644,9 +662,6 @@
   "opt_modelPlaceholder": {
     "message": "Enter the key, then click \"List models\""
   },
-  "acc_paymentsSoon": {
-    "message": "Top-ups open soon; use your free credits for now"
-  },
   "popup_local": {
     "message": "Direct from this device"
   },
@@ -666,7 +681,7 @@
     "message": "Your key stays on this computer. Questions go straight to the provider you chose, never through our servers."
   },
   "popup_tryPaid": {
-    "message": "Rather not set up a key? Credits mode works out of the box, with free trial credits for new accounts."
+    "message": "Rather not set up a key? Paid mode works out of the box, with free questions for new accounts."
   },
   "popup_tryPaidBtn": {
     "message": "Try it"
@@ -754,5 +769,11 @@
   },
   "pg_page": {
     "message": "Page {page}"
+  },
+  "acc_packTier": {
+    "message": "{n} {tier}"
+  },
+  "err_billingUnavailable": {
+    "message": "Top-ups are unavailable right now; please try again later"
   }
 }

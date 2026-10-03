@@ -7,6 +7,7 @@ import { Logo, Wordmark } from '../lib/Logo';
 import type { RunMode, RuntimeMessage } from '../lib/protocol';
 import { getSettings, updateSettings, type Mode, type Settings } from '../lib/settings';
 import { getShortcuts, openShortcutSettings } from '../lib/shortcuts';
+import { SolveTier, TIER_QUESTIONS } from '@quizpilot/shared';
 import { Account } from './Account';
 
 type ApiStatus = 'checking' | 'online' | 'offline';
@@ -27,6 +28,10 @@ export function App() {
 
   async function selectMode(next: Mode) {
     setSettings(await updateSettings({ mode: next }));
+  }
+
+  async function selectTier(next: SolveTier) {
+    setSettings(await updateSettings({ tier: next }));
   }
 
   async function run(mode: RunMode) {
@@ -116,7 +121,30 @@ export function App() {
           </section>
         ))}
 
-      {mode === 'paid' && <Account onReady={setLoggedIn} />}
+      {mode === 'paid' && settings && (
+        <section class="tier">
+          <fieldset class="mode">
+            <legend class="sr-only">{t('tierLabel')}</legend>
+            {SolveTier.options.map((tier) => (
+              <label key={tier} class={settings.tier === tier ? 'selected' : ''}>
+                <input
+                  type="radio"
+                  name="tier"
+                  value={tier}
+                  checked={settings.tier === tier}
+                  onChange={() => selectTier(tier)}
+                />
+                {t(`tier_${tier}`)}
+              </label>
+            ))}
+          </fieldset>
+          <p class="fine">
+            {t(`tier_${settings.tier}_hint`, { n: TIER_QUESTIONS[settings.tier] })}
+          </p>
+        </section>
+      )}
+
+      {mode === 'paid' && settings && <Account tier={settings.tier} onReady={setLoggedIn} />}
 
       <div class="actions">
         <button

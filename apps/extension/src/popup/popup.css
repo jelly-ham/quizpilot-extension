@@ -110,6 +110,17 @@ body {
   pointer-events: none;
 }
 
+/* ---------------------------------------------------------------- answer tier (credits mode) */
+
+.tier {
+  display: grid;
+  gap: 6px;
+}
+
+.tier .fine {
+  margin: 0 4px;
+}
+
 /* ---------------------------------------------------------------- cards */
 
 .card {
@@ -252,6 +263,12 @@ body {
 .pack span {
   font-size: 10px;
   color: var(--on-navy-2);
+  white-space: nowrap;
+}
+
+/* The answer mode picked above: its count is the one that applies (colour only, so it fits). */
+.pack span.current {
+  color: var(--on-navy);
 }
 
 .pack:hover:not(:disabled) {

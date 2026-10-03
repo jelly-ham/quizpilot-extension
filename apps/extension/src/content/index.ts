@@ -167,9 +167,13 @@ if (!globalThis.__quizpilot) {
       const hit = anchors.get(localId);
       if (!hit) return null;
       hit.anchor.block.scrollIntoView({ block: 'center', inline: 'nearest' });
-      // Wait for scrolling, sticky headers and lazy images to settle.
+      // Wait for scrolling, sticky headers and lazy images to settle. A background tab gets no
+      // animation frames, so the frame wait is capped instead of hanging the run.
       await new Promise((r) => setTimeout(r, 250));
-      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      await Promise.race([
+        new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))),
+        new Promise((r) => setTimeout(r, 200)),
+      ]);
       const vp = viewport();
       const r = regionOf(hit.anchor);
       const pad = 8;

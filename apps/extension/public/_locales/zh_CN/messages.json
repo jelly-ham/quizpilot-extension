@@ -17,6 +17,21 @@
   "apiStatus_offline": {
     "message": "服务离线"
   },
+  "tierLabel": {
+    "message": "答题模式"
+  },
+  "tier_fast": {
+    "message": "快速"
+  },
+  "tier_accurate": {
+    "message": "精准"
+  },
+  "tier_fast_hint": {
+    "message": "Jev 决策模型和轻量大模型作答，几秒出结果，每题按 1 题计。"
+  },
+  "tier_accurate_hint": {
+    "message": "高级大模型逐题思考作答，更准，但更慢。每题按 {n} 题计，没答出来的题不扣。"
+  },
   "modeLabel": {
     "message": "使用模式"
   },
@@ -27,10 +42,10 @@
     "message": "使用你自己的模型 API Key，仅保存在本机"
   },
   "mode_paid": {
-    "message": "点数版"
+    "message": "付费版"
   },
   "mode_paid_hint": {
-    "message": "无需配置，按使用量扣除点数"
+    "message": "无需配置，按答题数扣费"
   },
   "solvePage": {
     "message": "解答本页（自动答题）"
@@ -97,6 +112,9 @@
   },
   "st_undone": {
     "message": "已撤销填写"
+  },
+  "st_waitFront": {
+    "message": "截图需要这个标签页在前台：切回这里后会自动继续"
   },
   "err_pageChanged": {
     "message": "页面在作答过程中刷新、跳转或关闭了，这次没有填写完。请回到题目页面后重新解答。"
@@ -203,8 +221,8 @@
   "summary_note": {
     "message": "（{note}）"
   },
-  "footer_credits": {
-    "message": "本次消耗 {used} 点，余额 {balance} 点"
+  "footer_questions": {
+    "message": "本次用 {used} 题（{tier}），还可答 {balance} 题"
   },
   "err_cantRun": {
     "message": "无法在这个页面上运行（浏览器内置页面或扩展商店不允许）"
@@ -243,7 +261,7 @@
     "message": "没有拿到 Google 登录凭证"
   },
   "err_paidNeedsLogin": {
-    "message": "点数版需要先登录：点击浏览器工具栏里的 QuizPilot 图标登录"
+    "message": "付费版需要先登录：点击浏览器工具栏里的 QuizPilot 图标登录"
   },
   "err_byokNoKey": {
     "message": "免费版需要先在设置页添加模型 API Key"
@@ -255,7 +273,7 @@
     "message": "登录已过期，请重新登录"
   },
   "err_insufficient": {
-    "message": "点数不足（需要约 {required} 点，余额 {balance} 点），请在扩展弹窗中充值"
+    "message": "{tier}模式题数不足（需要 {required} 题，还可答 {balance} 题），请在扩展弹窗中充值"
   },
   "err_loginExpired": {
     "message": "登录已过期，请点击 QuizPilot 图标重新登录"
@@ -329,17 +347,14 @@
   "acc_logout": {
     "message": "退出"
   },
-  "acc_credits": {
-    "message": "点"
+  "acc_questions": {
+    "message": "题 · {tier}模式可答"
   },
   "acc_frozen": {
     "message": "账户已冻结"
   },
   "acc_redirecting": {
     "message": "跳转中…"
-  },
-  "acc_packCredits": {
-    "message": "{n} 点"
   },
   "acc_email": {
     "message": "邮箱"
@@ -366,7 +381,7 @@
     "message": "使用 Google 登录"
   },
   "acc_grant": {
-    "message": "新账户赠送体验点数"
+    "message": "新账户赠送免费题数"
   },
   "acc_invalidEmail": {
     "message": "请输入有效的邮箱"
@@ -384,7 +399,7 @@
     "message": "使用你自己的模型 API Key，Key 只保存在本机，请求直接发给模型服务商"
   },
   "opt_paidHint": {
-    "message": "无需配置，登录后按使用量扣除点数（在弹出窗口中登录与充值）"
+    "message": "无需配置，登录后按答题数扣费（在弹出窗口中登录与充值）"
   },
   "opt_modelsSaved": {
     "message": "模型配置已保存"
@@ -415,6 +430,9 @@
   },
   "opt_models": {
     "message": "免费版模型"
+  },
+  "opt_modelsTip": {
+    "message": "提示：使用高级模型（推理能力更强的大模型）可以提高答题准确率，但会降低答题速度。"
   },
   "opt_modelsIntro": {
     "message": "选择题和判断题推荐 Jev；填空、简答需要一个文本模型；截图识别和看图题需要一个支持图片的模型。API Key 只保存在这台电脑的浏览器里。"
@@ -534,10 +552,10 @@
     "message": "退款扣回"
   },
   "opt_historyLogin": {
-    "message": "登录后可以查看点数记录（在扩展弹窗中登录）"
+    "message": "登录后可以查看扣费记录（在扩展弹窗中登录）"
   },
   "opt_history": {
-    "message": "点数记录"
+    "message": "扣费记录"
   },
   "opt_noHistory": {
     "message": "还没有记录"
@@ -548,8 +566,8 @@
   "th_type": {
     "message": "类型"
   },
-  "th_credits": {
-    "message": "点数"
+  "th_charged": {
+    "message": "题数"
   },
   "opt_recent": {
     "message": "最近答题"
@@ -591,7 +609,7 @@
     "message": "其他 OpenAI 兼容服务"
   },
   "grant_ok": {
-    "message": "新账户已赠送 {n} 点"
+    "message": "新账户已赠送 {n} 题（精准模式可答 {m} 题）"
   },
   "grant_disposable": {
     "message": "临时邮箱不参与新用户赠送；充值后即可使用"
@@ -644,9 +662,6 @@
   "opt_modelPlaceholder": {
     "message": "先填 Key，再点“获取模型列表”选择"
   },
-  "acc_paymentsSoon": {
-    "message": "充值即将开放，目前可以先用赠送的点数"
-  },
   "popup_local": {
     "message": "本机直连"
   },
@@ -666,7 +681,7 @@
     "message": "Key 只保存在这台电脑上，题目直接发给你选择的模型服务商，不经过我们的服务器。"
   },
   "popup_tryPaid": {
-    "message": "不想自己配 Key？点数版开箱即用，新账户赠送体验点数。"
+    "message": "不想自己配 Key？付费版开箱即用，新账户赠送免费题数。"
   },
   "popup_tryPaidBtn": {
     "message": "试试"
@@ -754,5 +769,11 @@
   },
   "pg_page": {
     "message": "第 {page} 页"
+  },
+  "acc_packTier": {
+    "message": "{tier} {n} 题"
+  },
+  "err_billingUnavailable": {
+    "message": "充值暂时不可用，请稍后再试"
   }
 }

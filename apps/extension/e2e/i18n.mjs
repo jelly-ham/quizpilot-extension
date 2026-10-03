@@ -1,4 +1,4 @@
-// English UI: a browser in English gets the en locale everywhere (popup, options, menus).
+// Browser language picks the UI: English, Japanese and Korean get their locale everywhere.
 import {
   assert,
   buildExtension,
@@ -53,5 +53,37 @@ await main('i18n', async () => {
     assert.doesNotMatch(text, /[一-鿿]/, 'no Chinese left on the English options page');
   } finally {
     await browser.context.close();
+  }
+
+  // Japanese and Korean: their own text in the popup and options page, models tip included.
+  for (const [lang, html, solve, mode, tip] of [
+    ['ja', 'ja', 'このページを解答（自動入力）', 'モード', '高性能モデル'],
+    ['ko', 'ko', '이 페이지 풀기 (자동 입력)', '모드', '고급 모델'],
+  ]) {
+    const b = await launch(dist, { lang });
+    try {
+      await setSettings(b.worker, {
+        mode: 'byok',
+        byok: {
+          providers: [{ type: 'jev', id: 'jev', apiKey: 'k', baseURL: `${ORIGIN}/jev/v1` }],
+          routing: { choice: 'jev' },
+        },
+      });
+      assert.equal(await b.worker.evaluate(() => chrome.i18n.getMessage('solvePage')), solve);
+      const popup = await b.context.newPage();
+      await popup.goto(`chrome-extension://${b.extId}/src/popup/index.html`);
+      assert.equal(await popup.getAttribute('html', 'lang'), html);
+      const options = await b.context.newPage();
+      await options.goto(`chrome-extension://${b.extId}/src/options/index.html`);
+      await options.locator('h1').waitFor();
+      assert.equal(await options.locator('h2').first().textContent(), mode);
+      await options.locator('.tip', { hasText: tip }).waitFor();
+      if (lang === 'ko') {
+        const text = await options.locator('main').textContent();
+        assert.doesNotMatch(text, /[一-鿿]/, 'no Chinese left on the Korean options page');
+      }
+    } finally {
+      await b.context.close();
+    }
   }
 });

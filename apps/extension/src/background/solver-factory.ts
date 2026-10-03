@@ -7,16 +7,16 @@ import { byokSolver, UserError, type Solver } from './solver';
 export async function createSolver(settings: Settings): Promise<Solver> {
   if (settings.mode === 'byok') return byokSolver(settings);
   if (!(await getAuth())) throw new UserError(t('err_paidNeedsLogin'));
-  return paidSolver();
+  return paidSolver(settings.tier);
 }
 
 /** Paid mode: our API picks the models and charges credits. API errors are shown as user errors. */
-function paidSolver(): Solver {
+function paidSolver(tier: Settings['tier']): Solver {
   const call = async <T>(fn: () => Promise<T>): Promise<T> => {
     try {
       return await fn();
     } catch (err) {
-      throw err instanceof ApiError ? new UserError(apiErrorMessage(err)) : err;
+      throw err instanceof ApiError ? new UserError(apiErrorMessage(err, tier)) : err;
     }
   };
   return {

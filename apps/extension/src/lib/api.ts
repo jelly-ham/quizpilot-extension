@@ -266,7 +266,6 @@ export interface UsageHistory {
     provider: string;
     model: string;
     question_count: number;
-    credits: number;
     page_host: string | null;
     created_at: number;
   }[];

@@ -1,7 +1,7 @@
 import type { ProviderConfig } from '@quizpilot/providers';
 import { describe, expect, it } from 'vitest';
 import { ProviderConfig as ProviderConfigSchema } from '@quizpilot/providers';
-import { originPattern, PRESETS, uniqueId } from './presets';
+import { originPattern, PRESETS, supportsReasoning, uniqueId } from './presets';
 
 const jev: ProviderConfig = { type: 'jev', id: 'jev', apiKey: 'k' };
 const qwen: ProviderConfig = {
@@ -22,6 +22,22 @@ describe('helpers', () => {
     expect(originPattern(jev)).toBe('https://api.typesafe.ai/*');
     expect(originPattern({ ...jev, via: 'openrouter' })).toBe('https://openrouter.ai/*');
     expect(originPattern(qwen)).toBe('https://dashscope.aliyuncs.com/*');
+  });
+});
+
+describe('supportsReasoning', () => {
+  it('offers a thinking level only for OpenRouter, whose reasoning field the adapter sends', () => {
+    expect(supportsReasoning('https://openrouter.ai/api/v1')).toBe(true);
+    expect(supportsReasoning('https://api.openai.com/v1')).toBe(false);
+    expect(supportsReasoning('not a url')).toBe(false);
+    // A look-alike host is not OpenRouter.
+    expect(supportsReasoning('https://notopenrouter.ai/v1')).toBe(false);
+    expect(supportsReasoning('https://eu.openrouter.ai/api/v1')).toBe(true);
+  });
+
+  it('a config with a thinking level is valid', () => {
+    const r = ProviderConfigSchema.safeParse({ ...qwen, reasoning: 'medium' });
+    expect(r.success).toBe(true);
   });
 });
 

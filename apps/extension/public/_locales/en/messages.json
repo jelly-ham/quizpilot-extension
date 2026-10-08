@@ -584,6 +584,27 @@
   "opt_visionCheck": {
     "message": "This model accepts images"
   },
+  "opt_reasoning": {
+    "message": "Thinking"
+  },
+  "opt_reasoning_off": {
+    "message": "Off (answer directly, fastest)"
+  },
+  "opt_reasoning_low": {
+    "message": "Low"
+  },
+  "opt_reasoning_medium": {
+    "message": "Medium"
+  },
+  "opt_reasoning_high": {
+    "message": "High"
+  },
+  "opt_reasoningTag": {
+    "message": "Thinking: {level}"
+  },
+  "opt_reasoningHint": {
+    "message": "OpenRouter only. The model thinks before it answers: more accurate on hard questions, but slower, and the thinking is billed as output tokens, so it costs more. Best with an advanced reasoning model; models without thinking ignore it."
+  },
   "preset_jevOpenRouter": {
     "message": "Jev (OpenRouter)"
   },

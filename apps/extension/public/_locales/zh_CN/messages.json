@@ -584,6 +584,27 @@
   "opt_visionCheck": {
     "message": "这个模型支持图片输入"
   },
+  "opt_reasoning": {
+    "message": "思考强度"
+  },
+  "opt_reasoning_off": {
+    "message": "关闭（直接作答，最快）"
+  },
+  "opt_reasoning_low": {
+    "message": "低"
+  },
+  "opt_reasoning_medium": {
+    "message": "中"
+  },
+  "opt_reasoning_high": {
+    "message": "高"
+  },
+  "opt_reasoningTag": {
+    "message": "思考：{level}"
+  },
+  "opt_reasoningHint": {
+    "message": "仅 OpenRouter 支持。开启后模型先思考再作答，难题更准，但更慢，思考内容按输出 token 计费，费用更高。适合推理能力强的高级模型；不支持思考的模型会忽略此设置。"
+  },
   "preset_jevOpenRouter": {
     "message": "Jev（OpenRouter）"
   },

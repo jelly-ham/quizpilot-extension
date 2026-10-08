@@ -7,6 +7,7 @@ import {
   listModels,
   ProviderConfig,
   ProviderSetup,
+  ReasoningEffort,
   testProvider,
 } from '@quizpilot/providers';
 import { formatIssues, formatQuestions } from '@quizpilot/shared';
@@ -26,7 +27,7 @@ import { Logo, Wordmark } from '../lib/Logo';
 import { apiErrorMessage } from '../lib/messages';
 import { getSettings, updateSettings, type Settings } from '../lib/settings';
 import { getShortcuts, openShortcutSettings } from '../lib/shortcuts';
-import { originPattern, PRESETS, uniqueId, type Preset } from './presets';
+import { originPattern, PRESETS, supportsReasoning, type Preset, uniqueId } from './presets';
 
 type TestState =
   { status: 'testing' } | { status: 'ok'; text: string } | { status: 'error'; text: string };
@@ -362,6 +363,11 @@ function ProviderRow(props: {
             : `${c.model} · ${new URL(c.baseURL).host}`}
         </span>
         {c.type === 'openai-compatible' && c.vision && <span class="tag">{t('opt_vision')}</span>}
+        {c.type === 'openai-compatible' &&
+          typeof c.reasoning === 'string' &&
+          supportsReasoning(c.baseURL) && (
+            <span class="tag">{t('opt_reasoningTag', { level: effortLabel[c.reasoning]() })}</span>
+          )}
         <span class="spacer" />
         <button
           class="ghost small"
@@ -376,6 +382,15 @@ function ProviderRow(props: {
       </div>
       {c.type === 'openai-compatible' && (
         <VisionCheck checked={!!c.vision} onChange={(vision) => props.onChange({ ...c, vision })} />
+      )}
+      {c.type === 'openai-compatible' && supportsReasoning(c.baseURL) && (
+        <ReasoningSelect
+          value={c.reasoning}
+          onChange={(reasoning) => {
+            const { reasoning: _old, ...rest } = c;
+            props.onChange(reasoning ? { ...rest, reasoning } : rest);
+          }}
+        />
       )}
       {props.test && props.test.status !== 'testing' && (
         <p class={props.test.status === 'ok' ? 'ok' : 'error'}>{props.test.text}</p>
@@ -396,6 +411,7 @@ function AddProvider(props: {
   const [model, setModel] = useState(preset.model ?? '');
   const [apiKey, setApiKey] = useState('');
   const [vision, setVision] = useState(!!preset.vision);
+  const [reasoning, setReasoning] = useState<ReasoningEffort | undefined>();
   const [error, setError] = useState('');
   const [models, setModels] = useState<string[]>([]);
   const [listing, setListing] = useState<'idle' | 'busy' | string>('idle');
@@ -435,6 +451,7 @@ function AddProvider(props: {
             baseURL,
             model,
             vision,
+            ...(reasoning && supportsReasoning(baseURL) ? { reasoning } : {}),
             ...(apiKey ? { apiKey } : {}),
             ...(preset.headers ? { headers: preset.headers } : {}),
             ...(preset.jsonMode === false ? { jsonMode: false } : {}),
@@ -496,6 +513,9 @@ function AddProvider(props: {
         </>
       )}
       {preset.type === 'openai-compatible' && <VisionCheck checked={vision} onChange={setVision} />}
+      {preset.type === 'openai-compatible' && supportsReasoning(baseURL) && (
+        <ReasoningSelect value={reasoning} onChange={setReasoning} />
+      )}
       {error && <p class="error">{error}</p>}
       <div class="row-end">
         <button class="ghost" onClick={props.onCancel}>
@@ -860,6 +880,42 @@ function PagedTable(props: {
         </nav>
       )}
     </>
+  );
+}
+
+/** Written out (not built from the level) so the i18n test sees every key. */
+const effortLabel: Record<ReasoningEffort, () => string> = {
+  low: () => t('opt_reasoning_low'),
+  medium: () => t('opt_reasoning_medium'),
+  high: () => t('opt_reasoning_high'),
+};
+
+/** OpenRouter only: think before answering, at this effort. Off (the default) answers directly. */
+function ReasoningSelect(props: {
+  value?: boolean | ReasoningEffort;
+  onChange(v: ReasoningEffort | undefined): void;
+}) {
+  const value = typeof props.value === 'string' ? props.value : '';
+  return (
+    <label class="field">
+      <span>{t('opt_reasoning')}</span>
+      <select
+        value={value}
+        onChange={(e) => {
+          const v = (e.target as HTMLSelectElement).value;
+          const r = ReasoningEffort.safeParse(v);
+          props.onChange(r.success ? r.data : undefined);
+        }}
+      >
+        <option value="">{t('opt_reasoning_off')}</option>
+        {ReasoningEffort.options.map((x) => (
+          <option key={x} value={x}>
+            {effortLabel[x]()}
+          </option>
+        ))}
+      </select>
+      <small class="muted">{t('opt_reasoningHint')}</small>
+    </label>
   );
 }
 

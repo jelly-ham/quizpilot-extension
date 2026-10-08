@@ -1,4 +1,4 @@
-import { jevEndpoint, type ProviderConfig } from '@quizpilot/providers';
+import { isOpenRouter, jevEndpoint, type ProviderConfig } from '@quizpilot/providers';
 import { t } from '../lib/i18n';
 
 export interface Preset {
@@ -209,3 +209,6 @@ export function originPattern(config: ProviderConfig): string {
   const url = config.type === 'jev' ? jevEndpoint(config).url : config.baseURL;
   return `${new URL(url).origin}/*`;
 }
+
+/** Whether the thinking level can be set: only OpenRouter receives it (see isOpenRouter). */
+export const supportsReasoning = isOpenRouter;

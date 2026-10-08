@@ -584,6 +584,27 @@
   "opt_visionCheck": {
     "message": "このモデルは画像に対応しています"
   },
+  "opt_reasoning": {
+    "message": "思考レベル"
+  },
+  "opt_reasoning_off": {
+    "message": "オフ（すぐに解答、最速）"
+  },
+  "opt_reasoning_low": {
+    "message": "低"
+  },
+  "opt_reasoning_medium": {
+    "message": "中"
+  },
+  "opt_reasoning_high": {
+    "message": "高"
+  },
+  "opt_reasoningTag": {
+    "message": "思考：{level}"
+  },
+  "opt_reasoningHint": {
+    "message": "OpenRouter のみ対応。モデルが考えてから解答するので難問の正解率が上がりますが、遅くなり、思考部分は出力トークンとして課金されるため費用も増えます。推論に強い高性能モデル向けで、思考に対応しないモデルでは無視されます。"
+  },
   "preset_jevOpenRouter": {
     "message": "Jev（OpenRouter）"
   },

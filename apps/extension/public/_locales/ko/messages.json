@@ -584,6 +584,27 @@
   "opt_visionCheck": {
     "message": "이 모델은 이미지를 지원합니다"
   },
+  "opt_reasoning": {
+    "message": "사고 강도"
+  },
+  "opt_reasoning_off": {
+    "message": "끄기 (바로 답변, 가장 빠름)"
+  },
+  "opt_reasoning_low": {
+    "message": "낮음"
+  },
+  "opt_reasoning_medium": {
+    "message": "중간"
+  },
+  "opt_reasoning_high": {
+    "message": "높음"
+  },
+  "opt_reasoningTag": {
+    "message": "사고: {level}"
+  },
+  "opt_reasoningHint": {
+    "message": "OpenRouter에서만 지원됩니다. 모델이 생각한 뒤 답해 어려운 문제에서 더 정확하지만, 더 느리고 사고 내용이 출력 토큰으로 과금되어 비용이 늘어납니다. 추론에 강한 고급 모델에 적합하며, 사고를 지원하지 않는 모델은 이 설정을 무시합니다."
+  },
   "preset_jevOpenRouter": {
     "message": "Jev (OpenRouter)"
   },

@@ -98,16 +98,30 @@ function reasoningParam(reasoning: OpenAICompatibleConfig['reasoning'], required
   return { reasoning: { enabled: false } };
 }
 
+/**
+ * OpenRouter is the one service whose `reasoning` field this adapter sends; other
+ * OpenAI-compatible servers don't know it. The options page uses this too.
+ */
+export function isOpenRouter(baseURL: string): boolean {
+  try {
+    const host = new URL(baseURL).hostname;
+    return host === 'openrouter.ai' || host.endsWith('.openrouter.ai');
+  } catch {
+    return false;
+  }
+}
+
 /** OpenRouter's refusal when a model can't run with reasoning off. */
 const REASONING_MANDATORY = /reasoning is mandatory|cannot be disabled/i;
 
 export function createOpenAICompatibleProvider(config: OpenAICompatibleConfig): Provider {
   const url = `${trimSlash(config.baseURL)}/chat/completions`;
   const vision = config.vision ?? false;
-  const openRouter = new URL(config.baseURL).hostname.endsWith('openrouter.ai');
+  const openRouter = isOpenRouter(config.baseURL);
   // Some models refuse `reasoning: { enabled: false }` ("Reasoning is mandatory for this
   // endpoint"); after the first refusal this provider stops sending it.
   let reasoningRequired = false;
+  const thinks = openRouter && typeof config.reasoning === 'string';
 
   async function chat(
     messages: ChatMessage[],
@@ -130,7 +144,8 @@ export function createOpenAICompatibleProvider(config: OpenAICompatibleConfig): 
             ...(config.apiKey ? { Authorization: `Bearer ${config.apiKey}` } : {}),
             ...config.headers,
           },
-          timeoutMs: config.timeoutMs ?? 60_000,
+          // Thinking before answering takes longer than a direct answer.
+          timeoutMs: config.timeoutMs ?? (thinks ? 120_000 : 60_000),
           signal: ctx.signal,
           retry: config.retry,
         },

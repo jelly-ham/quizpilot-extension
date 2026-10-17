@@ -27,7 +27,7 @@
     "message": "Accurate"
   },
   "tier_fast_hint": {
-    "message": "Jev and a light LLM answer in seconds; each question counts as 1."
+    "message": "A decision model and a light LLM answer in seconds; each question counts as 1."
   },
   "tier_accurate_hint": {
     "message": "An advanced AI model thinks through each question: more accurate, but slower. Each question counts as {n}; unanswered ones are free."

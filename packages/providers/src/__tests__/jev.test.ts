@@ -120,6 +120,23 @@ describe('Jev provider', () => {
     expect(out.usage.inputTokens).toBe(10);
   });
 
+  it('sends at most 100 decision questions per request, counting each multi option', async () => {
+    const fetch = fakeFetch((req) => {
+      const keys = Object.keys(req.body.questions);
+      return json({
+        model: 'span-02',
+        answers: Object.fromEntries(keys.map((k) => [k, { type: 'noul', noul: 1 }])),
+        usage: { input_tokens: 10, output_tokens: 0 },
+      });
+    });
+    // 40 multi questions × 3 options = 120 decisions.
+    const out = await jev(fetch).solve(Array.from({ length: 40 }, (_, i) => multi(`m${i}`)));
+
+    const sizes = fetch.calls.map((c) => Object.keys(c.body.questions).length);
+    expect(sizes).toEqual([99, 21]);
+    expect(out.answers).toHaveLength(40);
+  });
+
   it('throws a ProviderError when the only request fails', async () => {
     const fetch = fakeFetch(json({ error: 'bad key' }, 401));
     await expect(jev(fetch).solve([single('s')])).rejects.toMatchObject({

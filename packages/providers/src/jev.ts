@@ -51,6 +51,8 @@ export function jevEndpoint(config: Pick<JevConfig, 'via' | 'baseURL' | 'model'>
  * characters and assume ~1 token per char, which is conservative for CJK and generous for English.
  */
 const REQUEST_CHAR_BUDGET = 40_000;
+/** Decision APIs other than Jev (Span, Solar Decide) reject more than 100 questions per request. */
+const REQUEST_QUESTION_LIMIT = 100;
 
 const SUPPORTED = new Set<Question['kind']>(['single', 'multi', 'judge']);
 
@@ -168,7 +170,7 @@ export function createJevProvider(config: JevConfig): Provider {
         }
       }
 
-      const chunks = chunkByChars(supported, REQUEST_CHAR_BUDGET);
+      const chunks = chunkRequests(supported, REQUEST_CHAR_BUDGET, REQUEST_QUESTION_LIMIT);
       const results = await Promise.allSettled(chunks.map((chunk) => call(chunk, ctx)));
 
       // If every request failed the same way, surface it as a call-level failure.
@@ -305,19 +307,26 @@ export function jevQuestionChars(q: Question): number {
   return q.kind === 'multi' ? (base + optionChars) * (q.options?.length ?? 1) : base + optionChars;
 }
 
-function chunkByChars(questions: Question[], budget: number): Question[][] {
+/** Decision questions one quiz question becomes (multi → one per option). */
+const decisionCount = (q: Question) => (q.kind === 'multi' ? (q.options?.length ?? 1) : 1);
+
+function chunkRequests(questions: Question[], budget: number, limit: number): Question[][] {
   const chunks: Question[][] = [];
   let current: Question[] = [];
   let size = STATE.length;
+  let count = 0;
   for (const q of questions) {
     const n = jevQuestionChars(q);
-    if (current.length > 0 && size + n > budget) {
+    const c = decisionCount(q);
+    if (current.length > 0 && (size + n > budget || count + c > limit)) {
       chunks.push(current);
       current = [];
       size = STATE.length;
+      count = 0;
     }
     current.push(q);
     size += n;
+    count += c;
   }
   if (current.length > 0) chunks.push(current);
   return chunks;

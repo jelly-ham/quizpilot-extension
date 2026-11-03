@@ -40,6 +40,16 @@ describe('postJson', () => {
     expect(fetch.calls).toHaveLength(1);
   });
 
+  it.each(['Missing or invalid Authorization header.', 'Please pass a valid API key'])(
+    'treats a 400 about the key as an auth error (Gemini): %s',
+    async (message) => {
+      const fetch = fakeFetch(json([{ error: { code: 400, message } }], 400));
+      await expect(postJson('https://x.test', {}, opts(fetch))).rejects.toMatchObject({
+        code: 'auth',
+      });
+    },
+  );
+
   it('retries network errors', async () => {
     const fetch = fakeFetch(new TypeError('fetch failed'), json({ ok: 1 }));
     await expect(postJson('https://x.test', {}, opts(fetch))).resolves.toEqual({ ok: 1 });

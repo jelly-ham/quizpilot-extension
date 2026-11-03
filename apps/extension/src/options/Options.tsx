@@ -442,6 +442,7 @@ function AddProvider(props: {
   }
 
   function add() {
+    if (!apiKey && !preset.keyless) return setError(t('opt_keyRequired'));
     const config: ProviderConfig =
       preset.type === 'jev'
         ? { type: 'jev', id, apiKey, via: preset.via ?? 'typesafe' }

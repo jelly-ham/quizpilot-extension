@@ -302,6 +302,9 @@
   "err_unsupported": {
     "message": "이 유형의 문제에 맞는 모델이 설정되지 않았습니다"
   },
+  "err_providerKey": {
+    "message": "이 모델의 API 키가 없거나 유효하지 않습니다. 설정에서 모델을 삭제한 뒤 유효한 키로 다시 추가하세요."
+  },
   "err_auth": {
     "message": "API 키가 잘못되었거나 접근 권한이 없습니다"
   },
@@ -481,6 +484,9 @@
   },
   "opt_delete": {
     "message": "삭제"
+  },
+  "opt_keyRequired": {
+    "message": "이 서비스의 API 키를 입력하세요."
   },
   "opt_nameTaken": {
     "message": "이미 사용 중인 이름입니다"

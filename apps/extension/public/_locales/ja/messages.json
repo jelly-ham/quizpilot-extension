@@ -302,6 +302,9 @@
   "err_unsupported": {
     "message": "この種類の問題に対応するモデルが設定されていません"
   },
+  "err_providerKey": {
+    "message": "このモデルの API キーが未設定か無効です。設定でモデルを削除し、有効なキーで追加し直してください。"
+  },
   "err_auth": {
     "message": "APIキーが無効か、アクセス権がありません"
   },
@@ -481,6 +484,9 @@
   },
   "opt_delete": {
     "message": "削除"
+  },
+  "opt_keyRequired": {
+    "message": "このサービスの API キーを入力してください。"
   },
   "opt_nameTaken": {
     "message": "この名前はすでに使われています"

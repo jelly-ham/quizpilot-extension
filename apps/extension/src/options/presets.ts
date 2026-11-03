@@ -195,6 +195,7 @@ export const PRESETS: Preset[] = [
     baseURL: 'https://',
     model: '',
     vision: false,
+    keyless: true,
   },
 ];
 

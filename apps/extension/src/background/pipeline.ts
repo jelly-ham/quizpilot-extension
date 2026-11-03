@@ -7,6 +7,7 @@ import {
   type AnswerError,
   type Question,
 } from '@quizpilot/shared';
+import { ProviderError } from '@quizpilot/providers';
 import contentScript from '../content/index.ts?iife';
 import type { ContentApi } from '../content/index';
 import { answerErrorMessage } from '../lib/messages';
@@ -218,7 +219,11 @@ export async function runPipeline(tab: chrome.tabs.Tab, mode: RunMode, makeSolve
       return;
     }
     const message =
-      err instanceof UserError ? err.message : t('err_generic', { msg: (err as Error).message });
+      err instanceof UserError
+        ? err.message
+        : err instanceof ProviderError && err.code === 'auth'
+          ? t('err_providerKey')
+          : t('err_generic', { msg: (err as Error).message });
     if (!(err instanceof UserError)) console.error('[QuizPilot]', err);
     log('出错', { message, stack: err instanceof UserError ? undefined : (err as Error).stack });
     if (!(await show(errorState(message)))) await badge(tabId, message);

@@ -302,6 +302,9 @@
   "err_unsupported": {
     "message": "没有可以回答这类题目的模型"
   },
+  "err_providerKey": {
+    "message": "这个模型的 API Key 缺失或无效。请在设置里删除这个模型，填入有效的 Key 后重新添加。"
+  },
   "err_auth": {
     "message": "API Key 无效或没有权限"
   },
@@ -481,6 +484,9 @@
   },
   "opt_delete": {
     "message": "删除"
+  },
+  "opt_keyRequired": {
+    "message": "请填写这个服务的 API Key。"
   },
   "opt_nameTaken": {
     "message": "名称已被使用"

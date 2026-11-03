@@ -302,6 +302,9 @@
   "err_unsupported": {
     "message": "No model is set up for this kind of question"
   },
+  "err_providerKey": {
+    "message": "Your API key for this model is missing or invalid. Delete the model in Settings and add it again with a valid key."
+  },
   "err_auth": {
     "message": "Invalid API key or no access"
   },
@@ -481,6 +484,9 @@
   },
   "opt_delete": {
     "message": "Remove"
+  },
+  "opt_keyRequired": {
+    "message": "Enter this service's API key."
   },
   "opt_nameTaken": {
     "message": "That name is already used"

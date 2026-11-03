@@ -77,12 +77,20 @@ export async function postJson(
       );
       continue;
     }
-    throw new ProviderError(codeForStatus(res.status), describe(res.status, text), res.status);
+    throw new ProviderError(
+      codeForStatus(res.status, text),
+      describe(res.status, text),
+      res.status,
+    );
   }
 }
 
-function codeForStatus(status: number) {
+/** Gemini answers a missing or wrong key with 400, not 401. */
+const BAD_KEY_BODY = /api[ _-]?key|authorization/i;
+
+function codeForStatus(status: number, body: string) {
   if (status === 401 || status === 403) return 'auth' as const;
+  if (status === 400 && BAD_KEY_BODY.test(body)) return 'auth' as const;
   if (status === 400 || status === 404 || status === 413 || status === 422)
     return 'bad_request' as const;
   if (status === 429) return 'rate_limit' as const;

@@ -4,8 +4,10 @@ import type {
   MarkResponse,
   ReadRequest,
   ReadResponse,
+  RunReport,
   SolveRequest,
   SolveResponse,
+  VerdictReport,
 } from '@quizpilot/shared';
 import { t, uiLang } from './i18n';
 
@@ -259,6 +261,19 @@ export const markRemote = (req: MarkRequest, signal?: AbortSignal) =>
   apiRequest<MarkResponse>('/v1/mark', { body: req, auth: true, signal });
 export const readRemote = (req: ReadRequest, signal?: AbortSignal) =>
   apiRequest<ReadResponse>('/v1/read', { body: req, auth: true, signal });
+/** Paid mode's answer records (background/report.ts). */
+export const postRunReport = (report: RunReport) =>
+  apiRequest<{ ok: true }>('/v1/reports', {
+    body: report,
+    auth: true,
+    signal: AbortSignal.timeout(20_000),
+  });
+export const postVerdicts = (runId: string, body: VerdictReport) =>
+  apiRequest<{ ok: true }>(`/v1/reports/${encodeURIComponent(runId)}/verdicts`, {
+    body,
+    auth: true,
+    signal: AbortSignal.timeout(20_000),
+  });
 
 export interface UsageHistory {
   usage: {

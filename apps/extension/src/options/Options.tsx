@@ -122,6 +122,14 @@ export function Options() {
             checked={settings.allowEscalation}
             onChange={(v) => patch({ allowEscalation: v })}
           />
+          {settings.mode === 'paid' && (
+            <Toggle
+              label={t('opt_shareSamples')}
+              hint={t('opt_shareSamplesHint')}
+              checked={settings.shareSamples}
+              onChange={(v) => patch({ shareSamples: v })}
+            />
+          )}
         </section>
 
         <ShortcutsSection />

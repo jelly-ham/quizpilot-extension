@@ -7,3 +7,4 @@ export * from './read';
 export * from './mark';
 export * from './credits';
 export * from './text';
+export * from './report';

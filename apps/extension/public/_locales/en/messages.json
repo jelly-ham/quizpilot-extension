@@ -431,6 +431,12 @@
   "opt_reviewHint": {
     "message": "When a multiple-choice or true/false answer is uncertain, the review model answers it again (one more model call; pick the review model under Routing in Free mode models)."
   },
+  "opt_shareSamples": {
+    "message": "Help improve: share question text"
+  },
+  "opt_shareSamplesHint": {
+    "message": "In credits mode, QuizPilot records how each question was read, whether it was answered and filled, and whether you changed the filled answer, to improve reading and answering. These records hold no question text. With this on, it also sends the question, its options, the answer given and the option you ended up choosing (no screenshots, nothing you typed), kept for 90 days. Nothing is recorded in free mode."
+  },
   "opt_needPermission": {
     "message": "Grant access to the model provider's domain so the extension can call its API"
   },

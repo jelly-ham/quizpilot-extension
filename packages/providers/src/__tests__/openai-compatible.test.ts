@@ -85,6 +85,35 @@ describe('OpenAI-compatible solve', () => {
     expect(fetch.calls[0]!.body.response_format).toBeUndefined();
   });
 
+  it('asks OpenRouter for preferred hosts in order, keeping fallbacks', async () => {
+    const make = (baseURL: string, providers?: string[]) => {
+      const fetch = fakeFetch(chatReply({ answers: [{ id: 's', choice: 'A' }] }));
+      const p = createOpenAICompatibleProvider({
+        id: 'x',
+        baseURL,
+        model: 'deepseek/deepseek-v4.1-flash',
+        apiKey: 'k',
+        ...(providers ? { providers } : {}),
+        fetch,
+        retry: noRetry,
+      });
+      return { p, fetch };
+    };
+    const or = make('https://openrouter.ai/api/v1', ['pearl-research/fp8', 'wafer']);
+    await or.p.solve([single('s')]);
+    expect(or.fetch.calls[0]!.body.provider).toEqual({
+      order: ['pearl-research/fp8', 'wafer'],
+      allow_fallbacks: true,
+    });
+    // Other services don't know the field; no order means OpenRouter's own routing.
+    const direct = make('https://api.deepseek.com/v1', ['wafer']);
+    await direct.p.solve([single('s')]);
+    expect(direct.fetch.calls[0]!.body.provider).toBeUndefined();
+    const plain = make('https://openrouter.ai/api/v1');
+    await plain.p.solve([single('s')]);
+    expect(plain.fetch.calls[0]!.body.provider).toBeUndefined();
+  });
+
   it('turns off hidden reasoning on OpenRouter only, unless asked for', async () => {
     const make = (baseURL: string, reasoning?: boolean | 'medium') => {
       const fetch = fakeFetch(chatReply({ answers: [{ id: 's', choice: 'A' }] }));

@@ -51,6 +51,12 @@ export interface OpenAICompatibleConfig {
    * at that depth (`reasoning: { effort }`), for models where thinking is worth paying for.
    */
   reasoning?: boolean | ReasoningEffort;
+  /**
+   * OpenRouter hosts to try first, in order (its `provider.order`, e.g. `pearl-research/fp8`, a
+   * host with a quantization variant). The rest still serve the request when these can't. Only
+   * sent to OpenRouter.
+   */
+  providers?: string[];
   maxOutputTokens?: number;
   timeoutMs?: number;
   headers?: Record<string, string>;
@@ -137,6 +143,9 @@ export function createOpenAICompatibleProvider(config: OpenAICompatibleConfig): 
           ...(config.maxOutputTokens ? { max_tokens: config.maxOutputTokens } : {}),
           ...((config.jsonMode ?? true) ? { response_format: { type: 'json_object' } } : {}),
           ...(openRouter ? reasoningParam(config.reasoning, reasoningRequired) : {}),
+          ...(openRouter && config.providers?.length
+            ? { provider: { order: config.providers, allow_fallbacks: true } }
+            : {}),
         },
         {
           fetch: config.fetch ?? globalThis.fetch.bind(globalThis),

@@ -14,6 +14,11 @@ export interface Settings {
   humanize: boolean;
   /** Record each step of a run for bug reports (see lib/debug.ts). */
   debug: boolean;
+  /**
+   * Paid mode, "help improve": answer records also carry each question's text, options and answer
+   * (background/report.ts). Off by default; without it the records hold no question text.
+   */
+  shareSamples: boolean;
   /** BYOK providers and routing. Keys stay in chrome.storage.local on this device. */
   byok: ProviderSetup;
 }
@@ -24,6 +29,7 @@ export const DEFAULT_SETTINGS: Settings = {
   allowEscalation: false,
   humanize: true,
   debug: false,
+  shareSamples: false,
   byok: { providers: [], routing: {} },
 };
 

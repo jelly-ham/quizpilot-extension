@@ -23,8 +23,11 @@ import {
   type Reveal,
   type RunMode,
   type Viewport,
+  type WatchSpec,
 } from '../lib/protocol';
-import { logger, type Log } from '../lib/debug';
+import { buildLabel, logger, type Log } from '../lib/debug';
+import type { ReportVia } from '@quizpilot/shared';
+import { sendRunReport } from './report';
 import { recordAnsweredRun } from '../lib/review';
 import { getRules, saveRule } from '../lib/site-rules';
 import { getSettings, type Settings } from '../lib/settings';
@@ -57,6 +60,16 @@ interface Run {
   footer?: string;
   /** Assist mode: answers are only outlined for the user; the panel offers no fill button. */
   assist?: boolean;
+  /** For paid mode's answer records (report.ts). Absent in runs saved by older versions. */
+  report?: {
+    runId: string;
+    pageUrl: string;
+    via: ReportVia;
+    /** Why an entry got no answer, by entry id. */
+    errors: Record<string, string>;
+    /** Fill results by entry id. */
+    fills: Record<string, { ok: boolean; reason?: string }>;
+  };
 }
 
 /** Page facts from the content script; tab.url is only visible with a host permission. */
@@ -157,6 +170,7 @@ type PanelFn = (s: PanelState | null) => Promise<unknown>;
 interface RunCtx {
   tab: chrome.tabs.Tab;
   tabId: number;
+  mode: RunMode;
   settings: Settings;
   solver: Solver;
   bill: { charged?: number; balance?: number };
@@ -191,7 +205,7 @@ export async function runPipeline(tab: chrome.tabs.Tab, mode: RunMode, makeSolve
       付费模式: settings.mode === 'paid',
       可截图识别: solver.canRead,
     });
-    const ctx: RunCtx = { tab, tabId, settings, solver, bill, panel, log };
+    const ctx: RunCtx = { tab, tabId, mode, settings, solver, bill, panel, log };
 
     if (mode === 'auto' || mode === 'assist') {
       const { run, status } = await (mode === 'auto' ? autoLoop : assistLoop)(ctx, page);
@@ -209,6 +223,7 @@ export async function runPipeline(tab: chrome.tabs.Tab, mode: RunMode, makeSolve
       return;
     }
     if (run === 'empty') throw new UserError(noQuestions(solver));
+    reportRun(ctx, run);
     await panel(state(run, summary(run), 'done'));
     countForReview(run);
     log('完成', { 用时ms: Date.now() - started, 结果: summary(run), 扣点: bill.charged });
@@ -258,7 +273,11 @@ async function answerOnce(
   const { tab, tabId, settings, solver, bill, panel, log } = ctx;
   const read =
     mode === 'region'
-      ? { entries: await readRegion(tab, page, solver, panel, log), note: '' }
+      ? {
+          entries: await readRegion(tab, page, solver, panel, log),
+          note: '',
+          via: 'region' as const,
+        }
       : await readPage(tab, page, solver, panel, mode === 'learn', log, skip);
   const entries = read.entries;
   if (!entries) return 'cancelled';
@@ -297,6 +316,16 @@ async function answerOnce(
     items: [],
     filled: false,
     note: read.note,
+    report: {
+      runId: crypto.randomUUID(),
+      pageUrl: page.url,
+      via: read.via,
+      errors: {
+        ...Object.fromEntries(unreadable.map((e) => [e.id, 'unreadable_options'])),
+        ...Object.fromEntries(errors.map((e) => [e.id, e.code])),
+      },
+      fills: {},
+    },
     ...(bill.charged !== undefined
       ? {
           // In questions of the mode this run used.
@@ -313,10 +342,31 @@ async function answerOnce(
 
   if (autoFill && canFill(run)) {
     await panel(state(run, t('st_filling'), 'busy'));
-    await fill(tabId, run, settings.humanize, log);
+    await fill(tabId, run, settings.humanize, log, watchSpec(settings, run));
     await saveRun(tabId, run);
   }
   return run;
+}
+
+/** Paid mode: watch what the user does with the answers (content/fill/watch.ts). */
+const watchSpec = (settings: Settings, run: Run): WatchSpec | undefined =>
+  settings.mode === 'paid' && run.report
+    ? { runId: run.report.runId, share: settings.shareSamples }
+    : undefined;
+
+/** Paid mode's answer record for a finished round; never in free mode. */
+function reportRun(ctx: RunCtx, run: Run) {
+  const { settings } = ctx;
+  if (settings.mode !== 'paid' || !run.report) return;
+  sendRunReport({
+    ...run.report,
+    mode: ctx.mode,
+    tier: settings.tier,
+    version: buildLabel(),
+    entries: run.entries,
+    answers: run.answers,
+    share: settings.shareSamples,
+  });
 }
 
 const canFill = (run: Run) => run.entries.some((e) => e.fillable && e.id in run.answers);
@@ -556,9 +606,13 @@ async function autoLoop(ctx: RunCtx, first: Page): Promise<{ run: Run | null; st
     const think = humanize ? readingTime(run.entries) - (Date.now() - roundStart) : 0;
     log('连续答题：作答前停顿', { round: rounds, ms: Math.round(Math.max(0, think)) });
     if (!(await pause(tabId, think))) return stopped();
-    if (!canFill(run)) return finish(t('auto_notFillable'));
-    await fill(tabId, run, humanize, log);
+    if (!canFill(run)) {
+      reportRun(ctx, run);
+      return finish(t('auto_notFillable'));
+    }
+    await fill(tabId, run, humanize, log, watchSpec(ctx.settings, run));
     await saveRun(tabId, run);
+    reportRun(ctx, run);
     answered += run.items.filter((i) => i.answer).length;
     await panel(state(run, t('auto_answered', { n: rounds }), 'busy'));
     // Even without pacing, give the page a moment to react to the answer.
@@ -604,7 +658,7 @@ export async function fillLastRun(tabId: number) {
     if (!run) return;
     const settings = await getSettings();
     await setPanel(tabId, state(run, t('st_filling'), 'busy'));
-    await fill(tabId, run, settings.humanize, logger(settings.debug));
+    await fill(tabId, run, settings.humanize, logger(settings.debug), watchSpec(settings, run));
     await saveRun(tabId, run);
     await setPanel(tabId, state(run, summary(run), 'done'));
   } finally {
@@ -660,7 +714,8 @@ async function assistLoop(ctx: RunCtx, first: Page): Promise<{ run: Run | null; 
       last = run;
       for (const e of run.entries) seen.add(e.domKey ?? questionKey(e.question));
       await saveRun(tabId, run);
-      const marked = await highlight(tabId, run);
+      const marked = await highlight(tabId, run, watchSpec(ctx.settings, run));
+      reportRun(ctx, run);
       log('辅助答题：已标出答案', { round: rounds, marked });
       await panel(state(run, marked ? t('assist_marked') : t('assist_shown'), 'busy'));
     }
@@ -694,12 +749,13 @@ async function readPage(
   /** Continuous modes: questions handled in an earlier round, by domKey. Dropped before any
    * screenshot, so they cost nothing. */
   skip?: (domKey: string) => boolean,
-): Promise<{ entries: Entry[]; note: string }> {
+): Promise<{ entries: Entry[]; note: string; via: ReportVia }> {
   const tabId = tab.id!;
   const rules = await getRules();
   let frames = await callFrames<FrameExtract>(tabId, 'all', 'extract', [rules]);
   log('读题', frames.map(describeFrame));
-  let note = frames.find((f) => f.frameId === 0)?.result?.via === 'rule' ? t('note_rule') : '';
+  let via: ReportVia = frames.find((f) => f.frameId === 0)?.result?.via ?? 'generic';
+  let note = via === 'rule' ? t('note_rule') : '';
 
   // Learn this site's layout when asked, or when the generic reader got nothing usable.
   const top = frames.find((f) => f.frameId === 0)?.result;
@@ -735,6 +791,7 @@ async function readPage(
       if (again?.result)
         frames = frames.map((f) => (f.frameId === 0 ? { ...f, result: again.result } : f));
       note = t('note_learned');
+      via = 'learned';
     } else if (forceLearn) {
       note = t('note_learnFailed');
     }
@@ -803,15 +860,15 @@ async function readPage(
   // Nothing readable in the DOM at all (canvas, PDF viewer, images): read the whole viewport.
   if (entries.length === 0 && solver.canRead) {
     const shot = frames.find((f) => f.frameId === 0)?.result;
-    if (!shot || !(await untilFront(tabId, panel, log))) return { entries, note };
+    if (!shot || !(await untilFront(tabId, panel, log))) return { entries, note, via };
     await panel(null);
     const crop = await cropToJpeg(await captureVisible(tab), null, shot.viewport);
     await panel(busyState(t('st_shotWholePage')));
     const out = await solver.read({ pageUrl: page.url, image: crop.dataUrl, hint: shot.title });
     log('整页截图识别结果', out.questions.map(describeQuestion));
-    return { entries: fromScreenshot(out, crop.dataUrl), note };
+    return { entries: fromScreenshot(out, crop.dataUrl), note, via: 'fullshot' };
   }
-  return { entries, note };
+  return { entries, note, via };
 }
 
 /**
@@ -936,17 +993,17 @@ function answersByFrame(run: Run): Map<number, Answer[]> {
 }
 
 /** Assist mode: outline the suggested answers in every frame. Returns how many were marked. */
-async function highlight(tabId: number, run: Run): Promise<number> {
+async function highlight(tabId: number, run: Run, watch?: WatchSpec): Promise<number> {
   const counts = await Promise.all(
     [...answersByFrame(run)].map(async ([frameId, answers]) => {
-      const [res] = await callFrames<number>(tabId, [frameId], 'highlight', [answers]);
+      const [res] = await callFrames<number>(tabId, [frameId], 'highlight', [answers, watch]);
       return res?.result ?? 0;
     }),
   );
   return counts.reduce((a, b) => a + b, 0);
 }
 
-async function fill(tabId: number, run: Run, humanize: boolean, log: Log) {
+async function fill(tabId: number, run: Run, humanize: boolean, log: Log, watch?: WatchSpec) {
   const byFrame = answersByFrame(run);
   // Frames are independent; fill them concurrently.
   await Promise.all(
@@ -955,10 +1012,15 @@ async function fill(tabId: number, run: Run, humanize: boolean, log: Log) {
         tabId,
         [frameId],
         'fill',
-        [{ answers, humanize }],
+        [{ answers, humanize, ...(watch ? { watch } : {}) }],
       );
       log('填写', { frameId, outcomes: res?.result });
       for (const o of res?.result ?? []) {
+        if (run.report)
+          run.report.fills[entryId(frameId, o.id)] = {
+            ok: o.ok,
+            ...(o.reason ? { reason: o.reason } : {}),
+          };
         if (o.ok) continue;
         const item = run.items.find((i) => i.frameId === frameId && i.localId === o.id);
         if (item) item.error = t('item_fillFailed', { reason: o.reason ?? '' });

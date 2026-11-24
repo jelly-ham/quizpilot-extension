@@ -1,4 +1,4 @@
-import type { Answer, QuestionKind } from '@quizpilot/shared';
+import type { Answer, QuestionKind, Verdict } from '@quizpilot/shared';
 import type { Extracted } from '../content/extract/generic';
 import type { SiteRule } from '../content/extract/rules';
 
@@ -74,9 +74,17 @@ export interface PanelState {
 /** What content's next() found: a "next question" control, or only a submit button. */
 export type NextFound = { kind: 'next' | 'submit'; label: string } | null;
 
+/** Paid mode: after filling or outlining, watch whether the user keeps the answers (fill/watch.ts). */
+export interface WatchSpec {
+  runId: string;
+  /** "Help improve" is on: the verdicts may carry the option keys the user ended up with. */
+  share: boolean;
+}
+
 export interface FillRequest {
   answers: Answer[];
   humanize: boolean;
+  watch?: WatchSpec;
 }
 
 /** Messages from extension pages / content UI to the background. */
@@ -86,7 +94,13 @@ export type RuntimeMessage =
   | { type: 'qp:undo' }
   | { type: 'qp:close' }
   | { type: 'qp:stop' }
-  | { type: 'qp:google-login' };
+  | { type: 'qp:google-login' }
+  /** From a content script: what the user did with a run's answers in that frame. */
+  | {
+      type: 'qp:verdicts';
+      runId: string;
+      verdicts: { id: string; verdict: Verdict; picked?: string[] }[];
+    };
 
 /**
  * page: read and solve; region: user-selected area; learn: relearn this site's layout first;

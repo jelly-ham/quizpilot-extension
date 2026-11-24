@@ -1,6 +1,7 @@
 import type { RunMode, RuntimeMessage } from '../lib/protocol';
 import { fillLastRun, forgetRun, isRunning, runPipeline, stopRun, undoLastRun } from './pipeline';
 import { googleLogin } from './google';
+import { sendVerdicts } from './report';
 import { createSolver } from './solver-factory';
 
 chrome.runtime.onInstalled.addListener(({ reason }) => {
@@ -101,6 +102,10 @@ chrome.runtime.onMessage.addListener((msg: RuntimeMessage, sender, sendResponse)
       break;
     case 'qp:stop':
       if (tabId) stopRun(tabId);
+      break;
+    case 'qp:verdicts':
+      // Paid mode's answer records: what the user did with a run's answers in that frame.
+      if (sender.frameId !== undefined) void sendVerdicts(msg.runId, sender.frameId, msg.verdicts);
       break;
   }
   sendResponse();

@@ -39,6 +39,8 @@ export const ProviderConfig = z.discriminatedUnion('type', [
     vision: z.boolean().optional(),
     jsonMode: z.boolean().optional(),
     reasoning: z.union([z.boolean(), ReasoningEffort]).optional(),
+    /** OpenRouter hosts to try first (provider.order). */
+    providers: z.array(z.string().min(1).max(100)).max(10).optional(),
     temperature: z.number().min(0).max(2).optional(),
     maxOutputTokens: z.number().int().positive().optional(),
     headers: z.record(z.string(), z.string()).optional(),

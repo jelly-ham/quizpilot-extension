@@ -5,6 +5,7 @@ import { buildLabel } from '../lib/debug';
 import { t } from '../lib/i18n';
 import { Logo, Wordmark } from '../lib/Logo';
 import type { RunMode, RuntimeMessage } from '../lib/protocol';
+import { closeReviewPrompt, REVIEW_URL, shouldAskForReview } from '../lib/review';
 import { getSettings, updateSettings, type Mode, type Settings } from '../lib/settings';
 import { getShortcuts, openShortcutSettings } from '../lib/shortcuts';
 import { SolveTier, TIER_QUESTIONS } from '@quizpilot/shared';
@@ -17,10 +18,12 @@ export function App() {
   const [api, setApi] = useState<ApiStatus>('checking');
   const [loggedIn, setLoggedIn] = useState(false);
   const [keys, setKeys] = useState<Record<string, string>>({});
+  const [askReview, setAskReview] = useState(false);
 
   useEffect(() => {
     getSettings().then(setSettings);
     getShortcuts().then(setKeys);
+    shouldAskForReview().then(setAskReview);
     const ctrl = new AbortController();
     checkApiHealth(ctrl.signal).then((ok) => setApi(ok ? 'online' : 'offline'));
     return () => ctrl.abort();
@@ -32,6 +35,11 @@ export function App() {
 
   async function selectTier(next: SolveTier) {
     setSettings(await updateSettings({ tier: next }));
+  }
+
+  function closeReview() {
+    setAskReview(false);
+    void closeReviewPrompt();
   }
 
   async function run(mode: RunMode) {
@@ -202,6 +210,24 @@ export function App() {
           </div>
         )}
       </div>
+
+      {askReview && (
+        <p class="review-ask">
+          <span>{t('review_ask')}</span>
+          <button
+            class="link"
+            onClick={() => {
+              closeReview();
+              void chrome.tabs.create({ url: REVIEW_URL });
+            }}
+          >
+            {t('review_write')}
+          </button>
+          <button class="link muted" onClick={closeReview}>
+            {t('review_dismiss')}
+          </button>
+        </p>
+      )}
 
       <footer class="footer">
         <button class="link" onClick={() => chrome.runtime.openOptionsPage()}>

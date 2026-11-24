@@ -120,6 +120,15 @@ await main('byok', async () => {
     const { page: quiz, status } = await openAndRun(browser, '/quiz.html');
     await status.filter({ hasText: '已解答' }).waitFor({ timeout: 30_000 });
     console.log('panel:', await status.textContent());
+    // A run that answered counts towards the review prompt.
+    await quiz.waitForTimeout(300);
+    assert.equal(
+      await browser.worker.evaluate(
+        async () => (await chrome.storage.local.get('reviewPrompt')).reviewPrompt?.runs,
+      ),
+      1,
+      'review counter',
+    );
 
     const checked = (sel) => quiz.locator(sel).isChecked();
     assert.equal(await checked('input[name=q1][value=b]'), true, 'single choice');

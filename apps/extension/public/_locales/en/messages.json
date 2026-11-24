@@ -302,6 +302,15 @@
   "err_unsupported": {
     "message": "No model is set up for this kind of question"
   },
+  "review_ask": {
+    "message": "Finding this useful? A review on the Chrome Web Store helps others find it."
+  },
+  "review_write": {
+    "message": "Write a review"
+  },
+  "review_dismiss": {
+    "message": "Don't show again"
+  },
   "err_providerKey": {
     "message": "Your API key for this model is missing or invalid. Delete the model in Settings and add it again with a valid key."
   },

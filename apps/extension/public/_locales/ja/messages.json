@@ -302,6 +302,15 @@
   "err_unsupported": {
     "message": "この種類の問題に対応するモデルが設定されていません"
   },
+  "review_ask": {
+    "message": "お役に立ちましたら、Chrome ウェブストアでレビューをお願いします。"
+  },
+  "review_write": {
+    "message": "レビューを書く"
+  },
+  "review_dismiss": {
+    "message": "今後表示しない"
+  },
   "err_providerKey": {
     "message": "このモデルの API キーが未設定か無効です。設定でモデルを削除し、有効なキーで追加し直してください。"
   },

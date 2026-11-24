@@ -302,6 +302,15 @@
   "err_unsupported": {
     "message": "没有可以回答这类题目的模型"
   },
+  "review_ask": {
+    "message": "觉得有帮助的话，欢迎在 Chrome 商店留个评价。"
+  },
+  "review_write": {
+    "message": "写评价"
+  },
+  "review_dismiss": {
+    "message": "不再提示"
+  },
   "err_providerKey": {
     "message": "这个模型的 API Key 缺失或无效。请在设置里删除这个模型，填入有效的 Key 后重新添加。"
   },

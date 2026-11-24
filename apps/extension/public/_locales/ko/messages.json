@@ -302,6 +302,15 @@
   "err_unsupported": {
     "message": "이 유형의 문제에 맞는 모델이 설정되지 않았습니다"
   },
+  "review_ask": {
+    "message": "도움이 되셨다면 Chrome 웹 스토어에 리뷰를 남겨 주세요."
+  },
+  "review_write": {
+    "message": "리뷰 쓰기"
+  },
+  "review_dismiss": {
+    "message": "다시 표시 안 함"
+  },
   "err_providerKey": {
     "message": "이 모델의 API 키가 없거나 유효하지 않습니다. 설정에서 모델을 삭제한 뒤 유효한 키로 다시 추가하세요."
   },

@@ -25,6 +25,7 @@ import {
   type Viewport,
 } from '../lib/protocol';
 import { logger, type Log } from '../lib/debug';
+import { recordAnsweredRun } from '../lib/review';
 import { getRules, saveRule } from '../lib/site-rules';
 import { getSettings, type Settings } from '../lib/settings';
 import { captureVisible, cropToJpeg, isFront } from './capture';
@@ -195,6 +196,7 @@ export async function runPipeline(tab: chrome.tabs.Tab, mode: RunMode, makeSolve
     if (mode === 'auto' || mode === 'assist') {
       const { run, status } = await (mode === 'auto' ? autoLoop : assistLoop)(ctx, page);
       await show(run ? state(run, status, 'done') : { ...busyState(status), tone: 'done' });
+      if (run) countForReview(run);
       log('完成', { 用时ms: Date.now() - started, 结果: status, 扣点: bill.charged });
       return;
     }
@@ -208,6 +210,7 @@ export async function runPipeline(tab: chrome.tabs.Tab, mode: RunMode, makeSolve
     }
     if (run === 'empty') throw new UserError(noQuestions(solver));
     await panel(state(run, summary(run), 'done'));
+    countForReview(run);
     log('完成', { 用时ms: Date.now() - started, 结果: summary(run), 扣点: bill.charged });
   } catch (err) {
     if (err instanceof StoppedError) {
@@ -1005,6 +1008,11 @@ function state(run: Run, status: string, tone: PanelState['tone']): PanelState {
     canUndo: run.filled,
     ...(run.footer ? { footer: run.footer } : {}),
   };
+}
+
+/** Never lets the review counter get in the way of a run that already succeeded. */
+function countForReview(run: Run) {
+  if (run.items.some((i) => i.answer)) void recordAnsweredRun().catch(() => {});
 }
 
 function summary(run: Run): string {
